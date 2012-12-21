@@ -1,0 +1,37 @@
+<div class="row-fluid">
+    <div class="span7">
+        <h1><%= @movie.title %></h1>
+
+        <% if @movie.rating || @movie.runtime || @movie.year %>
+            <dl class="clearfix">
+                <% if @movie.rating %>
+                    <dt>Rating</dt>
+                    <dd><%= @movie.rating %></dd>
+                <% end %>
+
+                <% if @movie.runtime %>
+                    <dt>Runtime</dt>
+                    <dd><%= @movie.runtime %></dd>
+                <% end %>
+
+                <% if @movie.year %>
+                    <dt>Release</dt>
+                    <dd><%= @movie.year %></dd>
+                <% end %>
+            </dl>
+        <% end %>
+
+        <p><%= @movie.description %></p>
+
+        <h2>Files</h2>
+        <ul>
+            <% @movie.video_files.each do |vf| %>
+                <li><%= link_to(vf.path.split('/').last, files_path(vf.path)) %></li>
+            <% end %>
+        </ul>
+    </div>
+
+    <div class="span5">
+        <img src="<%= @movie.image_cached %>" class="img-rounded pull-right" style="margin:18px 0; width:92%;">
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TenFoot</title>
+
+  <%= stylesheet_link_tag 'application' %>
+  <%= javascript_include_tag 'application' %>
+
+  <%= csrf_meta_tags %>
+
+</head>
+<body class="<%= body_classes %>">
+
+    <div class="container-fluid">
+
+        <%= yield %>
+
+    </div>
+
+</body>
+</html>

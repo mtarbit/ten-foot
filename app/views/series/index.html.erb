@@ -1,0 +1,20 @@
+<h1>Series</h1>
+
+<% min_idx = 0 %>
+<% max_idx = @series.count - 1 %>
+<% columns = 6 %>
+
+<% @series.each_with_index do |series, i| %>
+    <% if i == min_idx || i % columns == 0 %>
+        <div class="row-fluid">
+    <% end %>
+
+    <div class="series span2">
+        <div class="series-image"><%= link_to(image_tag(series.image_cached || 'series-image-placeholder.png', width: '100%', alt: nil, class: 'img-rounded'), series_path(series)) %></div>
+        <div class="series-title"><h4><%= link_to(series.title, series_path(series)) %></h4></div>
+    </div>
+
+    <% if i == max_idx || i % columns == columns - 1 %>
+        </div>
+    <% end %>
+<% end %>

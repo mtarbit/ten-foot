@@ -1,0 +1,43 @@
+<div class="row-fluid">
+    <div class="span7">
+        <h1><%= @series.title %></h1>
+
+        <% if @series.rating %>
+            <dl class="clearfix">
+                <dt>Rating</dt>
+                <dd><%= @series.rating %></dd>
+            </dl>
+        <% end %>
+
+        <p><%= @series.description %></p>
+
+        <% @episodes = @series.video_files.order(:season, :episode, :path) %>
+        <% min_idx = 0 %>
+        <% max_idx = @episodes.count - 1 %>
+        <% @episodes.each_with_index do |vf, i| %>
+            <% prev_season = @episodes[i-1].try(:season) if i > min_idx %>
+            <% next_season = @episodes[i+1].try(:season) if i < max_idx %>
+
+            <% if vf.season.nil? && i == 0 %>
+                <h2>Files</h2>
+            <% elsif vf.season != prev_season %>
+                <h2>Season <%= vf.season %></h2>
+            <% end %>
+
+            <% if vf.season != prev_season || i == min_idx %>
+                <ul>
+            <% end %>
+
+            <li><%= link_to(truncate("Episode #{vf.episode || '?'} - #{vf.path.split('/').last}", length: 45), files_path(vf.path)) %></li>
+
+            <% if vf.season != next_season || i == max_idx %>
+                </ul>
+            <% end %>
+
+        <% end %>
+    </div>
+
+    <div class="span5">
+        <img src="<%= @series.image_cached %>" class="img-rounded pull-right" style="margin:18px 0; width:92%;">
+    </div>
+</div>

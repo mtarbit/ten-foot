@@ -1,0 +1,39 @@
+<div class="row-fluid" style="margin-top:17%;">
+
+    <div class="span3 ac">
+        <h3>
+            <%= link_to('#') do %>
+                <i class="icon icon-large icon-rss"></i><br>
+                Feeds
+            <% end %>
+        </h3>
+    </div>
+
+    <div class="span3 ac">
+        <h3>
+            <%= link_to(movies_path) do %>
+                <i class="icon icon-large icon-film"></i><br>
+                Movies
+            <% end %>
+        </h3>
+    </div>
+
+    <div class="span3 ac">
+        <h3>
+            <%= link_to(series_index_path) do %>
+                <i class="icon icon-large icon-play-circle"></i><br>
+                Series
+            <% end %>
+        </h3>
+    </div>
+
+    <div class="span3 ac">
+        <h3>
+            <%= link_to(files_path) do %>
+                <i class="icon icon-large icon-folder-open"></i><br>
+                Files
+            <% end %>
+        </h3>
+    </div>
+
+</div>
