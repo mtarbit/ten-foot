@@ -1,4 +1,5 @@
 class FilesController < ApplicationController
+
   def index
     @relpath = params[:path] || ''
     @abspath = File.join($settings.video_files_path, @relpath)
@@ -10,8 +11,12 @@ class FilesController < ApplicationController
       end
       @filenames
     else
-      render :show, layout: 'video'
+      redirect_to file_path(params)
     end
+  end
+
+  def show
+    @path = params[:path]
   end
 
   def populate_video_files

@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 body {
   zoom: 2;
 }
@@ -37,3 +41,23 @@ body {
   float: left;
   margin-right: 20px;
 }
+
+
+.files-show {
+  height: 100%;
+  overflow: hidden;
+  cursor: none;
+  background: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.files-show .container-fluid {
+  padding: 0;
+}
+
+.files-show video {
+  height: 100%;
+  width: 100%;
+}
+
