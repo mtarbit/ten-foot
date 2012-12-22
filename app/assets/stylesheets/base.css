@@ -12,6 +12,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Economica', sans-serif;
 }
 
+h1 {
+  margin-bottom: 16px;
+}
+
 a {
   color: #af4;
 }
@@ -38,35 +42,58 @@ a:hover, a:focus, a:active {
   line-height: 24px;
 }
 
-.movies-index .movie-image img,
-.series-index .series-image img {
-  background-color: #1a1a1a;
-  box-shadow: inset 0 0 5px #0a0a0a;
+.poster {
+  margin-bottom: 16px;
 }
 
-.movies-index .movie-image,
-.movies-index .movie-title,
-.series-index .series-image,
-.series-index .series-title {
+.poster a {
+  border: 1px solid #222;
+}
+
+.poster a:hover,
+.poster a:focus,
+.poster a:active {
+  box-shadow: 0 -2px 16px #af4, 0 0 8px #fff;
+  border-color: #fff;
+}
+
+.poster-image,
+.poster-title {
   display: block;
 }
 
-.movies-index .movie-title,
-.series-index .series-title {
-  margin-top: 5px;
+.poster-image,
+.poster-title {
+  width: 100%;
+  height: 130px;
+  border-radius: 7px;
 }
 
-.movies-show dt,
-.series-show dt {
+.poster-image {
+  background-size: 100%;
+  background-position: 50% 30%;
+}
+
+.poster-title {
+  background-color: #1a1a1a;
+  box-shadow: inset 0 0 8px #0a0a0a;
+}
+
+.poster-title span {
+  display: block;
+  padding: 8px;
+  font-family: 'Economica', sans-serif;
+  font-weight: bold;
+}
+
+dl.details dt {
   float: left;
 }
 
-.movies-show dd,
-.series-show dd {
+dl.details dd {
   float: left;
   margin-right: 20px;
 }
-
 
 body.files-show {
   height: 100%;

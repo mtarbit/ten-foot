@@ -9,13 +9,12 @@
         <div class="row-fluid">
     <% end %>
 
-    <div class="movie span2">
-        <h4>
-            <%= link_to(movie_path(movie)) do %>
-                <span class="movie-image"><%= image_tag(movie.image_cached || 'series-image-placeholder.png', width: '100%', alt: nil, class: 'img-rounded') %></span>
-                <span class="movie-title"><%= movie.title %></span>
-            <% end %>
-        </h4>
+    <div class="poster span2">
+        <% if movie.image %>
+            <%= link_to('', movie_path(movie), class: 'poster-image', style: "background-image: url(#{movie.image_cached});") %>
+        <% else %>
+            <%= link_to(movie_path(movie), class: 'poster-title') do %><span><%= movie.title %></span><% end %>
+        <% end %>
     </div>
 
     <% if i == max_idx || i % columns == columns - 1 %>

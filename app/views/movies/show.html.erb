@@ -3,7 +3,7 @@
         <h1><%= @movie.title %></h1>
 
         <% if @movie.rating || @movie.runtime || @movie.year %>
-            <dl class="clearfix">
+            <dl class="details clearfix">
                 <% if @movie.rating %>
                     <dt>Rating</dt>
                     <dd><%= @movie.rating %></dd>
