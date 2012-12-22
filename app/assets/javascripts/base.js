@@ -17,8 +17,17 @@ player.init = function(){
   this.dom = this.elem.get(0);
 
   if (this.elem.length) {
+    this.initEvents();
     this.initKeyboard();
   }
+};
+
+player.initEvents = function(){
+  var self = this;
+
+  this.elem.on('ended', function(){
+    self.stop();
+  });
 };
 
 player.initKeyboard = function(){
