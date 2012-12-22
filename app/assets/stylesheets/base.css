@@ -3,9 +3,12 @@ html {
 }
 
 body {
+  font-size: 200%;
+  line-height: 1.4em;
   color: #fff;
   background: #222;
-  zoom: 2;
+  margin: 1em;
+  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -13,17 +16,33 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  margin-bottom: 16px;
+  margin-bottom: 0.4em;
 }
+
+h1, h2, h3 {
+  line-height: 1.6em;
+}
+h4, h5, h6 {
+  line-height: 1.4em;
+}
+
+h1 { font-size: 3.00em; }
+h2 { font-size: 1.96em; }
+h3 { font-size: 1.53em; }
+h4 { font-size: 1.09em; }
+h5 { font-size: 0.87em; }
+h6 { font-size: 0.74em; }
+
+li { line-height: 1.4em; }
 
 a {
   color: #af4;
 }
 
-a:hover, a:focus, a:active {
+a:hover, a:focus, a:active, a.active {
   outline: 0;
   color: #fff;
-  text-shadow: 0 0 10px #4af;
+  text-shadow: 0 0 0.5em #4af;
   text-decoration: none;
 }
 
@@ -38,12 +57,16 @@ a:hover, a:focus, a:active {
 .ac { text-align: center; }
 .ar { text-align: center; }
 
-.home h3 {
-  line-height: 24px;
+.img-rounded {
+  border-radius: 1em;
+}
+
+.home h2 {
+  line-height: 1.3em;
 }
 
 .poster {
-  margin-bottom: 16px;
+  margin-bottom: 1.2em;
 }
 
 .poster a {
@@ -52,8 +75,9 @@ a:hover, a:focus, a:active {
 
 .poster a:hover,
 .poster a:focus,
-.poster a:active {
-  box-shadow: 0 -2px 16px #af4, 0 0 8px #fff;
+.poster a:active,
+.poster a.active {
+  box-shadow: 0 -0.3em 1.5em #af4, 0 0 0.5em #fff;
   border-color: #fff;
 }
 
@@ -65,23 +89,26 @@ a:hover, a:focus, a:active {
 .poster-image,
 .poster-title {
   width: 100%;
-  height: 130px;
-  border-radius: 7px;
+  height: 12.25em;
+  border-radius: 0.6em;
 }
 
 .poster-image {
   background-size: 100%;
-  background-position: 50% 30%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-color: #000;
 }
 
 .poster-title {
   background-color: #1a1a1a;
-  box-shadow: inset 0 0 8px #0a0a0a;
+  box-shadow: inset 0 0 0.5em #0a0a0a;
 }
 
 .poster-title span {
   display: block;
-  padding: 8px;
+  padding: 0.8em;
+  font-size: 1.2em;
   font-family: 'Economica', sans-serif;
   font-weight: bold;
 }
@@ -98,7 +125,6 @@ dl.details dd {
 body.files-show {
   height: 100%;
   overflow: hidden;
-  cursor: none;
   border-top: 0;
   background: #000;
   margin: 0;
@@ -110,7 +136,14 @@ body.files-show {
 }
 
 .files-show video {
+  cursor: none;
   height: 100%;
   width: 100%;
+}
+
+@media screen and (max-width: 1366px) {
+  body {
+    font-size: 140%;
+  }
 }
 
