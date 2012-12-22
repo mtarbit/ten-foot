@@ -10,8 +10,12 @@
     <% end %>
 
     <div class="series span2">
-        <div class="series-image"><%= link_to(image_tag(series.image_cached || 'series-image-placeholder.png', width: '100%', alt: nil, class: 'img-rounded'), series_path(series)) %></div>
-        <div class="series-title"><h4><%= link_to(series.title, series_path(series)) %></h4></div>
+        <h4>
+            <%= link_to(series_path(series)) do %>
+                <span class="series-image"><%= image_tag(series.image_cached || 'series-image-placeholder.png', width: '100%', alt: nil, class: 'img-rounded') %></span>
+                <span class="series-title"><%= series.title %></span>
+            <% end %>
+        </h4>
     </div>
 
     <% if i == max_idx || i % columns == columns - 1 %>

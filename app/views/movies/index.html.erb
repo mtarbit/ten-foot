@@ -10,8 +10,12 @@
     <% end %>
 
     <div class="movie span2">
-        <div class="movie-image"><%= link_to(image_tag(movie.image_cached || 'series-image-placeholder.png', width: '100%', alt: nil, class: 'img-rounded'), movie_path(movie)) %></div>
-        <div class="movie-title"><h4><%= link_to(movie.title, movie_path(movie)) %></h4></div>
+        <h4>
+            <%= link_to(movie_path(movie)) do %>
+                <span class="movie-image"><%= image_tag(movie.image_cached || 'series-image-placeholder.png', width: '100%', alt: nil, class: 'img-rounded') %></span>
+                <span class="movie-title"><%= movie.title %></span>
+            <% end %>
+        </h4>
     </div>
 
     <% if i == max_idx || i % columns == columns - 1 %>

@@ -3,7 +3,24 @@ html {
 }
 
 body {
+  color: #fff;
+  background: #222;
   zoom: 2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Economica', sans-serif;
+}
+
+a {
+  color: #af4;
+}
+
+a:hover, a:focus, a:active {
+  outline: 0;
+  color: #fff;
+  text-shadow: 0 0 10px #4af;
+  text-decoration: none;
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -21,14 +38,22 @@ body {
   line-height: 24px;
 }
 
-.movies-index .movie,
-.series-index .series {
-  margin-top: 16px;
-}
-
 .movies-index .movie-image img,
 .series-index .series-image img {
-  background-color: #999;
+  background-color: #1a1a1a;
+  box-shadow: inset 0 0 5px #0a0a0a;
+}
+
+.movies-index .movie-image,
+.movies-index .movie-title,
+.series-index .series-image,
+.series-index .series-title {
+  display: block;
+}
+
+.movies-index .movie-title,
+.series-index .series-title {
+  margin-top: 5px;
 }
 
 .movies-show dt,
@@ -43,10 +68,11 @@ body {
 }
 
 
-.files-show {
+body.files-show {
   height: 100%;
   overflow: hidden;
   cursor: none;
+  border-top: 0;
   background: #000;
   margin: 0;
   padding: 0;
