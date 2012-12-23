@@ -1,4 +1,6 @@
 class VideoFile < ActiveRecord::Base
+  belongs_to :media, polymorphic: true
+
   attr_accessible :path
 
   before_validation :populate_from_path

@@ -1,7 +1,7 @@
 class Movie < ActiveRecord::Base
   include ImageCacheable
 
-  has_and_belongs_to_many :video_files
+  has_many :video_files, as: :media
 
   validates_presence_of :imdb_id
   validates_presence_of :title

@@ -1,7 +1,7 @@
 class Series < ActiveRecord::Base
   include ImageCacheable
 
-  has_and_belongs_to_many :video_files
+  has_many :video_files, as: :media
 
   validates_presence_of :tvdb_id
   validates_presence_of :title
