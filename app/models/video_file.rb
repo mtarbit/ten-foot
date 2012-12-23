@@ -3,7 +3,7 @@ class VideoFile < ActiveRecord::Base
 
   attr_accessible :path
 
-  before_validation :populate_from_path
+  before_validation :attributes_from_path
 
   validates_presence_of :path
   validates_presence_of :extension
@@ -13,10 +13,11 @@ class VideoFile < ActiveRecord::Base
   EXTENSIONS_RE_STR = '\.(' + EXTENSIONS.join('|') + ')$'
   EXTENSIONS_RE = Regexp.new(EXTENSIONS_RE_STR, Regexp::IGNORECASE)
 
-  scope :movies, where('season IS NULL AND episode IS NULL')
-  scope :series, where('season IS NOT NULL OR episode IS NOT NULL')
+  scope :unmatched, where(media_id: nil)
+  scope :matchable_as_movies, where(season: nil, episode: nil)
+  scope :matchable_as_series, where('season IS NOT NULL OR episode IS NOT NULL')
 
-  def populate_from_path
+  def attributes_from_path
     return unless path
 
     ext = File.extname(path)
@@ -135,5 +136,12 @@ class VideoFile < ActiveRecord::Base
     h[:title] = s
 
     h
+  end
+
+  def self.populate
+    Dir.chdir($settings.video_files_path)
+    Dir.glob('**/*.{' + EXTENSIONS.join(',') + '}').each do |path|
+      self.where(path: path).first_or_create!
+    end
   end
 end
