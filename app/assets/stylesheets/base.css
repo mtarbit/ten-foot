@@ -70,7 +70,7 @@ a:hover, a:focus, a:active, a.active {
 }
 
 .poster a {
-  border: 1px solid #222;
+  border: 2px solid #222;
 }
 
 .poster a:hover,
@@ -89,7 +89,7 @@ a:hover, a:focus, a:active, a.active {
 .poster-image,
 .poster-title {
   width: 100%;
-  height: 12.25em;
+  height: 11.9em;
   border-radius: 0.6em;
 }
 
@@ -101,7 +101,8 @@ a:hover, a:focus, a:active, a.active {
 }
 
 .poster-title {
-  background-color: #1a1a1a;
+  color: #333;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1a1a1a), color-stop(0.7, #0a0a0a));
   box-shadow: inset 0 0 0.5em #0a0a0a;
 }
 
