@@ -36,8 +36,8 @@ private
   def populate_records(klass)
     m = klass.count
     klass.populate
-    n = m - klass.count
-    render text: "Created #{n} #{records.pluralize(n)}"
+    n = klass.count - m
+    render text: "Created #{n} #{"record".pluralize(n)}"
   end
 
 end
