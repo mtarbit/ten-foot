@@ -7,8 +7,10 @@ var KEYS = {
   ,  39: 'rt'
   ,  38: 'up'
   ,  40: 'dn'
+  ,  72: 'h'
   ,  74: 'j'
   ,  75: 'k'
+  ,  76: 'l'
   , 190: '.'
 };
 
@@ -51,15 +53,23 @@ page.initKeyboard = function(){
 
       case 'shift-tab':
       case 'lt':
+      case 'h':
+        // self.prevHorizontal();
+        // break;
       case 'up':
       case 'k':
+        // self.prevVertical();
         self.prev();
         break;
 
       case 'tab':
       case 'rt':
+      case 'l':
+        // self.nextHorizontal();
+        // break;
       case 'dn':
       case 'j':
+        // self.nextVertical();
         self.next();
         break;
 
@@ -83,6 +93,23 @@ page.initKeyboard = function(){
 page.top = function(){
   this.focus(this.minLinkIndex);
 };
+
+page.focusNearest = function(direction, axis){
+  var a = this.links.eq(this.curLinkIndex);
+  for (var i = 0; i < this.links.length; i++) {
+    var b = this.links.eq(i);
+
+    var dx = dir * a.offset().left - b.offset().left;
+    var dy = dir * a.offset().top - b.offset().top;
+
+    console.log(i, dx, dy);
+  }
+};
+
+page.prevHorizontal = function(){ this.focusNearest(-1, 'x'); };
+page.prevVertical   = function(){ this.focusNearest(-1, 'y'); };
+page.nextHorizontal = function(){ this.focusNearest(+1, 'x'); };
+page.nextVertical   = function(){ this.focusNearest(+1, 'y'); };
 
 page.prev = function(){
   this.focus(this.curLinkIndex - 1);
