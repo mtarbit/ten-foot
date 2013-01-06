@@ -123,6 +123,7 @@ dl.details dd {
   margin-right: 20px;
 }
 
+body.feeds-show,
 body.files-show {
   height: 100%;
   overflow: hidden;

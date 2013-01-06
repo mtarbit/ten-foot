@@ -3,7 +3,7 @@
 <% @tweets.each do |tweet| %>
     <% tweet.you_tube_videos.each do |video| %>
         <div class="video media">
-            <div class="video-image pull-left"><%= link_to(image_tag(video.image), '#', class: 'img media-object') %></div>
+            <div class="video-image pull-left"><%= link_to(image_tag(video.image), feeds_show_path(video), class: 'img media-object') %></div>
             <div class="media-body">
                 <div class="tweet media">
                     <div class="tweet-icon pull-left"><%= image_tag(tweet.icon, class: 'media-object img-rounded', size: '48x48') %></div>

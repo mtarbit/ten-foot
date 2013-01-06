@@ -14,6 +14,7 @@ var KEYS = {
   , 190: '.'
 };
 
+// Page - generic keyboard-driven link navigation
 
 var page = {};
 
@@ -44,7 +45,7 @@ page.initKeyboard = function(){
 
     switch (key) {
       case 'esc':
-        history.back();
+        self.back();
         break;
 
       case '.':
@@ -75,7 +76,7 @@ page.initKeyboard = function(){
 
       case 'space':
       case 'enter':
-        self.play();
+        self.activate();
         break;
 
       default:
@@ -90,19 +91,25 @@ page.initKeyboard = function(){
   });
 };
 
+page.back = function(){
+  history.back();
+};
+
 page.top = function(){
   this.focus(this.minLinkIndex);
 };
 
 page.focusNearest = function(direction, axis){
   var a = this.links.eq(this.curLinkIndex);
-  for (var i = 0; i < this.links.length; i++) {
-    var b = this.links.eq(i);
+  if (a.length) {
+    for (var i = 0; i < this.links.length; i++) {
+      var b = this.links.eq(i);
 
-    var dx = dir * a.offset().left - b.offset().left;
-    var dy = dir * a.offset().top - b.offset().top;
+      var dx = dir * a.offset().left - b.offset().left;
+      var dy = dir * a.offset().top - b.offset().top;
 
-    console.log(i, dx, dy);
+      console.log(i, dx, dy);
+    }
   }
 };
 
@@ -127,7 +134,7 @@ page.focus = function(n){
   this.links.removeClass('active');
 
   var link = this.links.eq(n);
-  if (link) {
+  if (link.length) {
     link.addClass('active');
 
     var y1 = link.position().top;
@@ -139,15 +146,117 @@ page.focus = function(n){
   }
 };
 
-page.play = function(){
+page.activate = function(){
   var url = this.links.eq(this.curLinkIndex).attr('href');
   if (url) location.href = url;
 };
 
+// Feeds Player - YouTube chromeless player SWF
 
-var player = {};
+var feedsPlayer = {};
 
-player.init = function(){
+feedsPlayer.CHROMELESS_PLAYER_URL = "http://www.youtube.com/apiplayer?enablejsapi=1&version=3";
+
+feedsPlayer.init = function(){
+  this.domId = 'feed-player';
+  this.containerId = this.domId + '-container';
+  this.container = $('#' + this.containerId);
+
+  if (this.container.length) {
+    this.initCallbacks();
+    this.initDom();
+    this.initKeyboard();
+  }
+};
+
+feedsPlayer.initDom = function(){
+  this.videoId = this.container.data('video-id');
+  var parameters = { allowScriptAccess: 'always' };
+  var attributes = { id: this.domId };
+  swfobject.embedSWF(this.CHROMELESS_PLAYER_URL, this.containerId, '100%', '100%', '8', null, null, parameters, attributes);
+};
+
+feedsPlayer.initCallbacks = function(){
+  var self = this;
+
+  window.onYouTubePlayerReady = function() {
+    self.getDom();
+  }
+
+  window.onYouTubePlayerStateChange = function(state) {
+    if (state == self.api.STATES.ended) self.stop();
+  }
+};
+
+feedsPlayer.getDom = function(){
+  this.dom = $('#' + this.domId);
+  this.dom.get(0).addEventListener('onStateChange', 'onYouTubePlayerStateChange');
+  this.api.init();
+  this.api.load(this.videoId);
+}
+
+feedsPlayer.initKeyboard = function(){
+  var self = this;
+
+  $(document).on('keydown', function(e){
+    var key = KEYS[e.which];
+
+    if (e.altKey || e.ctrlKey || e.metaKey) return true;
+    if (e.shiftKey) key = 'shift-' + key;
+
+    var caught = true;
+
+    switch (key) {
+      case 'space': self.pause(); break;
+
+      default:
+        caught = false;
+        break;
+    }
+
+    if (caught) e.stopImmediatePropagation();
+  });
+}
+
+feedsPlayer.stop = function(){
+  page.back();
+};
+
+feedsPlayer.pause = function(){
+  if (this.api.is('paused')) {
+    this.api.play();
+  } else {
+    this.api.pause();
+  }
+};
+
+// Feeds Player API - YouTube chromeless player API
+// https://developers.google.com/youtube/js_api_reference
+
+var feedsPlayerApi = feedsPlayer.api = {};
+
+feedsPlayerApi.STATES = {
+    'unstarted': -1
+  , 'ended':      0
+  , 'playing':    1
+  , 'paused':     2
+  , 'buffering':  3
+};
+
+feedsPlayerApi.init = function(){ this.dom = feedsPlayer.dom.get(0); };
+feedsPlayerApi.load = function(id){ this.dom.loadVideoById(id); };
+feedsPlayerApi.play = function(){ this.dom.playVideo(); };
+feedsPlayerApi.pause = function(){ this.dom.pauseVideo(); };
+
+feedsPlayerApi.is = function(state){
+  return this.dom.getPlayerState() == this.STATES[state];
+};
+
+// Files Player - HTML5 video element
+
+var filesPlayer = {};
+
+filesPlayer.init = function(){
   this.elem = $('video');
   this.dom = this.elem.get(0);
 
@@ -157,7 +266,7 @@ player.init = function(){
   }
 };
 
-player.initEvents = function(){
+filesPlayer.initEvents = function(){
   var self = this;
 
   this.elem.on('ended', function(){
@@ -165,13 +274,15 @@ player.initEvents = function(){
   });
 };
 
-player.initKeyboard = function(){
+filesPlayer.initKeyboard = function(){
   var self = this;
 
   $(document).on('keydown', function(e){
-    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return true;
-
     var key = KEYS[e.which];
+
+    if (e.altKey || e.ctrlKey || e.metaKey) return true;
+    if (e.shiftKey) key = 'shift-' + key;
+
     var caught = true;
 
     switch (key) {
@@ -190,20 +301,24 @@ player.initKeyboard = function(){
   });
 };
 
-player.showControls = function(){
+filesPlayer.showControls = function(){
   this.elem.attr('controls', 'controls');
 };
 
-player.hideControls = function(){
+filesPlayer.hideControls = function(){
   this.elem.removeAttr('controls');
 };
 
-player.play = function(id){
+filesPlayer.stop = function(){
+  page.back();
+};
+
+filesPlayer.play = function(){
   this.dom.play();
   this.hideControls();
 };
 
-player.pause = function(){
+filesPlayer.pause = function(){
   if (this.dom.paused) {
     this.play();
   } else {
@@ -212,24 +327,25 @@ player.pause = function(){
   }
 };
 
-player.advance = function(){
+filesPlayer.advance = function(){
   this.dom.currentTime += 10;
 };
 
-player.reverse = function(){
+filesPlayer.reverse = function(){
   this.dom.currentTime -= 10;
 };
 
-player.louder = function(){
+filesPlayer.louder = function(){
   this.dom.volume = Math.min(this.dom.volume + 0.1, 1.0);
 };
 
-player.quieter = function(){
+filesPlayer.quieter = function(){
   this.dom.volume = Math.max(this.dom.volume - 0.1, 0.0);
 };
 
 $(function(){
-  player.init();
+  feedsPlayer.init();
+  filesPlayer.init();
   page.init();
 });
 

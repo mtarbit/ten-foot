@@ -3,6 +3,10 @@ class FeedsController < ApplicationController
     @tweets = Tweet.order('date DESC')
   end
 
+  def show
+    @video = YouTubeVideo.find(params[:id])
+  end
+
   def populate_tweets
     m = Tweet.count
     Tweet.populate
