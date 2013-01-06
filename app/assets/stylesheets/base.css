@@ -114,6 +114,44 @@ a:hover, a:focus, a:active, a.active {
   font-weight: bold;
 }
 
+.feed-item {
+  margin-bottom: 1.5em;
+}
+
+.feed-item .video-img {
+  float: left;
+  margin-right: 1em;
+}
+
+.feed-item .video-img a {
+  display: block;
+  border-radius: 0.6em;
+}
+
+.feed-item .video-img img {
+  border-radius: 0.5em;
+}
+
+.feed-item .tweet-icon {
+  float: left;
+  margin-top: 0.2em;
+  margin-right: 0.5em;
+}
+
+.feed-item .tweet-icon img {
+  border-radius: 0.3em;
+}
+
+.feed-item .tweet-date {
+  font-size: 0.7em;
+}
+
+.feed-item .video-desc {
+  font-size: 0.8em;
+  line-height: 1.4em;
+  margin-top: 0.5em;
+}
+
 dl.details dt {
   float: left;
 }
