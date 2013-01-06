@@ -40,10 +40,7 @@ class Tweet < ActiveRecord::Base
       puts "-----------------------------------------"
       results.each do |data|
         record = from_twitter_data(data)
-        s = "#{data.id} @#{data.user.screen_name}: #{data.text[0,30]}..."
-        s << ' exists' unless record.new_record?
-        s << ' videos' if record.you_tube_videos.present?
-        puts s
+        puts "#{record.you_tube_videos.blank? ? '-' : record.you_tube_videos.count} #{data.id} @#{data.user.screen_name}: #{data.text[0,30]}..."
       end
       puts "-----------------------------------------"
 
@@ -64,5 +61,7 @@ class Tweet < ActiveRecord::Base
     record.date = data.created_at
     record.you_tube_videos = videos
     record.save!
+
+    record
   end
 end

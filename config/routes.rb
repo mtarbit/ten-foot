@@ -2,7 +2,7 @@ TenFoot::Application.routes.draw do
   root :to => 'home#index'
 
   match 'feeds', to: 'feeds#index'
-  match 'feeds/show/:id', to: 'feeds#show'
+  match 'feeds/show/:id', to: 'feeds#show', as: :feeds_show
 
   resources :movies, only: [:index, :show]
   resources :series, only: [:index, :show]
