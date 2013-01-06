@@ -1,3 +1,8 @@
 ---
 video_files_path: /mnt/my-external-hdd/videos
 tvdb_api_key: 123456789ABCDEFG
+twitter:
+  consumer_key: 123456789ABCDEFGHIJKLM
+  consumer_secret: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcde
+  oauth_token: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
+  oauth_token_secret: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh

@@ -1,0 +1,24 @@
+<h1>Feeds</h1>
+
+<% @tweets.each do |tweet| %>
+    <% tweet.you_tube_videos.each do |video| %>
+        <div class="video media">
+            <div class="video-image pull-left"><%= link_to(image_tag(video.image), '#', class: 'img media-object') %></div>
+            <div class="media-body">
+                <div class="tweet media">
+                    <div class="tweet-icon pull-left"><%= image_tag(tweet.icon, class: 'media-object img-rounded', size: '48x48') %></div>
+                    <div class="media-body">
+                        <div class="tweet-text"><%= tweet.text %></div>
+                        <div class="tweet-date"><small><%= tweet.date.to_s(:default) %></small></div>
+                        <p>
+                            <small class="muted">
+                                <strong class="video-title"><%= video.title %></strong>
+                                <span class="video-description"><%= truncate(video.description, length: 100) %></span>
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>

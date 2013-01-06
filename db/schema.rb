@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223213243) do
+ActiveRecord::Schema.define(:version => 20130105094313) do
 
   create_table "movies", :force => true do |t|
     t.string   "imdb_id"
@@ -41,6 +41,25 @@ ActiveRecord::Schema.define(:version => 20121223213243) do
   add_index "series", ["title"], :name => "index_series_on_title"
   add_index "series", ["tvdb_id"], :name => "index_series_on_tvdb_id"
 
+  create_table "tweets", :force => true do |t|
+    t.string   "twitter_id"
+    t.string   "user"
+    t.string   "icon"
+    t.string   "text"
+    t.datetime "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "tweets", ["twitter_id"], :name => "index_tweets_on_twitter_id"
+
+  create_table "tweets_you_tube_videos", :id => false, :force => true do |t|
+    t.integer "tweet_id"
+    t.integer "you_tube_video_id"
+  end
+
+  add_index "tweets_you_tube_videos", ["tweet_id", "you_tube_video_id"], :name => "index_tweets_you_tube_videos_on_tweet_id_and_you_tube_video_id"
+
   create_table "video_files", :force => true do |t|
     t.string   "path"
     t.string   "extension"
@@ -56,5 +75,16 @@ ActiveRecord::Schema.define(:version => 20121223213243) do
 
   add_index "video_files", ["media_id"], :name => "index_video_files_on_media_id"
   add_index "video_files", ["media_type"], :name => "index_video_files_on_media_type"
+
+  create_table "you_tube_videos", :force => true do |t|
+    t.string   "youtube_id"
+    t.string   "image"
+    t.string   "title"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "you_tube_videos", ["youtube_id"], :name => "index_you_tube_videos_on_youtube_id"
 
 end
