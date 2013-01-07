@@ -6,7 +6,7 @@
             <div class="video-img"><%= link_to(image_tag(video.image), feeds_show_path(video), class: 'img') %></div>
             <div class="video-txt">
                 <div class="tweet-icon"><%= image_tag(tweet.icon, size: '48x48') %></div>
-                <div class="tweet-text"><%= tweet.text %> <small><%= time_ago_in_words(tweet.date) %> ago</small></div>
+                <div class="tweet-text"><%= tweet.text.html_safe %> <small><%= time_ago_in_words(tweet.date) %> ago</small></div>
                 <div class="video-desc muted"><strong><%= video.title %></strong> <%= truncate(video.description, length: 150) %></div>
             </div>
         </div>
