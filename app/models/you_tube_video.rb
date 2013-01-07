@@ -6,7 +6,7 @@ class YouTubeVideo < ActiveRecord::Base
   validates_presence_of :youtube_id
   validates_uniqueness_of :youtube_id
 
-  URL_RE = %r{^https?://(?:www\.|m\.)?youtube\.com/watch\?v=([\w-]+)}
+  URL_RE = %r{^https?://(?:www\.|m\.)?youtube\.com/watch\?(?:.*&)?v=([\w-]+)}
   SHORT_URL_RE = %r|^https?://youtu\.be/([\w-]+)|
 
   def url
