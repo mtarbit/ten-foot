@@ -28,8 +28,9 @@ page.initLinks = function(){
 
   this.minLinkIndex = 0;
   this.maxLinkIndex = this.links.length - 1;
+  this.refLinkIndex = this.findReferrerLinkIndex();
 
-  this.focus(this.minLinkIndex);
+  this.focus(this.refLinkIndex);
 };
 
 page.initKeyboard = function(){
@@ -92,7 +93,7 @@ page.initKeyboard = function(){
 };
 
 page.back = function(){
-  history.back();
+  location.href = document.referrer;
 };
 
 page.top = function(){
@@ -144,6 +145,20 @@ page.focus = function(n){
 
     $('body').scrollTop(y1 + h1 + buffer - h2);
   }
+};
+
+page.findReferrerLinkIndex = function(){
+  var index = this.minLinkIndex;
+
+  var pathA = document.referrer.replace(location.origin, '');
+  if (pathA) {
+    for (var i = 0; i < this.links.length; i++) {
+      var pathB = this.links.eq(i).attr('href');
+      if (pathA == pathB) { index = i; break; }
+    }
+  }
+
+  return index;
 };
 
 page.activate = function(){
