@@ -171,6 +171,7 @@ body.files-show {
   padding: 0;
 }
 
+.feeds-show .container-fluid,
 .files-show .container-fluid {
   padding: 0;
 }
