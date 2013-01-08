@@ -138,12 +138,13 @@ page.focus = function(n){
   if (link.length) {
     link.addClass('active');
 
-    var y1 = link.position().top;
-    var h1 = link.height();
-    var h2 = $(window).height();
-    var buffer = parseFloat($('body').css('marginBottom'), 10);
+    if (n == 0) {
+      var y = 0;
+    } else {
+      var y = link.position().top + (link.height() / 2) - ($(window).height() / 2);
+    }
 
-    $('body').scrollTop(y1 + h1 + buffer - h2);
+    $('body').scrollTop(y);
   }
 };
 
