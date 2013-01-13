@@ -11,11 +11,16 @@ module ImageCacheable
     abs_path = File.join(Rails.public_path, rel_path)
 
     unless File.exists?(abs_path)
-      open(abs_path, 'wb') do |file|
-        file << open(image).read
+      begin
+        open(abs_path, 'wb') do |file|
+          file << open(image).read
+        end
+      rescue OpenURI::HTTPError
+        return
       end
     end
 
     File.join('/', rel_path)
+
   end
 end
