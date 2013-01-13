@@ -1,0 +1,29 @@
+- Edit /etc/fstab and add external HDD (for permissions purposes)
+
+- Apt install apache2
+- Apt install sqlite3 libsqlite3-dev
+- Apt install libreadline-dev (for rails console)
+- Apt install zlib? (can't recall what needed this)
+
+- Git install rbenv
+- Git install ruby-build
+- Rbenv install 1.9.3-etc
+- Rbenv global/local 1.9.3-etc
+
+- Bundle install
+- Rbenv rehash
+- sudo $(which passenger-install-apache2-module)
+- Apt install modules as instructed
+
+- Copy apache config into /etc/apache2/sites-available (to be added)
+- sudo a2ensite ten-foot
+- sudo apache2ctl graceful
+
+- Copy config/settings.yml.example to config/settings.yml
+- Sign up for TVDB API key
+- Sign up for Twitter API details
+- Edit config/settings.yml and add own settings
+
+- rake db:setup
+- rake db:populate (to be written)
+- whenever --update-crontab

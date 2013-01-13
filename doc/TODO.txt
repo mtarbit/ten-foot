@@ -1,0 +1,64 @@
+TODO
+====
+x Scroll focused link to vertical center of page unless index == 0.
+- Rake task to populate DB (same as existing whenever config)
+- Rake task to fetch cacheable images
+- Cache YouTube images?
+- Resize cached images
+- Directional focus (not just next / prev link)
+- Infinite scroll
+- Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
+- Hide cursor in feed show mode?
+x Use config or settings gem (so private details don't need to be in source)
+- Add video player controls (videojs.com or mediaplayerjs.com ?)
+x Add keyboard bindings for controls
+x Back to previous page when video finishes playing
+x Try dark UI
+x Try conversion of avi to viewable format with ffmpeg
+- Add ability to convert a single file to viewable format
+- Queue conversion of all remaining files to a viewable format
+- Add duration, progress and calculate progress percentage for video files?
+- Add watched flag for video files
+- Add filters / ordering for index pages
+x Add delayed_job or whenever to populate with new videos from time to time.
+- Add ability to correct details by searching and selecting from results.
+- Add ability to correct details by manually entering information.
+x Twitter
+    x Fetch YouTube links from timeline
+    x Player for YouTube source
+
+Bonus points
+------------
+- Clone imdb_party repo, remove Struct definition and send a pull request
+- Clone tvdb_party repo, remove Struct definition and send a pull request
+- Replace httparty_icebox.rb with gem in both and send pull requests
+
+Feature creep
+-------------
+- General
+    - Add IMDb link to movie page
+    - Parse poster images for avg color of top and bottom pixel rows, 
+      then display a gradient behind poster in correct colors to disguise
+      smaller covers?
+    x Use a fancy font for headings (maybe the one cabel's using?)
+    - Show "what's next?" style dialog when video finishes playing
+- Subtitles
+    - Add video player subtitle support
+    - Auto-download from open subtitles
+    - UI for choosing from open subtitles
+- YouTube Subscriptions
+    - Fetch YouTube links from subscriptions API
+    - Player for YouTube source
+- Trailers
+    - Fetch Apple Trailers RSS
+    - Fetch video source from RSS listed pages
+    - Player for video source
+- RSS
+    - Fetch arbitrary RSS feed and parse for YouTube links
+- Second screen support
+    - Phone as remote
+    - Keep phone from sleeping / locking?
+
+
+
+
