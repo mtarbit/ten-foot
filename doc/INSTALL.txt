@@ -1,30 +1,35 @@
-- Edit /etc/fstab and add external HDD (for permissions purposes)
+$ sudo vim /etc/fstab # And add external HDD (for permissions purposes, e.g):
+LABEL="ExternalHDD"   /mnt/ExternalHDD   ntfs-3g     defaults,auto,uid=1000,gid=1000,umask=022   0   0
 
-- Apt install apache2
-- Apt install sqlite3 libsqlite3-dev
-- Apt install libreadline-dev (for rails console)
-- Apt install zlib? (can't recall what needed this)
-- Apt install browser-plugin-vlc
+$ sudo aptitude install apache2
+$ sudo aptitude install sqlite3 libsqlite3-dev
+$ sudo aptitude install libreadline-dev # For rails console
+$ sudo aptitude install zlib? # I don't remember what this was for
+$ sudo aptitude install imagemagick libmagickwand-dev # For rmagick
+$ sudo aptitude install browser-plugin-vlc
 
-- Git install rbenv
-- Git install ruby-build
-- Rbenv install 1.9.3-etc
-- Rbenv global/local 1.9.3-etc
+Follow rbenv install instructions here: https://github.com/sstephenson/rbenv
+Follow ruby-build install instructions here: https://github.com/sstephenson/ruby-build
+$ rbenv install 1.9.3-p327
+$ rbenv local 1.9.3-p327
 
-- Bundle install
-- Rbenv rehash
-- sudo $(which passenger-install-apache2-module)
-- Apt install modules as instructed
+$ bundle install
+$ rbenv rehash
+$ sudo $(which passenger-install-apache2-module)
 
-- Copy apache config into /etc/apache2/sites-available (to be added)
-- sudo a2ensite ten-foot
-- sudo apache2ctl graceful
+Follow instructions in passenger installer (apt modules, etc.)
 
-- Copy config/settings.yml.example to config/settings.yml
-- Sign up for TVDB API key
-- Sign up for Twitter API details
-- Edit config/settings.yml and add own settings
+This is yet to be added:
+$ sudo cp path/to/example-apache-config /etc/apache2/sites-available/ten-foot
+Edit config to match your set-up. Then:
+$ sudo a2ensite ten-foot
+$ sudo apache2ctl graceful
 
-- rake db:setup
-- rake db:populate (to be written)
-- whenever --update-crontab
+$ cp config/settings.yml.example config/settings.yml
+Sign up for TVDB API key
+Sign up for Twitter API details
+Edit config/settings.yml and add own settings
+
+$ rake db:setup
+$ rake db:populate # Yet to be added
+$ whenever --update-crontab
