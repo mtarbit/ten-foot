@@ -9,13 +9,25 @@ class VideoFile < ActiveRecord::Base
   validates_presence_of :extension
   validates_uniqueness_of :path
 
-  EXTENSIONS = %w[avi mpg mp4 m4v mkv ogv wmv]
+  EXTENSIONS     = %w[avi wmv mpg mp4 m4v mkv ogv]
+  EXTENSIONS_VLC = %w[avi wmv]
+
   EXTENSIONS_RE_STR = '\.(' + EXTENSIONS.join('|') + ')$'
   EXTENSIONS_RE = Regexp.new(EXTENSIONS_RE_STR, Regexp::IGNORECASE)
 
   scope :unmatched, where(media_id: nil)
   scope :matchable_as_movies, where(season: nil, episode: nil)
   scope :matchable_as_series, where('season IS NOT NULL OR episode IS NOT NULL')
+
+  def use_vlc?
+    EXTENSIONS_VLC.include?(extension)
+  end
+
+  def url
+    bits = path.split(File::SEPARATOR)
+    bits = bits.map {|b| URI.escape(b) }
+    '/videos/' + bits.join('/')
+  end
 
   def attributes_from_path
     return unless path

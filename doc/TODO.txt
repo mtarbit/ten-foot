@@ -6,11 +6,15 @@ x Scroll focused link to vertical center of page unless index == 0.
 - Cache YouTube images?
 - Resize cached images
 - Directional focus (not just next / prev link)
-- Infinite scroll
 - Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
+- Add controls for HTML5 video
+- Add controls for YouTube player
+- Add controls for VLC plugin:
+    - http://www.videolan.org/doc/play-howto/en/ch04.html
+    - http://wiki.videolan.org/Documentation:WebPlugin
+- Infinite scroll
 - Hide cursor in feed show mode?
 x Use config or settings gem (so private details don't need to be in source)
-- Add video player controls (videojs.com or mediaplayerjs.com ?)
 x Add keyboard bindings for controls
 x Back to previous page when video finishes playing
 x Try dark UI

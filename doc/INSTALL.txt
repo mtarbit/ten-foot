@@ -4,6 +4,7 @@
 - Apt install sqlite3 libsqlite3-dev
 - Apt install libreadline-dev (for rails console)
 - Apt install zlib? (can't recall what needed this)
+- Apt install browser-plugin-vlc
 
 - Git install rbenv
 - Git install ruby-build

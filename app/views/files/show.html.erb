@@ -1,3 +1,13 @@
-<video autoplay>
-    <source src="/videos/<%= @path %>"></source>
-</video>
+<% if @file.use_vlc? %>
+
+    <object type="application/x-vlc-plugin" toolbar="no">
+        <param name="src" value="<%= @file.url %>">
+    </object>
+
+<% else %>
+
+    <video autoplay>
+        <source src="<%= @file.url %>"></source>
+    </video>
+
+<% end %>

@@ -172,6 +172,7 @@ body.files-show {
   padding: 0;
 }
 
+.files-show object,
 .files-show video {
   cursor: none;
   height: 100%;
