@@ -6,7 +6,7 @@
 
 /config/settings.yml
 /doc/notes
-/public/images/cached
+/public/images/cached/*.jpg
 
 # Ignore bundler config
 /.bundle
