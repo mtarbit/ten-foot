@@ -28,9 +28,8 @@ page.initLinks = function(){
 
   this.minLinkIndex = 0;
   this.maxLinkIndex = this.links.length - 1;
-  this.refLinkIndex = this.findReferrerLinkIndex();
 
-  this.focus(this.refLinkIndex);
+  this.focus(this.findActivatedLinkIndex());
 };
 
 page.initKeyboard = function(){
@@ -93,7 +92,7 @@ page.initKeyboard = function(){
 };
 
 page.back = function(){
-  location.href = document.referrer;
+  history.back();
 };
 
 page.top = function(){
@@ -148,10 +147,10 @@ page.focus = function(n){
   }
 };
 
-page.findReferrerLinkIndex = function(){
+page.findActivatedLinkIndex = function(){
   var index = this.minLinkIndex;
 
-  var pathA = document.referrer.replace(location.origin, '');
+  var pathA = history.state && history.state.activatedHref;
   if (pathA) {
     for (var i = 0; i < this.links.length; i++) {
       var pathB = this.links.eq(i).attr('href');
@@ -163,8 +162,11 @@ page.findReferrerLinkIndex = function(){
 };
 
 page.activate = function(){
-  var url = this.links.eq(this.curLinkIndex).attr('href');
-  if (url) location.href = url;
+  var href = this.links.eq(this.curLinkIndex).attr('href');
+  if (href) {
+    history.replaceState({ activatedHref: href });
+    location.href = href;
+  }
 };
 
 // Feeds Player - YouTube chromeless player SWF
