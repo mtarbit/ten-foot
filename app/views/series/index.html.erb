@@ -11,7 +11,7 @@
 
     <div class="poster span2">
         <% if series.image %>
-            <%= link_to('', series_path(series), class: 'poster-image', style: "background-image: url(#{series.image_cached});") %>
+            <%= link_to('', series_path(series), class: 'poster-image', style: "background-image: url(#{series.image_scaled(275)});") %>
         <% else %>
             <%= link_to(series_path(series), class: 'poster-title') do %><span><%= series.title %></span><% end %>
         <% end %>

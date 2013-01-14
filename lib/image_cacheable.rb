@@ -1,18 +1,22 @@
 require 'cgi'
 require 'open-uri'
+require 'RMagick'
 
 module ImageCacheable
+  CACHE_DIR = 'images/cached'
+
+  URL_PATH = File.join('/', CACHE_DIR)
+  ABS_PATH = File.join(Rails.public_path, CACHE_DIR)
+
   def image_cached
     return unless image
 
-    file_name = image.gsub(/[^\w.]+/, '-')
+    file_name = sanitized_filename
+    file_path = File.join(ABS_PATH, file_name)
 
-    rel_path = File.join('images/cached', file_name)
-    abs_path = File.join(Rails.public_path, rel_path)
-
-    unless File.exists?(abs_path)
+    unless File.exists?(file_path)
       begin
-        open(abs_path, 'wb') do |file|
+        open(file_path, 'wb') do |file|
           file << open(image).read
         end
       rescue OpenURI::HTTPError
@@ -20,7 +24,43 @@ module ImageCacheable
       end
     end
 
-    File.join('/', rel_path)
-
+    File.join(URL_PATH, file_name)
   end
+
+  def image_scaled(w = nil, h = nil)
+    return unless image_cached
+    return unless w || h
+
+    src_name = sanitized_filename
+    src_path = File.join(ABS_PATH, src_name)
+
+    dim = ".#{w}x#{h}"
+    ext = File.extname(src_name)
+
+    dst_name = "#{File.basename(src_name, ext)}#{dim}#{ext}"
+    dst_path = File.join(ABS_PATH, dst_name)
+
+    unless File.exists?(dst_path)
+      begin
+        src = Magick::Image.read(src_path).first
+
+        w ||= src.columns * (h.to_f / src.rows)
+        h ||= src.rows * (w.to_f / src.columns)
+
+        dst = src.resize_to_fit(w, h)
+        dst.write(dst_path)
+      rescue Magick::ImageMagickError
+        return
+      end
+    end
+
+    File.join(URL_PATH, dst_name)
+  end
+
+private
+
+  def sanitized_filename
+    image.gsub(/[^\w.]+/, '-')
+  end
+
 end
