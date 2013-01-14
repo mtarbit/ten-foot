@@ -4,9 +4,9 @@ x Scroll focused link to vertical center of page unless index == 0.
 - Rake task to populate DB (same as existing whenever config)
 - Rake task to fetch cacheable images
 - Cache YouTube images?
-- Resize cached images
+x Resize cached images
 - Directional focus (not just next / prev link)
-- Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
+x Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
 - Add controls for HTML5 video
 - Add controls for YouTube player
 - Add controls for VLC plugin:
