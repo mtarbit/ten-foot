@@ -9,7 +9,7 @@ class FilesController < ApplicationController
       Dir.foreach(@abspath) do |filename|
         @filenames << filename unless filename =~ /^\./
       end
-      @filenames
+      @filenames.sort!
     else
       redirect_to file_path(params)
     end
