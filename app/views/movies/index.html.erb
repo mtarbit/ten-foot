@@ -10,7 +10,7 @@
     <% end %>
 
     <div class="poster span2">
-        <% if movie.image %>
+        <% if movie.image_cached %>
             <%= link_to('', movie_path(movie), class: 'poster-image', style: "background-image: url(#{movie.image_scaled(275)});") %>
         <% else %>
             <%= link_to(movie_path(movie), class: 'poster-title') do %><span><%= movie.title %></span><% end %>

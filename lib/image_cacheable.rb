@@ -16,9 +16,10 @@ module ImageCacheable
 
     unless File.exists?(file_path)
       begin
-        open(file_path, 'wb') do |file|
-          file << open(image).read
-        end
+        data = open(image).read
+        file = open(file_path, 'wb')
+        file.write(data)
+        file.close
       rescue OpenURI::HTTPError
         return
       end
