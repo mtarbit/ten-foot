@@ -16,7 +16,7 @@ class FilesController < ApplicationController
   end
 
   def show
-    @file = VideoFile.find_by_path(params[:path])
+    @file = VideoFile.where(path: params[:path]).first_or_create
   end
 
   def populate_video_files
