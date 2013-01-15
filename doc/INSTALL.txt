@@ -11,7 +11,6 @@ $ sudo aptitude install browser-plugin-vlc
 Follow rbenv install instructions here: https://github.com/sstephenson/rbenv
 Follow ruby-build install instructions here: https://github.com/sstephenson/ruby-build
 $ rbenv install 1.9.3-p327
-$ rbenv local 1.9.3-p327
 
 $ bundle install
 $ rbenv rehash
