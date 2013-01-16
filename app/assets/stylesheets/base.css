@@ -1,3 +1,7 @@
+* {
+  cursor: none;
+}
+
 body {
   font-size: 200%;
   line-height: 1.4em;
