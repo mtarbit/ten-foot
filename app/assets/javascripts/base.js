@@ -55,23 +55,21 @@ page.initKeyboard = function(){
       case 'shift-tab':
       case 'lt':
       case 'h':
-        // self.prevHorizontal();
-        // break;
+        self.prevHorizontal();
+        break;
       case 'up':
       case 'k':
-        // self.prevVertical();
-        self.prev();
+        self.prevVertical();
         break;
 
       case 'tab':
       case 'rt':
       case 'l':
-        // self.nextHorizontal();
-        // break;
+        self.nextHorizontal();
+        break;
       case 'dn':
       case 'j':
-        // self.nextVertical();
-        self.next();
+        self.nextVertical();
         break;
 
       case 'space':
@@ -99,24 +97,47 @@ page.top = function(){
   this.focus(this.minLinkIndex);
 };
 
-page.focusNearest = function(direction, axis){
+page.compassDirection = function(x, y) {
+  var r = Math.abs(x / y);
+  if (x >= 0 && y >= 0) return (r < 1) ? 'S':'E';
+  if (x <= 0 && y >= 0) return (r < 1) ? 'S':'W';
+  if (x >= 0 && y <= 0) return (r < 1) ? 'N':'E';
+  if (x <= 0 && y <= 0) return (r < 1) ? 'N':'W';
+};
+
+page.focusNearest = function(direction){
   var a = this.links.eq(this.curLinkIndex);
   if (a.length) {
+    var nearestDelta = null;
+    var nearestIndex = null;
+
     for (var i = 0; i < this.links.length; i++) {
       var b = this.links.eq(i);
 
-      var dx = dir * a.offset().left - b.offset().left;
-      var dy = dir * a.offset().top - b.offset().top;
+      if (i == this.curLinkIndex) continue;
 
-      console.log(i, dx, dy);
+      var x = b.offset().left - a.offset().left;
+      var y = b.offset().top - a.offset().top;
+
+      if (page.compassDirection(x, y) != direction) continue;
+
+      var delta = Math.round(Math.sqrt((x * x) + (y * y)));
+      if (delta < nearestDelta || nearestDelta == null) {
+        nearestDelta = delta;
+        nearestIndex = i;
+      }
+    }
+
+    if (nearestIndex != null) {
+      this.focus(nearestIndex);
     }
   }
 };
 
-page.prevHorizontal = function(){ this.focusNearest(-1, 'x'); };
-page.prevVertical   = function(){ this.focusNearest(-1, 'y'); };
-page.nextHorizontal = function(){ this.focusNearest(+1, 'x'); };
-page.nextVertical   = function(){ this.focusNearest(+1, 'y'); };
+page.prevHorizontal = function(){ this.focusNearest('W'); };
+page.prevVertical   = function(){ this.focusNearest('N'); };
+page.nextHorizontal = function(){ this.focusNearest('E'); };
+page.nextVertical   = function(){ this.focusNearest('S'); };
 
 page.prev = function(){
   this.focus(this.curLinkIndex - 1);
