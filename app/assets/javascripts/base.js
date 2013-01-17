@@ -29,6 +29,11 @@ page.initLinks = function(){
   this.minLinkIndex = 0;
   this.maxLinkIndex = this.links.length - 1;
 
+  this.linkOffsetCache = {};
+  for (var i = 0; i < this.links.length; i++) {
+    this.linkOffsetCache[i] = this.links.eq(i).offset();
+  }
+
   this.focus(this.findActivatedLinkIndex());
 };
 
@@ -106,31 +111,31 @@ page.compassDirection = function(x, y) {
 };
 
 page.focusNearest = function(direction){
-  var a = this.links.eq(this.curLinkIndex);
-  if (a.length) {
-    var nearestDelta = null;
-    var nearestIndex = null;
+  var i = this.curLinkIndex;
+  var iOff = this.linkOffsetCache[i];
 
-    for (var i = 0; i < this.links.length; i++) {
-      var b = this.links.eq(i);
+  var nearestDelta = null;
+  var nearestIndex = null;
 
-      if (i == this.curLinkIndex) continue;
+  for (var j = 0; j < this.links.length; j++) {
+    if (j == i) continue;
 
-      var x = b.offset().left - a.offset().left;
-      var y = b.offset().top - a.offset().top;
+    var jOff = this.linkOffsetCache[j];
 
-      if (page.compassDirection(x, y) != direction) continue;
+    var x = jOff.left - iOff.left;
+    var y = jOff.top - iOff.top;
 
-      var delta = Math.round(Math.sqrt((x * x) + (y * y)));
-      if (delta < nearestDelta || nearestDelta == null) {
-        nearestDelta = delta;
-        nearestIndex = i;
-      }
+    if (page.compassDirection(x, y) != direction) continue;
+
+    var delta = Math.round(Math.sqrt((x * x) + (y * y)));
+    if (delta < nearestDelta || nearestDelta == null) {
+      nearestDelta = delta;
+      nearestIndex = j;
     }
+  }
 
-    if (nearestIndex != null) {
-      this.focus(nearestIndex);
-    }
+  if (nearestIndex != null) {
+    this.focus(nearestIndex);
   }
 };
 
