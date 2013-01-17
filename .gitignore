@@ -6,6 +6,7 @@
 
 /config/settings.yml
 /public/images/cached/*.jpg
+/public/videos
 
 # Ignore bundler config
 /.bundle
