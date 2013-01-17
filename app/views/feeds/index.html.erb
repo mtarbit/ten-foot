@@ -3,7 +3,7 @@
 <% @tweets.each do |tweet| %>
     <% tweet.you_tube_videos.each do |video| %>
         <div class="feed-item clearfix">
-            <div class="video-img"><%= link_to(image_tag(video.image), feeds_show_path(video), class: 'img') %></div>
+            <div class="video-img"><%= link_to(image_tag(video.image_cached, alt: video.title), feeds_show_path(video), class: 'img') %></div>
             <div class="video-txt">
                 <div class="tweet-icon"><%= image_tag(tweet.icon, size: '48x48') %></div>
                 <div class="tweet-text"><%= tweet.text.html_safe %> <small><%= time_ago_in_words(tweet.date) %> ago</small></div>

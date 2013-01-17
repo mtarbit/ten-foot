@@ -1,6 +1,8 @@
 require 'open-uri'
 
 class YouTubeVideo < ActiveRecord::Base
+  include ImageCacheable
+
   has_and_belongs_to_many :tweets
 
   validates_presence_of :youtube_id
