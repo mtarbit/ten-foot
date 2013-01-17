@@ -3,24 +3,26 @@ TODO
 x Scroll focused link to vertical center of page unless index == 0.
 - Rake task to populate DB (same as existing whenever config)
 - Rake task to fetch cacheable images
-- Cache YouTube images?
+x Cache YouTube images
+- Cache Twitter images
 x Resize cached images
-- Directional focus (not just next / prev link)
+x Directional focus (not just next / prev link)
 x Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
 - Add controls for HTML5 video
 - Add controls for YouTube player
 - Add controls for VLC plugin:
     - http://www.videolan.org/doc/play-howto/en/ch04.html
     - http://wiki.videolan.org/Documentation:WebPlugin
+- Add a simple screensaver for all non video player pages
+    - Canvas with grid of squares fading in and out
+    - Mouse or keyboard activity should reset timer
 - Infinite scroll
-- Hide cursor in feed show mode?
+x Hide cursor in feed show mode
 x Use config or settings gem (so private details don't need to be in source)
 x Add keyboard bindings for controls
 x Back to previous page when video finishes playing
 x Try dark UI
 x Try conversion of avi to viewable format with ffmpeg
-- Add ability to convert a single file to viewable format
-- Queue conversion of all remaining files to a viewable format
 - Add duration, progress and calculate progress percentage for video files?
 - Add watched flag for video files
 - Add filters / ordering for index pages
@@ -30,6 +32,11 @@ x Add delayed_job or whenever to populate with new videos from time to time.
 x Twitter
     x Fetch YouTube links from timeline
     x Player for YouTube source
+
+Retired
+-------
+- Add ability to convert a single file to viewable format
+- Queue conversion of all remaining files to a viewable format
 
 Bonus points
 ------------

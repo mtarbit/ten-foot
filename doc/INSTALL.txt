@@ -12,8 +12,12 @@ Follow rbenv install instructions here: https://github.com/sstephenson/rbenv
 Follow ruby-build install instructions here: https://github.com/sstephenson/ruby-build
 $ rbenv install 1.9.3-p327
 
+$ gem install bundler
+$ rbenv rehash
+
 $ bundle install
 $ rbenv rehash
+
 $ sudo $(which passenger-install-apache2-module)
 
 Follow instructions in passenger installer (apt modules, etc.)
