@@ -1,6 +1,5 @@
 require 'cgi'
 require 'open-uri'
-require 'RMagick'
 
 module ImageCacheable
   CACHE_DIR = 'images/cached'
