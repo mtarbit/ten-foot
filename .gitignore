@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 /config/settings.yml
-/public/images/cached/*.jpg
+/public/images/cached/*
 /public/videos
 
 # Ignore bundler config

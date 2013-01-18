@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105094313) do
+ActiveRecord::Schema.define(:version => 20130118221222) do
 
   create_table "movies", :force => true do |t|
     t.string   "imdb_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20130105094313) do
   create_table "tweets", :force => true do |t|
     t.string   "twitter_id"
     t.string   "user"
-    t.string   "icon"
+    t.string   "image"
     t.string   "text"
     t.datetime "date"
     t.datetime "created_at", :null => false

@@ -1,4 +1,6 @@
 class Tweet < ActiveRecord::Base
+  include ImageCacheable
+
   has_and_belongs_to_many :you_tube_videos
 
   validates_presence_of :twitter_id
@@ -56,9 +58,9 @@ class Tweet < ActiveRecord::Base
     return record unless videos.present?
 
     record.user = data.user.screen_name
-    record.icon = data.user.profile_image_url
     record.text = data.text
     record.date = data.created_at
+    record.image = data.user.profile_image_url
     record.you_tube_videos = videos
     record.save!
 
