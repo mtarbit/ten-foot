@@ -124,8 +124,7 @@ a:hover, a:focus, a:active, a.active {
 }
 
 .feed-item .video-img {
-  float: left;
-  margin-right: 1em;
+  margin-bottom: 0.6em;
 }
 
 .feed-item .video-img a {
@@ -145,6 +144,21 @@ a:hover, a:focus, a:active, a.active {
 
 .feed-item .tweet-icon img {
   border-radius: 0.3em;
+}
+
+.feed-item .tweet-user,
+.feed-item .tweet-date,
+.feed-item .tweet-text em {
+  color: #999;
+}
+
+.feed-item .tweet-user {
+  font-size: 1.3em;
+  line-height: 0.8em;
+}
+
+.feed-item .tweet-text em {
+  font-style: normal;
 }
 
 .feed-item .tweet-date {

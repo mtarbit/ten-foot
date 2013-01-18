@@ -1,6 +1,6 @@
 class FeedsController < ApplicationController
   def index
-    @tweets = Tweet.order('date DESC')
+    @videos = YouTubeVideo.includes(:tweets).order('tweets.date DESC')
   end
 
   def show
