@@ -76,7 +76,6 @@ a:hover, a:focus, a:active, a.active {
   border: 2px solid #222;
   border-radius: 0.6em;
   display: block;
-  opacity: 0.3;
 }
 
 .poster a img, a.img img, a .img img {
@@ -89,7 +88,6 @@ a:hover, a:focus, a:active, a.active {
 .poster a.active, a.img.active, a.active .img {
   box-shadow: 0 -0.3em 1.5em #af4, 0 0 0.5em #fff;
   border-color: #fff;
-  opacity: 1;
 }
 
 .poster-image,
@@ -128,16 +126,7 @@ a:hover, a:focus, a:active, a.active {
   color: #fff;
   display: block;
   box-shadow: none !important;
-  opacity: 0.3;
   text-shadow: none;
-}
-
-.feed-item a.active {
-  opacity: 1;
-}
-
-.feed-item a .img {
-  opacity: 1;
 }
 
 .feed-item .video-img,
