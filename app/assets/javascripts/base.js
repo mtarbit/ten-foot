@@ -257,6 +257,8 @@ feedsPlayer.initKeyboard = function(){
   keys.addHandler(function(key){
     switch (key) {
       case 'space': self.pause(); break;
+      case 'rt':    self.api.advance(); break;
+      case 'lt':    self.api.reverse(); break;
       default:      return false; break;
     }
 
@@ -293,6 +295,8 @@ feedsPlayerApi.init = function(){ this.dom = feedsPlayer.dom.get(0); };
 feedsPlayerApi.load = function(id){ this.dom.loadVideoById(id); };
 feedsPlayerApi.play = function(){ this.dom.playVideo(); };
 feedsPlayerApi.pause = function(){ this.dom.pauseVideo(); };
+feedsPlayerApi.advance = function(){ this.dom.seekTo(this.dom.getCurrentTime() + 10); };
+feedsPlayerApi.reverse = function(){ this.dom.seekTo(this.dom.getCurrentTime() - 10); };
 
 feedsPlayerApi.is = function(state){
   return this.dom.getPlayerState() == this.STATES[state];
@@ -300,9 +304,9 @@ feedsPlayerApi.is = function(state){
 
 // Files Player - HTML5 video element
 
-var filesPlayer = {};
+var filesPlayerHtml5 = {};
 
-filesPlayer.init = function(){
+filesPlayerHtml5.init = function(){
   this.elem = $('video');
   this.dom = this.elem.get(0);
 
@@ -312,7 +316,7 @@ filesPlayer.init = function(){
   }
 };
 
-filesPlayer.initEvents = function(){
+filesPlayerHtml5.initEvents = function(){
   var self = this;
 
   this.elem.on('ended', function(){
@@ -320,10 +324,10 @@ filesPlayer.initEvents = function(){
   });
 };
 
-filesPlayer.initKeyboard = function(){
+filesPlayerHtml5.initKeyboard = function(){
   var self = this;
 
-  keys.addHandler(function(){
+  keys.addHandler(function(key){
     switch (key) {
       case 'space': self.pause();   break;
       case 'rt':    self.advance(); break;
@@ -337,24 +341,24 @@ filesPlayer.initKeyboard = function(){
   });
 };
 
-filesPlayer.showControls = function(){
+filesPlayerHtml5.showControls = function(){
   this.elem.attr('controls', 'controls');
 };
 
-filesPlayer.hideControls = function(){
+filesPlayerHtml5.hideControls = function(){
   this.elem.removeAttr('controls');
 };
 
-filesPlayer.stop = function(){
+filesPlayerHtml5.stop = function(){
   page.back();
 };
 
-filesPlayer.play = function(){
+filesPlayerHtml5.play = function(){
   this.dom.play();
   this.hideControls();
 };
 
-filesPlayer.pause = function(){
+filesPlayerHtml5.pause = function(){
   if (this.dom.paused) {
     this.play();
   } else {
@@ -363,25 +367,81 @@ filesPlayer.pause = function(){
   }
 };
 
-filesPlayer.advance = function(){
+filesPlayerHtml5.advance = function(){
   this.dom.currentTime += 10;
 };
 
-filesPlayer.reverse = function(){
+filesPlayerHtml5.reverse = function(){
   this.dom.currentTime -= 10;
 };
 
-filesPlayer.louder = function(){
+filesPlayerHtml5.louder = function(){
   this.dom.volume = Math.min(this.dom.volume + 0.1, 1.0);
 };
 
-filesPlayer.quieter = function(){
+filesPlayerHtml5.quieter = function(){
   this.dom.volume = Math.max(this.dom.volume - 0.1, 0.0);
 };
 
+// Files Player - VLC plugin element
+
+var filesPlayerVlc = {};
+
+filesPlayerVlc.init = function(){
+  this.elem = $('object[type="application/x-vlc-plugin"]');
+  this.dom = this.elem.get(0);
+
+  if (this.elem.length) {
+    this.initEvents();
+    this.initKeyboard();
+  }
+};
+
+filesPlayerVlc.initEvents = function(){
+  var self = this;
+
+  this.elem.on('MediaPlayerEndReached', function(){
+    self.stop();
+  });
+};
+
+filesPlayerVlc.initKeyboard = function(){
+  var self = this;
+
+  keys.addHandler(function(key){
+    switch (key) {
+      case 'space': self.pause();   break;
+      case 'rt':    self.advance(); break;
+      case 'lt':    self.reverse(); break;
+      default:      return false;   break;
+    }
+
+    return true;
+  });
+};
+
+filesPlayerVlc.stop = function(){
+  page.back();
+};
+
+filesPlayerVlc.pause = function(){
+  this.dom.playlist.togglePause();
+};
+
+filesPlayerVlc.advance = function(){
+  this.dom.input.time += 10 * 1000;
+};
+
+filesPlayerVlc.reverse = function(){
+  this.dom.input.time -= 10 * 1000;
+};
+
+// Initialisers
+
 $(function(){
   feedsPlayer.init();
-  filesPlayer.init();
+  filesPlayerHtml5.init();
+  filesPlayerVlc.init();
   page.init();
 });
 
