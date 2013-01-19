@@ -13,9 +13,10 @@ x Back to previous page should re-select previously selected link (based on refe
 - Add controls for VLC plugin:
     - http://www.videolan.org/doc/play-howto/en/ch04.html
     - http://wiki.videolan.org/Documentation:WebPlugin
-- Add a simple screensaver for all non video player pages
+x Add a simple screensaver for all non video player pages
+    - Fade in / out
     - Canvas with grid of squares fading in and out
-    - Mouse or keyboard activity should reset timer
+    x Mouse or keyboard activity should reset timer
 - Infinite scroll
 x Hide cursor in feed show mode
 x Use config or settings gem (so private details don't need to be in source)
