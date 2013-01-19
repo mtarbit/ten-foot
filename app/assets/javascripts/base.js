@@ -1,4 +1,6 @@
-var KEYS = {
+var keys = {};
+
+keys.NAMES = {
       9: 'tab'
   ,  13: 'enter'
   ,  27: 'esc'
@@ -12,6 +14,18 @@ var KEYS = {
   ,  75: 'k'
   ,  76: 'l'
   , 190: '.'
+};
+
+keys.addHandler = function(handler){
+  $(document).on('keydown', function(e){
+    var key = keys.NAMES[e.which];
+
+    if (e.altKey || e.ctrlKey || e.metaKey) return true;
+    if (e.shiftKey) key = 'shift-' + key;
+
+    var caught = handler(key);
+    if (caught) e.stopImmediatePropagation();
+  });
 };
 
 // Page - generic keyboard-driven link navigation
@@ -40,14 +54,7 @@ page.initLinks = function(){
 page.initKeyboard = function(){
   var self = this;
 
-  $(document).on('keydown', function(e){
-    var key = KEYS[e.which];
-
-    if (e.altKey || e.ctrlKey || e.metaKey) return true;
-    if (e.shiftKey) key = 'shift-' + key;
-
-    var caught = true;
-
+  keys.addHandler(function(key){
     switch (key) {
       case 'esc':
         self.back();
@@ -83,14 +90,11 @@ page.initKeyboard = function(){
         break;
 
       default:
-        caught = false;
+        return false;
         break;
     }
 
-    if (caught) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }
+    return true;
   });
 };
 
@@ -250,23 +254,13 @@ feedsPlayer.getDom = function(){
 feedsPlayer.initKeyboard = function(){
   var self = this;
 
-  $(document).on('keydown', function(e){
-    var key = KEYS[e.which];
-
-    if (e.altKey || e.ctrlKey || e.metaKey) return true;
-    if (e.shiftKey) key = 'shift-' + key;
-
-    var caught = true;
-
+  keys.addHandler(function(key){
     switch (key) {
       case 'space': self.pause(); break;
-
-      default:
-        caught = false;
-        break;
+      default:      return false; break;
     }
 
-    if (caught) e.stopImmediatePropagation();
+    return true;
   });
 }
 
@@ -329,27 +323,17 @@ filesPlayer.initEvents = function(){
 filesPlayer.initKeyboard = function(){
   var self = this;
 
-  $(document).on('keydown', function(e){
-    var key = KEYS[e.which];
-
-    if (e.altKey || e.ctrlKey || e.metaKey) return true;
-    if (e.shiftKey) key = 'shift-' + key;
-
-    var caught = true;
-
+  keys.addHandler(function(){
     switch (key) {
       case 'space': self.pause();   break;
       case 'rt':    self.advance(); break;
       case 'lt':    self.reverse(); break;
       case 'up':    self.louder();  break;
       case 'dn':    self.quieter(); break;
-
-      default:
-        caught = false;
-        break;
+      default:      return false;   break;
     }
 
-    if (caught) e.stopImmediatePropagation();
+    return true;
   });
 };
 
