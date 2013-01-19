@@ -72,15 +72,21 @@ a:hover, a:focus, a:active, a.active {
   margin-bottom: 1.2em;
 }
 
-.poster a, a.img {
+.poster a, a.img, a .img {
   border: 2px solid #222;
-  opacity: 0.4;
+  border-radius: 0.6em;
+  display: block;
+  opacity: 0.3;
 }
 
-.poster a:hover,  a.img:hover,
-.poster a:focus,  a.img:focus,
-.poster a:active, a.img:active,
-.poster a.active, a.img.active {
+.poster a img, a.img img, a .img img {
+  border-radius: 0.5em;
+}
+
+.poster a:hover,  a.img:hover, a:hover .img,
+.poster a:focus,  a.img:focus, a:focus .img,
+.poster a:active, a.img:active, a:active .img,
+.poster a.active, a.img.active, a.active .img {
   box-shadow: 0 -0.3em 1.5em #af4, 0 0 0.5em #fff;
   border-color: #fff;
   opacity: 1;
@@ -88,14 +94,8 @@ a:hover, a:focus, a:active, a.active {
 
 .poster-image,
 .poster-title {
-  display: block;
-}
-
-.poster-image,
-.poster-title {
   width: 100%;
   height: 11.9em;
-  border-radius: 0.6em;
 }
 
 .poster-image {
@@ -123,23 +123,41 @@ a:hover, a:focus, a:active, a.active {
   margin-bottom: 1.5em;
 }
 
-.feed-item .video-img {
-  margin-bottom: 0.6em;
-}
-
-.feed-item .video-img a {
+.feed-item a {
+  border: none;
+  color: #fff;
   display: block;
-  border-radius: 0.6em;
+  box-shadow: none !important;
+  opacity: 0.3;
+  text-shadow: none;
 }
 
-.feed-item .video-img img {
-  border-radius: 0.5em;
+.feed-item a.active {
+  opacity: 1;
+}
+
+.feed-item a .img {
+  opacity: 1;
+}
+
+.feed-item .video-img,
+.feed-item .video-txt,
+.feed-item .tweet-text {
+  display: block;
+}
+
+.feed-item .video-img {
+  margin-bottom: 0.8em;
+}
+
+.feed-item .video-txt {
+  padding-left: 58px;
 }
 
 .feed-item .tweet-icon {
-  float: left;
+  position: absolute;
   margin-top: 0.2em;
-  margin-right: 0.5em;
+  margin-left: -58px;
 }
 
 .feed-item .tweet-icon img {
@@ -147,14 +165,19 @@ a:hover, a:focus, a:active, a.active {
 }
 
 .feed-item .tweet-user,
-.feed-item .tweet-date,
 .feed-item .tweet-text em {
   color: #999;
 }
+.feed-item .tweet-date {
+  color: #555;
+}
 
 .feed-item .tweet-user {
+  font-family: 'Economica', sans-serif;
+  font-weight: bold;
   font-size: 1.3em;
-  line-height: 0.8em;
+  line-height: 1.1em;
+  margin-bottom: 0.1em;
 }
 
 .feed-item .tweet-text em {

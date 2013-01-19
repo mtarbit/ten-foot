@@ -2,7 +2,7 @@
 
 <% min_idx = 0 %>
 <% max_idx = @videos.count - 1 %>
-<% columns = 4 %>
+<% columns = 3 %>
 
 <% @videos.each_with_index do |video, i| %>
     <% tweet = video.tweets.first %>
@@ -11,15 +11,17 @@
         <div class="row-fluid">
     <% end %>
 
-    <div class="span3">
+    <div class="span4">
         <div class="feed-item">
-            <div class="video-img"><%= link_to(image_tag(video.image_cached, alt: video.title, style: 'width: 100%'), feeds_show_path(video), class: 'img') %></div>
-            <div class="video-txt">
-                <div class="tweet-icon"><%= image_tag(tweet.image_cached, alt: tweet.user, size: '48x48') %></div>
-                <h3 class="tweet-user"><%= tweet.user %></h3>
-                <div class="tweet-text"><%= minimal_tweet_text(tweet.text) %></div>
-                <div class="tweet-date"><%= time_ago_in_words(tweet.date) %> ago</div>
-            </div>
+            <%= link_to(feeds_show_path(video)) do %>
+                <span class="video-img"><%= image_tag(video.image_cached || '_.gif', alt: video.title, class: 'img', style: 'width: 100%') %></span>
+                <span class="video-txt">
+                    <span class="tweet-icon"><%= image_tag(tweet.image_cached, alt: tweet.user, size: '48x48') %></span>
+                    <span class="tweet-user"><%= tweet.user %></span>
+                    <span class="tweet-date"><%= time_ago_in_words(tweet.date) %> ago</span>
+                    <span class="tweet-text"><%= minimal_tweet_text(tweet.text) %></span>
+                </span>
+            <% end %>
         </div>
     </div>
 
