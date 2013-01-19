@@ -156,17 +156,25 @@ page.focus = function(n){
   if (n < this.minLinkIndex) n = this.minLinkIndex;
   if (n > this.maxLinkIndex) n = this.maxLinkIndex;
 
+  var prev = this.links.eq(this.curLinkIndex);
+  if (prev.length) prev.removeClass('active');
+
   this.curLinkIndex = n;
-  this.links.removeClass('active');
 
   var link = this.links.eq(n);
   if (link.length) {
     link.addClass('active');
 
+    var y1 = link.offset().top;
+    var h1 = link.height() / 2;
+    var h2 = $(window).height() / 2;
+
+    if (prev.length && prev.offset().top == y1) return;
+
     if (n == 0) {
       var y = 0;
     } else {
-      var y = link.position().top + (link.height() / 2) - ($(window).height() / 2);
+      var y = y1 + h1 - h2;
     }
 
     $('body').scrollTop(y);
