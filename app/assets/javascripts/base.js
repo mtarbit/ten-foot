@@ -217,6 +217,8 @@ page.activate = function(){
 
 var saver = {};
 
+saver.TIMER_DELAY = 5 * 60 * 1000;
+
 saver.init = function(){
   if (page.is('feeds-show') || page.is('files-show')) return;
 
@@ -239,7 +241,7 @@ saver.init = function(){
 
 saver.startTimer = function(){
   var self = this;
-  this.timeoutId = setTimeout(function(){ self.start(); }, 5 * 60 * 1000);
+  this.timeoutId = setTimeout(function(){ self.start(); }, self.TIMER_DELAY);
 };
 
 saver.clearTimer = function(){
@@ -281,11 +283,11 @@ saver.draw = function(){
 };
 
 saver.show = function(){
-  this.canvas.show();
+  this.canvas.fadeIn();
 };
 
 saver.hide = function(){
-  this.canvas.hide();
+  this.canvas.fadeOut();
 };
 
 // Feeds Player - YouTube chromeless player SWF
