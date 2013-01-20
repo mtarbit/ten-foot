@@ -225,7 +225,7 @@ saver.init = function(){
   this.canvas = $('<canvas>');
   this.canvas.css({ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, display: 'none' });
 
-  $('body').prepend(this.canvas);
+  $('body').append(this.canvas);
 
   this.dom = this.canvas.get(0);
   this.api = this.dom.getContext('2d');
