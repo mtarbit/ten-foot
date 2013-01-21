@@ -153,7 +153,13 @@ class VideoFile < ActiveRecord::Base
   def self.populate
     Dir.chdir($settings.video_files_path)
     Dir.glob('**/*.{' + EXTENSIONS.join(',') + '}').each do |path|
-      self.where(path: path).first_or_create! unless File.directory?(path)
+      full_path = File.join($settings.video_files_path, path)
+
+      next if File.directory?(full_path)
+
+      record = self.where(path: path).first_or_initialize
+      record.created_at = File.ctime(full_path)
+      record.save!
     end
   end
 end
