@@ -18,11 +18,11 @@ class Series < ActiveRecord::Base
       a_score = 0
       b_score = 0
 
-      a_score += 1 if a['SeriesName'].downcase == title
-      a_score += 1 if a['FirstAired'].split('-')[0] == year
+      a_score += 1 if self.tvdb_title_eq(a['SeriesName'], title)
+      a_score += 1 if self.tvdb_year_eq(a['FirstAired'], year)
 
-      b_score += 1 if b['SeriesName'].downcase == title
-      b_score += 1 if b['FirstAired'].split('-')[0] == year
+      b_score += 1 if self.tvdb_title_eq(b['SeriesName'], title)
+      b_score += 1 if self.tvdb_year_eq(b['FirstAired'], year)
 
       b_score <=> a_score
     end if year
@@ -54,7 +54,28 @@ class Series < ActiveRecord::Base
         result && self.from_tvdb_id(result['id'])
       end
 
-      record.video_files << vf
+      if record
+        record.video_files << vf
+      else
+        puts "No match for: #{vf.title} (#{vf.year})"
+      end
     end
   end
+
+private
+
+  def self.normalized_title(title)
+    title.downcase.gsub(/[^\w\s]+/, '')
+  end
+
+  def self.tvdb_title_eq(a, b)
+    a = self.normalized_title(a)
+    b = self.normalized_title(b)
+    a.include?(b)
+  end
+
+  def self.tvdb_year_eq(a, b)
+    a.split('-')[0] == b
+  end
+
 end
