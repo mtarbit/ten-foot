@@ -79,9 +79,9 @@ a:hover, a:focus, a:active, a.active {
 .home h2 {
   font-size: 2em;
   line-height: 1.3em;
-  background: inherit;
-  -webkit-background-clip: inherit;
-  -webkit-text-fill-color: inherit;
+  background: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
 }
 
 .poster {
