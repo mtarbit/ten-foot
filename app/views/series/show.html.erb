@@ -28,7 +28,7 @@
                 <ul>
             <% end %>
 
-            <li><%= link_to(truncate("Episode #{vf.episode || '?'} - #{vf.path.split('/').last}", length: 45), files_path(vf.path)) %></li>
+            <li><%= link_to(truncate("Episode #{vf.episode || '?'} - #{vf.path.split('/').last}", length: 65), files_path(vf.path)) %></li>
 
             <% if vf.season != next_season || i == max_idx %>
                 </ul>
