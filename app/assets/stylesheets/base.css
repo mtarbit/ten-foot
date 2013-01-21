@@ -2,17 +2,28 @@
   cursor: none;
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
   font-size: 200%;
   line-height: 1.4em;
   color: #fff;
-  background: #222;
+  background: -webkit-radial-gradient(transparent, rgba(0, 0, 0, 0.5)),
+              -webkit-linear-gradient(45deg, #1a1a1a 20%, #242424 20%, #222);
+  background-size: 100% 100%, 0.5em 0.5em;
+  background-attachment: fixed;
   margin: 1em 1em 2em;
   overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Economica', sans-serif;
+  background: -webkit-linear-gradient(#fff 50%, #cea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 h1 {
@@ -45,7 +56,7 @@ a {
 a:hover, a:focus, a:active, a.active {
   outline: 0;
   color: #fff;
-  text-shadow: 0 0 0.5em #4af;
+  text-shadow: 0 0 0.5em #af4;
   text-decoration: none;
 }
 
@@ -65,7 +76,11 @@ a:hover, a:focus, a:active, a.active {
 }
 
 .home h2 {
+  font-size: 2em;
   line-height: 1.3em;
+  background: inherit;
+  -webkit-background-clip: inherit;
+  -webkit-text-fill-color: inherit;
 }
 
 .poster {
@@ -86,8 +101,8 @@ a:hover, a:focus, a:active, a.active {
 .poster a:focus,  a.img:focus, a:focus .img,
 .poster a:active, a.img:active, a:active .img,
 .poster a.active, a.img.active, a.active .img {
-  box-shadow: 0 -0.3em 1.5em #af4, 0 0 0.5em #fff;
   border-color: #fff;
+  box-shadow: 0 -0.3em 1.8em #af4, 0 0 0.5em #fff;
 }
 
 .poster-image,
