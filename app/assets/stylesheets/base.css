@@ -3,11 +3,11 @@
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
-  height: 100%;
+  min-height: 100%;
   font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 200%;
   line-height: 1.4em;
@@ -206,6 +206,25 @@ dl.details dt {
 dl.details dd {
   float: left;
   margin-right: 20px;
+}
+
+.movies-show .poster,
+.series-show .poster {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  box-shadow: 0 0 1em rgba(0,0,0, 1);
+}
+
+.movies-show .poster img,
+.series-show .poster img {
+  /* If I use height: 100% instead of this ridiculous hack then the
+   * image's height is scaled correctly. But if it was scaled up,
+   * rather than down, then its width stays as that of the original
+   * image and the aspect ratio is distorted. */
+  min-height: 100%;
+  max-height: 100%;
 }
 
 body.feeds-show,
