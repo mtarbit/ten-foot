@@ -1,38 +1,95 @@
-$ sudo vim /etc/fstab # And add external HDD (for permissions purposes, e.g):
-LABEL="ExternalHDD"   /mnt/ExternalHDD   ntfs-3g     defaults,auto,uid=1000,gid=1000,umask=022   0   0
+Using an external HDD
+=====================
 
-$ sudo aptitude install apache2
-$ sudo aptitude install sqlite3 libsqlite3-dev
-$ sudo aptitude install libreadline-dev # For rails console
-$ sudo aptitude install zlib? # I don't remember what this was for
-$ sudo aptitude install imagemagick libmagickwand-dev # For rmagick
-$ sudo aptitude install browser-plugin-vlc
+If you're using an external hard drive and it's auto-mounted, you may need
+to explicitly create a custom mount point for it instead to allow you to set
+the necessary permissions so that media can be served from it by Apache.
 
-Follow rbenv install instructions here: https://github.com/sstephenson/rbenv
-Follow ruby-build install instructions here: https://github.com/sstephenson/ruby-build
-$ rbenv install 1.9.3-p327
+    $ sudo vim /etc/fstab
 
-$ gem install bundler
-$ rbenv rehash
+An example fstab entry is as follows:
 
-$ bundle install
-$ rbenv rehash
+    LABEL="ExternalHDD"   /mnt/ExternalHDD   ntfs-3g     defaults,auto,uid=1000,gid=1000,umask=022   0   0
 
-$ sudo $(which passenger-install-apache2-module)
+After adding something like this and restarting, your HDD should appear at 
+the specified path with group & world readable permissions.
 
-Follow instructions in passenger installer (apt modules, etc.)
 
-This is yet to be added:
-$ sudo cp path/to/example-apache-config /etc/apache2/sites-available/ten-foot
-Edit config to match your set-up. Then:
-$ sudo a2ensite ten-foot
-$ sudo apache2ctl graceful
+Installing dependencies
+=======================
 
-$ cp config/settings.yml.example config/settings.yml
-Sign up for TVDB API key
-Sign up for Twitter API details
-Edit config/settings.yml and add own settings
+Some initial dependencies for the software that follows:
 
-$ rake db:setup
-$ rake db:populate # Yet to be added
-$ whenever --update-crontab
+    sudo aptitude install apache2
+    sudo aptitude install sqlite3 libsqlite3-dev
+    sudo aptitude install libreadline-dev
+    sudo aptitude install zlib
+    sudo aptitude install imagemagick libmagickwand-dev
+    sudo aptitude install browser-plugin-vlc
+
+Install rbenv to manage Ruby versions as described here:
+    https://github.com/sstephenson/rbenv
+
+Install ruby-build to install Ruby versions as described here:
+    https://github.com/sstephenson/ruby-build
+
+Install the current version of Ruby:
+
+    $ rbenv install 1.9.3-p327
+
+Install bundler to manage Ruby gem dependencies:
+
+    $ gem install bundler
+    $ rbenv rehash
+
+Install the Ruby gems themselves:
+
+    $ bundle install
+    $ rbenv rehash
+
+Install the Phusion Passenger Apache module to serve Ruby on Rails:
+
+    $ sudo $(which passenger-install-apache2-module)
+
+Follow any aptitude installation instructions in the output from the Passenger installer.
+
+
+Installing the application
+==========================
+
+Fetch a copy of the ten foot source:
+
+    $ mkdir ~/projects; cd !$
+    $ git clone git@github.com:mtarbit/ten-foot.git
+
+Configure the application:
+
+    $ cp config/settings.yml.example config/settings.yml
+
+Sign up for a TVDB API key here:
+    http://thetvdb.com/?tab=apiregister
+
+Sign up for Twitter API details here:
+    https://dev.twitter.com/apps
+
+Edit config/settings.yml and add your settings.
+
+Configure apache:
+
+    $ sudo rake tenfoot:apacheconf > /etc/apache2/sites-available/ten-foot
+    $ sudo a2ensite ten-foot
+    $ sudo apache2ctl graceful
+
+Populate the database:
+
+    $ rake db:setup
+    $ rake tenfoot:populate
+
+Add a scheduled job to check for new data once an hour:
+
+    $ whenever --update-crontab
+
+Go to http://localhost:8080 in your browser.
+
+Enjoy!?
+
