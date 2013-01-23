@@ -7,6 +7,8 @@ class Movie < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :imdb_id
 
+  DEFAULT_IMAGE_SIZE = [275, nil]
+
   def year
     release_date && release_date.split('-').first
   end

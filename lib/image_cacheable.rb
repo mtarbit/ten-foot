@@ -2,10 +2,22 @@ require 'cgi'
 require 'open-uri'
 
 module ImageCacheable
+  extend ActiveSupport::Concern
+
+  included do
+    after_save :cache_and_scale
+  end
+
   CACHE_DIR = 'images/cached'
 
   URL_PATH = File.join('/', CACHE_DIR)
   ABS_PATH = File.join(Rails.public_path, CACHE_DIR)
+
+  def cache_and_scale
+    return unless image_changed?
+    image_cached
+    image_scaled(*DEFAULT_IMAGE_SIZE) if defined?(DEFAULT_IMAGE_SIZE)
+  end
 
   def image_cached
     return unless image

@@ -7,6 +7,8 @@ class Series < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :tvdb_id
 
+  DEFAULT_IMAGE_SIZE = [275, nil]
+
   def self.tvdb
     @@tvdb ||= TvdbParty::Search.new($settings.tvdb_api_key)
   end
