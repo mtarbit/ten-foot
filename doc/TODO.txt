@@ -1,7 +1,13 @@
 TODO
 ====
+- Look into VLC stalling with traffic cone when video ends.
 - Add duration, progress and calculate progress percentage for video files?
+ (For VLC videos, guesstimate progress using runtime and dom.input.time when dom.input.length is unavailable.)
 - Add watched flag for video files
+- Add buttons to movies / series:
+    - "Play all" (or "all unwatched")
+    - "Mark all watched / unwatched"
+    - "Wrong movie / series?"
 - Add filters / ordering for index pages
 - Add ability to correct details by searching and selecting from results.
 - Add ability to correct details by manually entering information.
@@ -10,6 +16,15 @@ TODO
 - Add controls for VLC plugin:
     - http://www.videolan.org/doc/play-howto/en/ch04.html
     - http://wiki.videolan.org/Documentation:WebPlugin
+- Add trailers section.
+    - Screen-scrape Apple trailers page.
+    - Fetch large poster version.
+    - Fetch title (and description?).
+    - Fetch video URL.
+- Add "play all" mode to feeds, trailers.
+- When in "play all" mode, pause between videos:
+    - Show next video info.
+    - Show buttons: "Play", "Skip", "Stop"
 x Scroll focused link to vertical center of page unless index == 0.
 x Rake task to populate DB (same as existing whenever config)
 x Rake task to fetch cacheable images
@@ -61,10 +76,6 @@ Feature creep
 - YouTube Subscriptions
     - Fetch YouTube links from subscriptions API
     - Player for YouTube source
-- Trailers
-    - Fetch Apple Trailers RSS
-    - Fetch video source from RSS listed pages
-    - Player for video source
 - RSS
     - Fetch arbitrary RSS feed and parse for YouTube links
 - Second screen support
