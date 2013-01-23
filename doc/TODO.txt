@@ -1,20 +1,25 @@
 TODO
 ====
-x Scroll focused link to vertical center of page unless index == 0.
-- Rake task to populate DB (same as existing whenever config)
-- Rake task to fetch cacheable images
-x Cache YouTube images
-x Cache Twitter images
-x Resize cached images
-x Directional focus (not just next / prev link)
-x Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
+- Add duration, progress and calculate progress percentage for video files?
+- Add watched flag for video files
+- Add filters / ordering for index pages
+- Add ability to correct details by searching and selecting from results.
+- Add ability to correct details by manually entering information.
 - Add controls for HTML5 video
 - Add controls for YouTube player
 - Add controls for VLC plugin:
     - http://www.videolan.org/doc/play-howto/en/ch04.html
     - http://wiki.videolan.org/Documentation:WebPlugin
+x Scroll focused link to vertical center of page unless index == 0.
+x Rake task to populate DB (same as existing whenever config)
+x Rake task to fetch cacheable images
+x Cache YouTube images
+x Cache Twitter images
+x Resize cached images
+x Directional focus (not just next / prev link)
+x Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
 x Add a simple screensaver for all non video player pages
-    - Fade in / out
+    x Fade in / out
     - Canvas with grid of squares fading in and out
     x Mouse or keyboard activity should reset timer
 - Infinite scroll
@@ -24,12 +29,7 @@ x Add keyboard bindings for controls
 x Back to previous page when video finishes playing
 x Try dark UI
 x Try conversion of avi to viewable format with ffmpeg
-- Add duration, progress and calculate progress percentage for video files?
-- Add watched flag for video files
-- Add filters / ordering for index pages
 x Add delayed_job or whenever to populate with new videos from time to time.
-- Add ability to correct details by searching and selecting from results.
-- Add ability to correct details by manually entering information.
 x Twitter
     x Fetch YouTube links from timeline
     x Player for YouTube source
