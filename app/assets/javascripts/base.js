@@ -391,9 +391,10 @@ var filesPlayerHtml5 = {};
 
 filesPlayerHtml5.init = function(){
   this.elem = $('video');
-  this.dom = this.elem.get(0);
 
   if (this.elem.length) {
+    this.dom = this.elem.get(0);
+
     this.initEvents();
     this.initKeyboard();
   }
@@ -472,9 +473,11 @@ var filesPlayerVlc = {};
 
 filesPlayerVlc.init = function(){
   this.elem = $('object[type="application/x-vlc-plugin"]');
-  this.dom = this.elem.get(0);
 
   if (this.elem.length) {
+    this.dom = this.elem.get(0);
+    this.dom.audio.volume = 50;
+
     this.initEvents();
     this.initKeyboard();
   }
@@ -496,6 +499,8 @@ filesPlayerVlc.initKeyboard = function(){
       case 'space': self.pause();   break;
       case 'rt':    self.advance(); break;
       case 'lt':    self.reverse(); break;
+      case 'up':    self.louder();  break;
+      case 'dn':    self.quieter(); break;
       default:      return false;   break;
     }
 
@@ -517,6 +522,14 @@ filesPlayerVlc.advance = function(){
 
 filesPlayerVlc.reverse = function(){
   this.dom.input.time -= 10 * 1000;
+};
+
+filesPlayerVlc.louder = function(){
+  this.dom.volume = Math.min(this.dom.volume + 10, 200);
+};
+
+filesPlayerVlc.quieter = function(){
+  this.dom.volume = Math.max(this.dom.volume - 10, 0);
 };
 
 // Initialisers
