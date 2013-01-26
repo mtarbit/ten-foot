@@ -13,7 +13,7 @@
 
     <div class="span4">
         <div class="feed-item">
-            <%= link_to(feeds_show_path(video)) do %>
+            <%= link_to(feed_path(video)) do %>
                 <span class="video-img"><%= image_tag(video.image_cached || '_.gif', alt: video.title, class: 'img', style: 'width: 100%') %></span>
                 <span class="video-txt">
                     <span class="tweet-icon"><%= image_tag(tweet.image_cached, alt: tweet.user, size: '48x48') %></span>

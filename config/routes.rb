@@ -1,12 +1,10 @@
 TenFoot::Application.routes.draw do
   root :to => 'home#index'
 
-  match 'feeds', to: 'feeds#index'
-  match 'feeds/show/:id', to: 'feeds#show', as: :feeds_show
+  match 'files/path(/:path)', to: 'files#path', as: :files_path, constraints: {path: /.+/}
 
+  resources :feeds, only: [:index, :show]
   resources :movies, only: [:index, :show]
   resources :series, only: [:index, :show]
-
-  match 'files/show/:path', to: 'files#show', as: :file, constraints: {path: /.+/}
-  match 'files(/:path)', to: 'files#index', as: :files, constraints: {path: /.+/}
+  resources :files, only: [:index, :show]
 end

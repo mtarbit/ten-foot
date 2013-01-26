@@ -8,7 +8,7 @@
         <% icon = 'film' if icon == 'file' && VideoFile::EXTENSIONS.include?(File.extname(filename)[1..-1]) %>
         <li>
             <i class="icon icon-<%= icon %>"></i>
-            <%= link_to filename, files_path(relpath) %>
+            <%= link_to filename, files_path_path(path: relpath) %>
         </li>
     <% end %>
 </ul>
