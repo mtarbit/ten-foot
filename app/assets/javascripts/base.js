@@ -486,9 +486,13 @@ filesPlayerVlc.init = function(){
 filesPlayerVlc.initEvents = function(){
   var self = this;
 
-  this.elem.on('MediaPlayerEndReached', function(){
+  this.dom.addEventListener('MediaPlayerTimeChanged', function(){
+    // console.log(self.dom.input.time);
+  }, false);
+
+  this.dom.addEventListener('MediaPlayerEndReached', function(){
     self.stop();
-  });
+  }, false);
 };
 
 filesPlayerVlc.initKeyboard = function(){
