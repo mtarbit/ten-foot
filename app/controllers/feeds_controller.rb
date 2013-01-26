@@ -6,11 +6,4 @@ class FeedsController < ApplicationController
   def show
     @video = YouTubeVideo.find(params[:id])
   end
-
-  def populate_tweets
-    m = Tweet.count
-    Tweet.populate
-    n = Tweet.count - m
-    render text: "Created #{n} #{"record".pluralize(n)}"
-  end
 end

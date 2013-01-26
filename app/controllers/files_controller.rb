@@ -19,25 +19,4 @@ class FilesController < ApplicationController
     @file = VideoFile.where(path: params[:path]).first_or_create
   end
 
-  def populate_video_files
-    populate_records(VideoFile)
-  end
-
-  def populate_movies
-    populate_records(Movie)
-  end
-
-  def populate_series
-    populate_records(Series)
-  end
-
-private
-
-  def populate_records(klass)
-    m = klass.count
-    klass.populate
-    n = klass.count - m
-    render text: "Created #{n} #{"record".pluralize(n)}"
-  end
-
 end
