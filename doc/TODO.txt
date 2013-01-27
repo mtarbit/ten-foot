@@ -1,9 +1,7 @@
 TODO
 ====
-- Look into VLC stalling with traffic cone when video ends.
-- Add duration, progress and calculate progress percentage for video files?
- (For VLC videos, guesstimate progress using runtime and dom.input.time when dom.input.length is unavailable.)
-- Add watched flag for video files
+- Add watched? method and scope for video files
+- Seek forward when viewing a video with progress if possible (ask for confirmation?)
 - Add buttons to movies / series:
     - "Play all" (or "all unwatched")
     - "Mark all watched / unwatched"
@@ -25,6 +23,8 @@ TODO
 - When in "play all" mode, pause between videos:
     - Show next video info.
     - Show buttons: "Play", "Skip", "Stop"
+x Look into VLC stalling with traffic cone when video ends.
+x Add duration, progress and calculate progress ratio for video files
 x Scroll focused link to vertical center of page unless index == 0.
 x Rake task to populate DB (same as existing whenever config)
 x Rake task to fetch cacheable images
@@ -59,6 +59,8 @@ Bonus points
 - Clone imdb_party repo, remove Struct definition and send a pull request
 - Clone tvdb_party repo, remove Struct definition and send a pull request
 - Replace httparty_icebox.rb with gem in both and send pull requests
+- Raise issue about icebox caching strategy no longer working with latest version of HTTParty? Which repo?
+- Clone vlcdb repo, remove deprecated libvlc function
 
 Feature creep
 -------------
@@ -69,6 +71,9 @@ Feature creep
       smaller covers?
     x Use a fancy font for headings (maybe the one cabel's using?)
     - Show "what's next?" style dialog when video finishes playing
+    - Add support for Vines
+        - Probably in the existing feeds stream.
+        - Also add a "world" stream that's just YouTube and Vine videos from the firehose?
 - Subtitles
     - Add video player subtitle support
     - Auto-download from open subtitles
