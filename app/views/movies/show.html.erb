@@ -26,7 +26,7 @@
         <h2>Files</h2>
         <ul>
             <% @movie.video_files.each do |vf| %>
-                <li><%= link_to(vf.path.split('/').last, files_path(vf)) %></li>
+                <li><%= link_to(vf.path.split('/').last, file_path(vf)) %></li>
             <% end %>
         </ul>
     </div>

@@ -1,7 +1,7 @@
 class FilesController < ApplicationController
 
   def index
-    redirect_to files_path_path
+    redirect_to file_path_path
   end
 
   def path
