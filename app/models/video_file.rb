@@ -19,6 +19,8 @@ class VideoFile < ActiveRecord::Base
   scope :matchable_as_movies, where(season: nil, episode: nil)
   scope :matchable_as_series, where('season IS NOT NULL OR episode IS NOT NULL')
 
+  @@vlc_instance = VLC::LibVLC.libvlc_new(0, nil)
+
   def use_vlc?
     EXTENSIONS_VLC.include?(extension)
   end
@@ -27,6 +29,20 @@ class VideoFile < ActiveRecord::Base
     bits = path.split(File::SEPARATOR)
     bits = bits.map {|b| URI.escape(b) }
     '/videos/' + bits.join('/')
+  end
+
+  def full_path
+    File.join($settings.video_files_path, path)
+  end
+
+  def time=(time)
+    self.progress = time.to_f / duration
+  end
+
+  def duration
+    media = VLC::Media.libvlc_media_new_path(@@vlc_instance, full_path)
+    VLC::Media.libvlc_media_parse(media)
+    VLC::Media.libvlc_media_get_duration(media)
   end
 
   def attributes_from_path

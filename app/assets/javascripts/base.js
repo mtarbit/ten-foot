@@ -389,6 +389,8 @@ feedsPlayerApi.is = function(state){
 
 var filesPlayerHtml5 = {};
 
+filesPlayerHtml5.lastTimeChange = 0;
+
 filesPlayerHtml5.init = function(){
   this.elem = $('video');
 
@@ -403,8 +405,16 @@ filesPlayerHtml5.init = function(){
 filesPlayerHtml5.initEvents = function(){
   var self = this;
 
+  this.elem.on('timeupdate', function(){
+    self.checkProgress();
+  });
+
   this.elem.on('ended', function(){
     self.stop();
+  });
+
+  $(window).unload(function(){
+    self.updateProgress();
   });
 };
 
@@ -423,6 +433,26 @@ filesPlayerHtml5.initKeyboard = function(){
 
     return true;
   });
+};
+
+filesPlayerHtml5.checkProgress = function(){
+  var currTimeChange = this.time();
+  if (currTimeChange > this.lastTimeChange + (15 * 1000)) {
+    this.updateProgress();
+    this.lastTimeChange = currTimeChange;
+  }
+};
+
+filesPlayerHtml5.updateProgress = function(){
+  $.ajax({
+    url: location.pathname + '/progress',
+    type: 'POST',
+    data: { time: this.time(), _method: 'PUT' }
+  });
+};
+
+filesPlayerHtml5.time = function(){
+  return Math.round(this.dom.currentTime * 1000);
 };
 
 filesPlayerHtml5.showControls = function(){
@@ -471,6 +501,8 @@ filesPlayerHtml5.quieter = function(){
 
 var filesPlayerVlc = {};
 
+filesPlayerVlc.lastTimeChange = 0;
+
 filesPlayerVlc.init = function(){
   this.elem = $('object[type="application/x-vlc-plugin"]');
 
@@ -487,12 +519,16 @@ filesPlayerVlc.initEvents = function(){
   var self = this;
 
   this.dom.addEventListener('MediaPlayerTimeChanged', function(){
-    // console.log(self.dom.input.time);
+    self.checkProgress();
   }, false);
 
   this.dom.addEventListener('MediaPlayerEndReached', function(){
     self.stop();
   }, false);
+
+  $(window).unload(function(){
+    self.updateProgress();
+  });
 };
 
 filesPlayerVlc.initKeyboard = function(){
@@ -510,6 +546,26 @@ filesPlayerVlc.initKeyboard = function(){
 
     return true;
   });
+};
+
+filesPlayerVlc.checkProgress = function(){
+  var currTimeChange = this.time();
+  if (currTimeChange > this.lastTimeChange + (15 * 1000)) {
+    this.updateProgress();
+    this.lastTimeChange = currTimeChange;
+  }
+};
+
+filesPlayerVlc.updateProgress = function(){
+  $.ajax({
+    url: location.pathname + '/progress',
+    type: 'POST',
+    data: { time: this.time(), _method: 'PUT' }
+  });
+};
+
+filesPlayerVlc.time = function(){
+  return this.dom.input.time;
 };
 
 filesPlayerVlc.stop = function(){

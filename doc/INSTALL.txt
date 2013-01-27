@@ -25,7 +25,7 @@ Some initial dependencies for the software that follows:
     sudo aptitude install libreadline-dev
     sudo aptitude install zlib
     sudo aptitude install imagemagick libmagickwand-dev
-    sudo aptitude install browser-plugin-vlc
+    sudo aptitude install browser-plugin-vlc libvlc-dev
 
 Install rbenv to manage Ruby versions as described here:
     https://github.com/sstephenson/rbenv

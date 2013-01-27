@@ -29,4 +29,11 @@ class FilesController < ApplicationController
     @file = VideoFile.find(params[:id])
   end
 
+  def progress
+    @file = VideoFile.find(params[:id])
+    @file.time = params[:time]
+    @file.save!
+    render nothing: true
+  end
+
 end

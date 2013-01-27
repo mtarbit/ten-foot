@@ -6,5 +6,8 @@ TenFoot::Application.routes.draw do
   resources :feeds, only: [:index, :show]
   resources :movies, only: [:index, :show]
   resources :series, only: [:index, :show]
-  resources :files, only: [:index, :show]
+
+  resources :files, only: [:index, :show] do
+    put :progress, on: :member
+  end
 end

@@ -13,6 +13,7 @@ gem 'tvdb_party'
 gem 'twitter'
 gem 'whenever', require: false
 gem 'rmagick', require: 'RMagick'
+gem 'vlcrb', git: 'git://github.com/nashby/vlcrb.git'
 
 # Gems used only for assets and not required
 # in production environments by default.
