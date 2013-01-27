@@ -85,6 +85,22 @@ controls.formattedSeconds = function(s){
 
 controls.toggle = function(){
   this.elem.toggle();
+  this.toggleVlcFix();
+};
+
+controls.toggleVlcFix = function(){
+  var playerElem = this.player.elem;
+  var parentElem = playerElem.parent();
+
+  if (this.elem.is(':visible')) {
+    this.elem.css('bottom', 0);
+    playerElem.height(playerElem.height());
+    parentElem.css('overflow', 'hidden');
+    parentElem.height(playerElem.height() - this.elem.height());
+  } else {
+    playerElem.height('100%');
+    parentElem.height('auto');
+  }
 };
 
 controls.update = function(){
