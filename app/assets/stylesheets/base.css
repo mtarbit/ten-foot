@@ -249,6 +249,70 @@ body.files-show {
   width: 100%;
 }
 
+.controls {
+  position: absolute;
+  left: 50%;
+  margin-left: -30%;
+  bottom: 1em;
+  width: 60%;
+  background: rgba(0,0,0, 0.8);
+  border-radius: 0.3em;
+  line-height: 1.5em;
+  vertical-align: middle;
+}
+
+.controls-status,
+.controls-progress-bar,
+.controls-progress-num {
+  float: left;
+  margin-right: 0.7em;
+}
+
+.controls-status {
+  margin-left: 0.8em;
+}
+
+.controls-progress-bar,
+.controls-volume-bar {
+  border: 1px solid rgba(255,255,255, 0.5);
+  width: 55%;
+  height: 0.3em;
+  line-height: 0;
+  margin-top: 0.55em;
+  border-radius: 0.2em;
+}
+
+.controls-progress-bar-inner,
+.controls-volume-bar-inner {
+  width: 0%;
+  height: 0.3em;
+  border-radius: 0.2em;
+  background: rgba(255,255,255, 0.5);
+}
+
+.controls-progress-num {
+  font-size: 0.65em;
+  margin-right: 1em;
+  vertical-align: top;
+}
+
+.controls-progress-divider {
+  margin: 0 0.3em;
+  color: rgba(255,255,255, 0.5);
+}
+
+.controls-volume {
+  float: right;
+  margin-right: 0.7em;
+}
+
+.controls-volume-bar {
+  width: 12%;
+  float: right;
+  margin-right: 0.8em;
+}
+
+
 @media screen and (max-width: 1366px) {
   body {
     font-size: 140%;

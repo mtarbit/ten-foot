@@ -9,9 +9,8 @@ playerHtml5.init = function(){
 
   if (this.elem.length) {
     this.dom = this.elem.get(0);
-
     this.initEvents();
-    this.initKeyboard();
+    return this;
   }
 };
 
@@ -31,25 +30,8 @@ playerHtml5.initEvents = function(){
   });
 };
 
-playerHtml5.initKeyboard = function(){
-  var self = this;
-
-  keys.addHandler(function(key){
-    switch (key) {
-      case 'space': self.pause();   break;
-      case 'rt':    self.advance(); break;
-      case 'lt':    self.reverse(); break;
-      case 'up':    self.louder();  break;
-      case 'dn':    self.quieter(); break;
-      default:      return false;   break;
-    }
-
-    return true;
-  });
-};
-
 playerHtml5.checkProgress = function(){
-  var currTimeChange = this.time();
+  var currTimeChange = this.getTime();
   if (currTimeChange > this.lastTimeChange + (15 * 1000)) {
     this.updateProgress();
     this.lastTimeChange = currTimeChange;
@@ -60,37 +42,19 @@ playerHtml5.updateProgress = function(){
   $.ajax({
     url: location.pathname + '/progress',
     type: 'POST',
-    data: { time: this.time(), _method: 'PUT' }
+    data: { time: this.getTime(), _method: 'PUT' }
   });
-};
-
-playerHtml5.time = function(){
-  return Math.round(this.dom.currentTime * 1000);
-};
-
-playerHtml5.showControls = function(){
-  this.elem.attr('controls', 'controls');
-};
-
-playerHtml5.hideControls = function(){
-  this.elem.removeAttr('controls');
 };
 
 playerHtml5.stop = function(){
   page.back();
 };
 
-playerHtml5.play = function(){
-  this.dom.play();
-  this.hideControls();
-};
-
 playerHtml5.pause = function(){
   if (this.dom.paused) {
-    this.play();
+    this.dom.play();
   } else {
     this.dom.pause();
-    this.showControls();
   }
 };
 
@@ -108,4 +72,16 @@ playerHtml5.louder = function(){
 
 playerHtml5.quieter = function(){
   this.dom.volume = Math.max(this.dom.volume - 0.1, 0.0);
+};
+
+playerHtml5.getTime = function(){
+  return Math.round(this.dom.currentTime * 1000);
+};
+
+playerHtml5.getDuration = function(){
+  return Math.round(this.dom.duration * 1000);
+};
+
+playerHtml5.getVolume = function(){
+  return this.dom.volume;
 };

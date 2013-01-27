@@ -10,9 +10,8 @@ playerVlc.init = function(){
   if (this.elem.length) {
     this.dom = this.elem.get(0);
     this.dom.audio.volume = 50;
-
     this.initEvents();
-    this.initKeyboard();
+    return this;
   }
 };
 
@@ -32,25 +31,8 @@ playerVlc.initEvents = function(){
   });
 };
 
-playerVlc.initKeyboard = function(){
-  var self = this;
-
-  keys.addHandler(function(key){
-    switch (key) {
-      case 'space': self.pause();   break;
-      case 'rt':    self.advance(); break;
-      case 'lt':    self.reverse(); break;
-      case 'up':    self.louder();  break;
-      case 'dn':    self.quieter(); break;
-      default:      return false;   break;
-    }
-
-    return true;
-  });
-};
-
 playerVlc.checkProgress = function(){
-  var currTimeChange = this.time();
+  var currTimeChange = this.getTime();
   if (currTimeChange > this.lastTimeChange + (15 * 1000)) {
     this.updateProgress();
     this.lastTimeChange = currTimeChange;
@@ -61,12 +43,8 @@ playerVlc.updateProgress = function(){
   $.ajax({
     url: location.pathname + '/progress',
     type: 'POST',
-    data: { time: this.time(), _method: 'PUT' }
+    data: { time: this.getTime(), _method: 'PUT' }
   });
-};
-
-playerVlc.time = function(){
-  return this.dom.input.time;
 };
 
 playerVlc.stop = function(){
@@ -86,9 +64,21 @@ playerVlc.reverse = function(){
 };
 
 playerVlc.louder = function(){
-  this.dom.volume = Math.min(this.dom.volume + 10, 200);
+  this.dom.audio.volume = Math.min(this.dom.audio.volume + 10, 200);
 };
 
 playerVlc.quieter = function(){
-  this.dom.volume = Math.max(this.dom.volume - 10, 0);
+  this.dom.audio.volume = Math.max(this.dom.audio.volume - 10, 0);
+};
+
+playerVlc.getTime = function(){
+  return this.dom.input.time;
+};
+
+playerVlc.getDuration = function(){
+  return this.elem.data('duration');
+};
+
+playerVlc.getVolume = function(){
+  return this.dom.audio.volume / 200;
 };

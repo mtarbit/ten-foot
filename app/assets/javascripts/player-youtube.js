@@ -12,7 +12,7 @@ playerYouTube.init = function(){
   if (this.container.length) {
     this.initCallbacks();
     this.initDom();
-    this.initKeyboard();
+    return this;
   }
 };
 
@@ -36,45 +36,15 @@ playerYouTube.initCallbacks = function(){
 };
 
 playerYouTube.getDom = function(){
-  this.dom = $('#' + this.domId);
-  this.dom.get(0).addEventListener('onStateChange', 'onYouTubePlayerStateChange');
-  this.api.init();
-  this.api.load(this.videoId);
-}
+  this.elem = $('#' + this.domId);
 
-playerYouTube.initKeyboard = function(){
-  var self = this;
+  this.dom = this.elem.get(0);
 
-  keys.addHandler(function(key){
-    switch (key) {
-      case 'space': self.pause(); break;
-      case 'rt':    self.api.advance(); break;
-      case 'lt':    self.api.reverse(); break;
-      default:      return false; break;
-    }
-
-    return true;
-  });
-}
-
-playerYouTube.stop = function(){
-  page.back();
+  this.dom.addEventListener('onStateChange', 'onYouTubePlayerStateChange');
+  this.dom.loadVideoById(this.videoId);
 };
 
-playerYouTube.pause = function(){
-  if (this.api.is('paused')) {
-    this.api.play();
-  } else {
-    this.api.pause();
-  }
-};
-
-// Player YouTube API - YouTube chromeless player API
-// https://developers.google.com/youtube/js_api_reference
-
-var playerYouTubeApi = playerYouTube.api = {};
-
-playerYouTubeApi.STATES = {
+playerYouTube.STATES = {
     'unstarted': -1
   , 'ended':      0
   , 'playing':    1
@@ -82,13 +52,47 @@ playerYouTubeApi.STATES = {
   , 'buffering':  3
 };
 
-playerYouTubeApi.init = function(){ this.dom = playerYouTube.dom.get(0); };
-playerYouTubeApi.load = function(id){ this.dom.loadVideoById(id); };
-playerYouTubeApi.play = function(){ this.dom.playVideo(); };
-playerYouTubeApi.pause = function(){ this.dom.pauseVideo(); };
-playerYouTubeApi.advance = function(){ this.dom.seekTo(this.dom.getCurrentTime() + 10); };
-playerYouTubeApi.reverse = function(){ this.dom.seekTo(this.dom.getCurrentTime() - 10); };
-
-playerYouTubeApi.is = function(state){
+playerYouTube.is = function(state){
   return this.dom.getPlayerState() == this.STATES[state];
 };
+
+playerYouTube.stop = function(){
+  page.back();
+};
+
+playerYouTube.pause = function(){
+  if (this.is('paused')) {
+    this.dom.playVideo();
+  } else {
+    this.dom.pauseVideo();
+  }
+};
+
+playerYouTube.advance = function(){
+  this.dom.seekTo(this.dom.getCurrentTime() + 10);
+};
+
+playerYouTube.reverse = function(){
+  this.dom.seekTo(this.dom.getCurrentTime() - 10);
+};
+
+playerYouTube.louder = function(){
+  this.dom.setVolume(Math.min(this.dom.getVolume() + 10, 100));
+};
+
+playerYouTube.quieter = function(){
+  this.dom.setVolume(Math.max(this.dom.getVolume() - 10, 0));
+};
+
+playerYouTube.getTime = function(){
+  return this.dom.getCurrentTime() * 1000;
+};
+
+playerYouTube.getDuration = function(){
+  return this.dom.getDuration() * 1000;
+};
+
+playerYouTube.getVolume = function(){
+  return this.dom.getVolume() / 100;
+};
+
