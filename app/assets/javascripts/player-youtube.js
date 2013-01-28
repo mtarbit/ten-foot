@@ -29,11 +29,11 @@ playerYouTube.initCallbacks = function(){
 
   window.onYouTubePlayerReady = function() {
     self.getDom();
-  }
+  };
 
   window.onYouTubePlayerStateChange = function(state) {
-    if (state == self.api.STATES.ended) self.stop();
-  }
+    if (state == self.STATES.ended) self.stop();
+  };
 };
 
 playerYouTube.getDom = function(){
