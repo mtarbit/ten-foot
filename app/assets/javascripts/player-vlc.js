@@ -2,6 +2,7 @@
 
 var playerVlc = {};
 
+playerVlc.type = 'vlc';
 playerVlc.lastTimeChange = 0;
 
 playerVlc.init = function(){

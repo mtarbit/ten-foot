@@ -2,6 +2,7 @@
 
 var playerYouTube = {};
 
+playerYouTube.type = 'youtube';
 playerYouTube.CHROMELESS_PLAYER_URL = "http://www.youtube.com/apiplayer?enablejsapi=1&version=3";
 
 playerYouTube.init = function(){

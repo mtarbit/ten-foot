@@ -85,7 +85,9 @@ controls.formattedSeconds = function(s){
 
 controls.toggle = function(){
   this.elem.toggle();
-  this.toggleVlcFix();
+  if (this.player.type == 'vlc') {
+    this.toggleVlcFix();
+  }
 };
 
 controls.toggleVlcFix = function(){

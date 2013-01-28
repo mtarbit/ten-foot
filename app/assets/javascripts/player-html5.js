@@ -2,6 +2,7 @@
 
 var playerHtml5 = {};
 
+playerHtml5.type = 'html5';
 playerHtml5.lastTimeChange = 0;
 
 playerHtml5.init = function(){
