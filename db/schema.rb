@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126215332) do
+ActiveRecord::Schema.define(:version => 20130128225219) do
 
   create_table "movies", :force => true do |t|
     t.string   "imdb_id"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(:version => 20130126215332) do
   create_table "video_files", :force => true do |t|
     t.string   "path"
     t.string   "extension"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "title"
     t.integer  "year"
     t.integer  "season"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20130126215332) do
     t.integer  "media_id"
     t.string   "media_type"
     t.decimal  "progress"
+    t.boolean  "unmatchable", :default => false
   end
 
   add_index "video_files", ["media_id"], :name => "index_video_files_on_media_id"

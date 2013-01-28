@@ -5,6 +5,7 @@ namespace :tenfoot do
     VideoFile.populate
     Movie.populate
     Series.populate
+    VideoFile.unmatched.update_all(unmatchable: true)
     Tweet.populate
   end
 
