@@ -166,16 +166,28 @@ class VideoFile < ActiveRecord::Base
     h
   end
 
+  def to_s
+    s = []
+    s << "season: #{season}" if season
+    s << "episode: #{episode}" if episode
+    s << "year: #{year}" if year
+    s = (s.count > 0) ? " (#{s.join(', ')})" : ''
+    "#{title}#{s}"
+  end
+
   def self.populate
     Dir.chdir($settings.video_files_path)
     Dir.glob('**/*.{' + EXTENSIONS.join(',') + '}').each do |path|
       full_path = File.join($settings.video_files_path, path)
-
       next if File.directory?(full_path)
 
       record = self.where(path: path).first_or_initialize
+      next unless record.new_record?
+
       record.created_at = File.ctime(full_path)
       record.save!
+
+      puts "Found new video: #{path}"
     end
   end
 end

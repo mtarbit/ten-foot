@@ -64,8 +64,9 @@ class Movie < ActiveRecord::Base
 
       if record
         record.video_files << vf
+        puts "Matched: #{vf.to_s}"
       else
-        puts "No match for: #{vf.title} (#{vf.year})"
+        puts "No match for: #{vf.to_s}"
       end
     end
   end
