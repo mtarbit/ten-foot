@@ -35,6 +35,10 @@ class VideoFile < ActiveRecord::Base
     File.join($settings.video_files_path, path)
   end
 
+  def time
+    progress && (progress * duration).round
+  end
+
   def time=(time)
     self.progress = time.to_f / duration
   end

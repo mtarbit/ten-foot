@@ -4,6 +4,7 @@ var playerHtml5 = {};
 
 playerHtml5.type = 'html5';
 playerHtml5.lastTimeChange = 0;
+playerHtml5.seekTime;
 
 playerHtml5.init = function(){
   this.elem = $('video');
@@ -11,12 +12,17 @@ playerHtml5.init = function(){
   if (this.elem.length) {
     this.dom = this.elem.get(0);
     this.initEvents();
+    this.resume();
     return this;
   }
 };
 
 playerHtml5.initEvents = function(){
   var self = this;
+
+  this.elem.on('loadedmetadata', function(){
+    if (self.seekTime) self.setTime(self.seekTime);
+  });
 
   this.elem.on('timeupdate', function(){
     self.checkProgress();
@@ -47,6 +53,16 @@ playerHtml5.updateProgress = function(){
   });
 };
 
+playerHtml5.resume = function(){
+  var time = this.elem.data('time');
+  if (time) {
+    this.lastTimeChange = time;
+    this.seekTime = time;
+  }
+
+  this.dom.play();
+};
+
 playerHtml5.stop = function(){
   page.back();
 };
@@ -73,6 +89,10 @@ playerHtml5.louder = function(){
 
 playerHtml5.quieter = function(){
   this.dom.volume = Math.max(this.dom.volume - 0.1, 0.0);
+};
+
+playerHtml5.setTime = function(time){
+  this.dom.currentTime = time / 1000;
 };
 
 playerHtml5.getTime = function(){

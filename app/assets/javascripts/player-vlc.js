@@ -4,20 +4,26 @@ var playerVlc = {};
 
 playerVlc.type = 'vlc';
 playerVlc.lastTimeChange = 0;
+playerVlc.seekTime;
 
 playerVlc.init = function(){
   this.elem = $('object[type="application/x-vlc-plugin"]');
 
   if (this.elem.length) {
     this.dom = this.elem.get(0);
-    this.dom.audio.volume = 50;
     this.initEvents();
+    this.resume();
     return this;
   }
 };
 
 playerVlc.initEvents = function(){
   var self = this;
+
+  this.dom.addEventListener('MediaPlayerOpening', function(){
+    self.dom.audio.volume = 50;
+    if (self.seekTime) self.setTime(self.seekTime);
+  }, false);
 
   this.dom.addEventListener('MediaPlayerTimeChanged', function(){
     self.checkProgress();
@@ -48,6 +54,29 @@ playerVlc.updateProgress = function(){
   });
 };
 
+playerVlc.resume = function(){
+  var src = this.elem.data('src');
+
+  var time = this.elem.data('time');
+  if (time) {
+    this.lastTimeChange = time;
+    this.seekTime = time;
+  }
+
+  // The VLC plugin doesn't seem to be able to parse metadata (e.g. duration)
+  // for an http:// URL, but will for file://. However, Chrome wont let us use
+  // a file:// URL directly because of the same-origin policy.
+
+  // We can route around the problem by using the VLC plugin's API to load the
+  // file instead though. Since that seems to fly under Chrome's radar.
+
+  // With the metadata loaded we're then able to seek, advance and reverse to
+  // our heart's content:
+
+  this.dom.playlist.add(src);
+  this.dom.playlist.play();
+};
+
 playerVlc.stop = function(){
   page.back();
 };
@@ -70,6 +99,10 @@ playerVlc.louder = function(){
 
 playerVlc.quieter = function(){
   this.dom.audio.volume = Math.max(this.dom.audio.volume - 10, 0);
+};
+
+playerVlc.setTime = function(time){
+  this.dom.input.time = time;
 };
 
 playerVlc.getTime = function(){
