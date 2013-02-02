@@ -60,10 +60,10 @@ controls.initKeyboard = function(){
   keys.addHandler(function(key){
     switch (key) {
       case 'space': self.pause();   break;
-      case 'rt':    self.advance(); break;
-      case 'lt':    self.reverse(); break;
+      case 'right': self.advance(); break;
+      case 'left':  self.reverse(); break;
       case 'up':    self.louder();  break;
-      case 'dn':    self.quieter(); break;
+      case 'down':  self.quieter(); break;
       default:      return false;   break;
     }
 

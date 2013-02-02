@@ -30,12 +30,12 @@ page.initKeyboard = function(){
         self.back();
         break;
 
-      case '.':
+      case 'home':
         self.top();
         break;
 
       case 'shift-tab':
-      case 'lt':
+      case 'left':
       case 'h':
         self.prevHorizontal();
         break;
@@ -45,11 +45,11 @@ page.initKeyboard = function(){
         break;
 
       case 'tab':
-      case 'rt':
+      case 'right':
       case 'l':
         self.nextHorizontal();
         break;
-      case 'dn':
+      case 'down':
       case 'j':
         self.nextVertical();
         break;
