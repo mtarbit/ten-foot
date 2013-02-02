@@ -31,7 +31,11 @@ page.initKeyboard = function(){
         break;
 
       case 'home':
-        self.top();
+        self.focusFirst();
+        break;
+
+      case 'end':
+        self.focusLast();
         break;
 
       case 'shift-tab':
@@ -76,16 +80,20 @@ page.back = function(){
   history.back();
 };
 
-page.top = function(){
-  this.focus(this.minLinkIndex);
-};
-
 page.compassDirection = function(x, y) {
   var r = Math.abs(x / y);
   if (x >= 0 && y >= 0) return (r < 1) ? 'S':'E';
   if (x <= 0 && y >= 0) return (r < 1) ? 'S':'W';
   if (x >= 0 && y <= 0) return (r < 1) ? 'N':'E';
   if (x <= 0 && y <= 0) return (r < 1) ? 'N':'W';
+};
+
+page.focusFirst = function(){
+  this.focus(this.minLinkIndex);
+};
+
+page.focusLast = function(){
+  this.focus(this.maxLinkIndex);
 };
 
 page.focusNearest = function(direction){
