@@ -1,25 +1,6 @@
-class Series < ActiveRecord::Base
-  include ImageCacheable
-
-  has_many :video_files, as: :media, dependent: :nullify
-
+class Series < Media
   validates_presence_of :tvdb_id
-  validates_presence_of :title
   validates_uniqueness_of :tvdb_id
-
-  DEFAULT_IMAGE_SIZE = [275, nil]
-
-  scope :recent, joins(:video_files).order('video_files.created_at DESC').group('series.id')
-  scope :watched, lambda {|flag = true| joins(:video_files).where(video_files: {watched: flag}).group('series.id') }
-  scope :unwatched, watched(false)
-
-  def toggle_watched(watched = nil)
-    watched ||= video_files.any?(&:unwatched?)
-    video_files.each do |record|
-      record.watched = watched
-      record.save!
-    end
-  end
 
   def self.tvdb
     @@tvdb ||= TvdbParty::Search.new($settings.tvdb_api_key)
@@ -78,10 +59,6 @@ class Series < ActiveRecord::Base
   end
 
 private
-
-  def self.normalized_title(title)
-    title.downcase.gsub(/[^\w\s]+/, '')
-  end
 
   def self.tvdb_title_eq(a, b)
     a = self.normalized_title(a)

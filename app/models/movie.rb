@@ -1,25 +1,6 @@
-class Movie < ActiveRecord::Base
-  include ImageCacheable
-
-  has_many :video_files, as: :media, dependent: :nullify
-
+class Movie < Media
   validates_presence_of :imdb_id
-  validates_presence_of :title
   validates_uniqueness_of :imdb_id
-
-  DEFAULT_IMAGE_SIZE = [275, nil]
-
-  scope :recent, joins(:video_files).order('video_files.created_at DESC').group('movies.id')
-  scope :watched, lambda {|flag = true| joins(:video_files).where(video_files: {watched: flag}).group('movies.id') }
-  scope :unwatched, watched(false)
-
-  def toggle_watched(watched = nil)
-    watched ||= video_files.any?(&:unwatched?)
-    video_files.each do |record|
-      record.watched = watched
-      record.save!
-    end
-  end
 
   def year
     release_date && release_date.split('-').first
@@ -84,10 +65,6 @@ class Movie < ActiveRecord::Base
   end
 
 private
-
-  def self.normalized_title(title)
-    title.downcase.gsub(/[^\w\s]+/, '')
-  end
 
   def self.imdb_title_eq(a, b)
     a = self.normalized_title(CGI.unescapeHTML(a))
