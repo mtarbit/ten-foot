@@ -29,7 +29,7 @@
                 <ul>
             <% end %>
 
-            <li><%= link_to(truncate("Episode #{vf.episode || '?'} - #{vf.path.split('/').last}", length: 65), file_path(vf)) %></li>
+            <li<%= ' class="watched"'.html_safe if vf.watched? %>><%= link_to(truncate("Episode #{vf.episode || '?'} - #{vf.path.split('/').last}", length: 65), file_path(vf)) %></li>
 
             <% if vf.season != next_season || i == max_idx %>
                 </ul>

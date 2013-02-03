@@ -208,6 +208,23 @@ dl.details dd {
   margin-right: 20px;
 }
 
+.movies-show li.watched,
+.series-show li.watched {
+  list-style-type: circle;
+  color: #666;
+}
+
+.movies-show li.watched a,
+.series-show li.watched a {
+  color: inherit;
+}
+
+.movies-show li.watched a.active,
+.series-show li.watched a.active {
+  color: #ccc;
+  text-shadow: none;
+}
+
 .movies-show .poster,
 .series-show .poster {
   position: fixed;
@@ -227,8 +244,8 @@ dl.details dd {
   max-height: 100%;
 }
 
-body.feeds-show,
-body.files-show {
+.feeds-show,
+.files-show {
   height: 100%;
   overflow: hidden;
   border-top: 0;
