@@ -1,7 +1,7 @@
 <h1>Series</h1>
 
 <% min_idx = 0 %>
-<% max_idx = @series.count - 1 %>
+<% max_idx = @series.to_a.count - 1 %>
 <% columns = 6 %>
 
 <% @series.each_with_index do |series, i| %>

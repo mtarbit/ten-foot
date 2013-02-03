@@ -1,7 +1,7 @@
 <h1>Movies</h1>
 
 <% min_idx = 0 %>
-<% max_idx = @movies.count - 1 %>
+<% max_idx = @movies.to_a.count - 1 %>
 <% columns = 6 %>
 
 <% @movies.each_with_index do |movie, i| %>

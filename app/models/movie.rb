@@ -9,6 +9,8 @@ class Movie < ActiveRecord::Base
 
   DEFAULT_IMAGE_SIZE = [275, nil]
 
+  scope :recent, joins(:video_files).order('video_files.created_at DESC').group('movies.id')
+
   def year
     release_date && release_date.split('-').first
   end

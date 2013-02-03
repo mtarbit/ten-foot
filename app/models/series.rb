@@ -9,6 +9,8 @@ class Series < ActiveRecord::Base
 
   DEFAULT_IMAGE_SIZE = [275, nil]
 
+  scope :recent, joins(:video_files).order('video_files.created_at DESC').group('series.id')
+
   def self.tvdb
     @@tvdb ||= TvdbParty::Search.new($settings.tvdb_api_key)
   end

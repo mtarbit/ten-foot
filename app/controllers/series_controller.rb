@@ -1,6 +1,6 @@
 class SeriesController < ApplicationController
   def index
-    @series = Series.joins(:video_files).group('series.id').order('video_files.created_at DESC').to_a
+    @series = Series.recent
   end
 
   def show
