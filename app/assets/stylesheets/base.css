@@ -13,7 +13,7 @@ body {
   line-height: 1.4em;
   color: #fff;
   background: -webkit-radial-gradient(transparent, rgba(0, 0, 0, 0.5)),
-              -webkit-linear-gradient(45deg, #1a1a1a 20%, #242424 20%, #222);
+              -webkit-linear-gradient(45deg, #1a1a1a 20%, #222 20%, #242424);
   background-size: 100% 100%, 0.5em 0.5em;
   background-attachment: fixed;
   margin: 1em 1em 2em;
@@ -64,6 +64,29 @@ a.active {
   color: #fff;
   text-shadow: 0 0 0.5em #af4;
   text-decoration: none;
+}
+
+a.button {
+  display: block;
+  margin: 0.5em 0;
+  padding: 0.2em;
+  color: #fff;
+  box-shadow: 0 0 0.0em 0.1em #333;
+  background: #1a1a1a;
+  text-align: center;
+  border-radius: 0.2em;
+}
+
+a.button i.icon {
+  font-size: 0.8em;
+  margin-right: 0.5em;
+}
+
+a.button.active {
+  color: #af4;
+  box-shadow: 0 0 0.0em 0.1em #af4,
+              0 0 0.6em 0.0em #af4;
+  text-shadow: none;
 }
 
 [class^="icon-"], [class*=" icon-"] {

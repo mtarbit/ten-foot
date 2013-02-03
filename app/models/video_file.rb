@@ -17,13 +17,17 @@ class VideoFile < ActiveRecord::Base
 
   WATCHED_PROGRESS_RATIO = 0.95
 
+  @@vlc_instance = VLC::LibVLC.libvlc_new(0, nil)
+
   scope :watched, where(watched: true)
   scope :unwatched, where(watched: false)
   scope :unmatched, where(media_id: nil)
   scope :matchable_as_movies, where(unmatchable: false).where(season: nil, episode: nil)
   scope :matchable_as_series, where(unmatchable: false).where('season IS NOT NULL OR episode IS NOT NULL')
 
-  @@vlc_instance = VLC::LibVLC.libvlc_new(0, nil)
+  def self.first_watchable
+    unwatched.first || first
+  end
 
   def toggle_watched(watched = nil)
     self.watched = watched || unwatched?

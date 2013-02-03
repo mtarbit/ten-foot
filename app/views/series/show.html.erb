@@ -12,6 +12,14 @@
 
         <p><%= @series.description %></p>
 
+        <div class="row-fluid">
+            <div class="span4">
+                <%= link_to(file_path(@series.video_files.first_watchable), class: 'button') do %>
+                    <i class="icon icon-play"></i> Play next
+                <% end %>
+            </div>
+        </div>
+
         <% @episodes = @series.video_files.order(:season, :episode, :path) %>
         <% min_idx = 0 %>
         <% max_idx = @episodes.count - 1 %>

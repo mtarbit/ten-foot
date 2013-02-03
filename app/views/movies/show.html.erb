@@ -23,6 +23,14 @@
 
         <p><%= @movie.description %></p>
 
+        <div class="row-fluid">
+            <div class="span4">
+                <%= link_to(file_path(@movie.video_files.first_watchable), class: 'button') do %>
+                    <i class="icon icon-play"></i> Play next
+                <% end %>
+            </div>
+        </div>
+
         <h2>Files</h2>
         <ul>
             <% @movie.video_files.order(:path).each do |vf| %>
