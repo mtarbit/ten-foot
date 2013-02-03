@@ -2,31 +2,7 @@ class Series < Media
   validates_presence_of :tvdb_id
   validates_uniqueness_of :tvdb_id
 
-  def self.tvdb
-    @@tvdb ||= TvdbParty::Search.new($settings.tvdb_api_key)
-  end
-
-  def self.matches(title, year = nil)
-    results = tvdb.search(title)
-
-    results = results.sort do |a,b|
-      a_score = 0
-      b_score = 0
-
-      a_score += 1 if self.tvdb_title_eq(a['SeriesName'], title)
-      a_score += 1 if self.tvdb_year_eq(a['FirstAired'], year)
-
-      b_score += 1 if self.tvdb_title_eq(b['SeriesName'], title)
-      b_score += 1 if self.tvdb_year_eq(b['FirstAired'], year)
-
-      b_score <=> a_score
-    end if year
-
-    results
-  end
-
-  def self.from_tvdb_id(tvdb_id)
-    result = tvdb.get_series_by_id(tvdb_id)
+  def self.from_tvdb_result(result)
     record = self.where(tvdb_id: result.id).first_or_initialize
 
     if record.new_record?
@@ -45,29 +21,16 @@ class Series < Media
       record = self.where('title LIKE ?', vf.title).first
 
       record ||= begin
-        result = self.matches(vf.title, vf.year).first
-        result && self.from_tvdb_id(result['id'])
+        result = TvdbService.search(vf.title, vf.year).first
+        result && self.from_tvdb_result(TvdbService.fetch(result['id']))
       end
 
       if record
         record.video_files << vf
-        puts "Matched: #{vf.to_s}"
+        puts "Matched: #{vf}"
       else
-        puts "No match for: #{vf.to_s}"
+        puts "No match for: #{vf}"
       end
     end
   end
-
-private
-
-  def self.tvdb_title_eq(a, b)
-    a = self.normalized_title(a)
-    b = self.normalized_title(b)
-    a.include?(b)
-  end
-
-  def self.tvdb_year_eq(a, b)
-    a.split('-')[0] == b
-  end
-
 end

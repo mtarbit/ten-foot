@@ -37,10 +37,4 @@ class Media < ActiveRecord::Base
     video_files.unwatched.exists?
   end
 
-protected
-
-  def self.normalized_title(title)
-    title.downcase.gsub(/[^\w\s]+/, '')
-  end
-
 end
