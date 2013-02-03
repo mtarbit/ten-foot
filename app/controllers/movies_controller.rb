@@ -10,6 +10,10 @@ class MoviesController < ApplicationController
   def watched
     @movie = Movie.find(params[:id])
     @movie.toggle_watched(params[:watched])
-    render nothing: true
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js   { render nothing: true }
+    end
   end
 end

@@ -6,15 +6,15 @@ TenFoot::Application.routes.draw do
   resources :feeds, only: [:index, :show]
 
   resources :movies, only: [:index, :show] do
-    put :watched, on: :member
+    match :watched, on: :member
   end
 
   resources :series, only: [:index, :show] do
-    put :watched, on: :member
+    match :watched, on: :member
   end
 
   resources :files, only: [:index, :show] do
-    put :progress, on: :member
-    put :watched, on: :member
+    match :progress, on: :member
+    match :watched, on: :member
   end
 end

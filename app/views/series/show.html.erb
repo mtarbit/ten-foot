@@ -18,6 +18,15 @@
                     <i class="icon icon-play"></i> Play next
                 <% end %>
             </div>
+            <div class="span4">
+                <%= link_to(watched_series_path(@series), class: 'button') do %>
+                    <% if @series.watched? %>
+                        <i class="icon icon-eye-close"></i> Mark unwatched
+                    <% else %>
+                        <i class="icon icon-eye-open"></i> Mark watched
+                    <% end %>
+                <% end %>
+            </div>
         </div>
 
         <% @episodes = @series.video_files.order(:season, :episode, :path) %>
