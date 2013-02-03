@@ -10,6 +10,8 @@ class Series < ActiveRecord::Base
   DEFAULT_IMAGE_SIZE = [275, nil]
 
   scope :recent, joins(:video_files).order('video_files.created_at DESC').group('series.id')
+  scope :watched, lambda {|flag = true| joins(:video_files).where(video_files: {watched: flag}).group('series.id') }
+  scope :unwatched, watched(false)
 
   def self.tvdb
     @@tvdb ||= TvdbParty::Search.new($settings.tvdb_api_key)

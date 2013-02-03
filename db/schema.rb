@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130128225219) do
+ActiveRecord::Schema.define(:version => 20130203094226) do
 
   create_table "movies", :force => true do |t|
     t.string   "imdb_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20130128225219) do
     t.string   "media_type"
     t.decimal  "progress"
     t.boolean  "unmatchable", :default => false
+    t.boolean  "watched",     :default => false
   end
 
   add_index "video_files", ["media_id"], :name => "index_video_files_on_media_id"

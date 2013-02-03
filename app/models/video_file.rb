@@ -15,6 +15,10 @@ class VideoFile < ActiveRecord::Base
   EXTENSIONS_RE_STR = '\.(' + EXTENSIONS.join('|') + ')$'
   EXTENSIONS_RE = Regexp.new(EXTENSIONS_RE_STR, Regexp::IGNORECASE)
 
+  WATCHED_PROGRESS_RATIO = 0.95
+
+  scope :watched, where(watched: true)
+  scope :unwatched, where(watched: false)
   scope :unmatched, where(media_id: nil)
   scope :matchable_as_movies, where(unmatchable: false).where(season: nil, episode: nil)
   scope :matchable_as_series, where(unmatchable: false).where('season IS NOT NULL OR episode IS NOT NULL')
@@ -41,6 +45,9 @@ class VideoFile < ActiveRecord::Base
 
   def time=(time)
     self.progress = time.to_f / duration
+    if self.progress > WATCHED_PROGRESS_RATIO
+      self.watched = true
+    end
   end
 
   def duration

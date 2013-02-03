@@ -1,6 +1,6 @@
 class SeriesController < ApplicationController
   def index
-    @series = Series.recent
+    @series = Series.recent.unwatched
   end
 
   def show

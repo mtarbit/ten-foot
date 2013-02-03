@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.recent
+    @movies = Movie.recent.unwatched
   end
 
   def show
