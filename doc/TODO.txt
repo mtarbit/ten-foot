@@ -1,10 +1,11 @@
 TODO
 ====
-- Add watched? method and scope for video files
-- Seek forward when viewing a video with progress if possible (ask for confirmation?)
-- Add buttons to movies / series:
-    - "Play all" (or "all unwatched")
-    - "Mark all watched / unwatched"
+x Add watched? method and scope for video files
+x Seek forward when viewing a video with progress if possible
+- Ask for confirmation before resuming a previously watched video.
+x Add buttons to movies / series:
+    x "Play all" (or "all unwatched")
+    x "Mark all watched / unwatched"
     - "Wrong movie / series?"
 - Add filters / ordering for index pages
 - Add ability to correct details by searching and selecting from results.
