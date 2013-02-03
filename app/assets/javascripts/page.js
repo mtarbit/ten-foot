@@ -63,6 +63,10 @@ page.initKeyboard = function(){
         self.activate();
         break;
 
+      case 'w':
+        self.toggleWatched();
+        break;
+
       default:
         return false;
         break;
@@ -186,5 +190,17 @@ page.activate = function(){
   if (href) {
     history.replaceState({ activatedHref: href });
     location.href = href;
+  }
+};
+
+page.toggleWatched = function(){
+  var href = this.links.eq(this.curLinkIndex).attr('href');
+  var hrefRE = /^\/(movies|series|files)\/\d+$/;
+  if (hrefRE.test(href)) {
+    $.ajax({
+      url: href + '/watched',
+      type: 'POST',
+      data: { _method: 'PUT' }
+    });
   }
 };

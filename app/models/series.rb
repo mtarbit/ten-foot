@@ -13,6 +13,14 @@ class Series < ActiveRecord::Base
   scope :watched, lambda {|flag = true| joins(:video_files).where(video_files: {watched: flag}).group('series.id') }
   scope :unwatched, watched(false)
 
+  def toggle_watched(watched = nil)
+    watched ||= video_files.any?(&:unwatched?)
+    video_files.each do |record|
+      record.watched = watched
+      record.save!
+    end
+  end
+
   def self.tvdb
     @@tvdb ||= TvdbParty::Search.new($settings.tvdb_api_key)
   end

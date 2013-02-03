@@ -25,6 +25,15 @@ class VideoFile < ActiveRecord::Base
 
   @@vlc_instance = VLC::LibVLC.libvlc_new(0, nil)
 
+  def toggle_watched(watched = nil)
+    self.watched = watched || unwatched?
+    save!
+  end
+
+  def unwatched?
+    !watched?
+  end
+
   def use_vlc?
     EXTENSIONS_VLC.include?(extension)
   end

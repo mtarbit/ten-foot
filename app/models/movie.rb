@@ -13,6 +13,14 @@ class Movie < ActiveRecord::Base
   scope :watched, lambda {|flag = true| joins(:video_files).where(video_files: {watched: flag}).group('movies.id') }
   scope :unwatched, watched(false)
 
+  def toggle_watched(watched = nil)
+    watched ||= video_files.any?(&:unwatched?)
+    video_files.each do |record|
+      record.watched = watched
+      record.save!
+    end
+  end
+
   def year
     release_date && release_date.split('-').first
   end

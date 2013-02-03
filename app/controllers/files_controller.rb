@@ -36,4 +36,10 @@ class FilesController < ApplicationController
     render nothing: true
   end
 
+  def watched
+    @file = VideoFile.find(params[:id])
+    @file.toggle_watched(params[:watched])
+    render nothing: true
+  end
+
 end
