@@ -60,6 +60,9 @@ keys.name = function(e){
 keys.addHandler = function(handler){
   $(document).keydown(function(e){
     var caught = handler(keys.name(e));
-    if (caught) e.stopImmediatePropagation();
+    if (caught) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
   });
 };

@@ -2,7 +2,7 @@
 
 var saver = {};
 
-saver.TIMER_DELAY = 5 * 60 * 1000;
+saver.TIMER_DELAY = 2 * 60 * 1000;
 
 saver.init = function(){
   if (page.is('feeds-show') || page.is('files-show')) return;

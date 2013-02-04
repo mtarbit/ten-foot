@@ -89,6 +89,42 @@ a.button.active {
   text-shadow: none;
 }
 
+label, input, button, select, textarea {
+  font-size: inherit;
+  line-height: 1em;
+  -webkit-transition: none !important;
+}
+
+input[type="text"] {
+  color: #222;
+  font-size: 0.8em;
+  line-height: 1em;
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  display: block;
+  background: #fff;
+  height: 0.7em;
+  width: 0.7em;
+  border-radius: 0.4em;
+  margin-right: 0.5em;
+}
+
+input[type="radio"]:checked {
+  background: -webkit-radial-gradient(#000 30%, #fff 40%);
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="radio"]:focus {
+  outline: 0;
+  border-color: transparent;
+  box-shadow: 0 0 0.0em 0.2em #222,
+              0 0 0.0em 0.3em #af4,
+              0 0 1.0em 0.3em #af4;
+}
+
 [class^="icon-"], [class*=" icon-"] {
   width: inherit;
   height: inherit;
@@ -291,7 +327,15 @@ dl.details dd {
   width: 100%;
 }
 
-.controls {
+.files-search .control-label {
+  width: 3em;
+}
+
+.files-search .form-horizontal .controls {
+  margin-left: 4em;
+}
+
+.player-controls {
   position: absolute;
   left: 50%;
   margin-left: -30%;
@@ -303,19 +347,19 @@ dl.details dd {
   vertical-align: middle;
 }
 
-.controls-status,
-.controls-progress-bar,
-.controls-progress-num {
+.player-controls-status,
+.player-controls-progress-bar,
+.player-controls-progress-num {
   float: left;
   margin-right: 0.7em;
 }
 
-.controls-status {
+.player-controls-status {
   margin-left: 0.8em;
 }
 
-.controls-progress-bar,
-.controls-volume-bar {
+.player-controls-progress-bar,
+.player-controls-volume-bar {
   border: 1px solid rgba(255,255,255, 0.5);
   width: 55%;
   height: 0.3em;
@@ -324,31 +368,31 @@ dl.details dd {
   border-radius: 0.2em;
 }
 
-.controls-progress-bar-inner,
-.controls-volume-bar-inner {
+.player-controls-progress-bar-inner,
+.player-controls-volume-bar-inner {
   width: 0%;
   height: 0.3em;
   border-radius: 0.2em;
   background: rgba(255,255,255, 0.5);
 }
 
-.controls-progress-num {
+.player-controls-progress-num {
   font-size: 0.65em;
   margin-right: 1em;
   vertical-align: top;
 }
 
-.controls-progress-divider {
+.player-controls-progress-divider {
   margin: 0 0.3em;
   color: rgba(255,255,255, 0.5);
 }
 
-.controls-volume {
+.player-controls-volume {
   float: right;
   margin-right: 0.7em;
 }
 
-.controls-volume-bar {
+.player-controls-volume-bar {
   width: 12%;
   float: right;
   margin-right: 0.8em;

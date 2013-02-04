@@ -1,79 +1,113 @@
-// Page - generic keyboard-driven link navigation
+// Page - generic keyboard-driven page navigation
 
 var page = {};
 
 page.init = function(){
+  this.initElems();
   this.initLinks();
   this.initKeyboard();
 };
 
-page.initLinks = function(){
-  this.links = $('a');
+page.initElems = function(){
+  this.elems = $('a, :input:visible');
 
-  this.minLinkIndex = 0;
-  this.maxLinkIndex = this.links.length - 1;
+  this.minElemIndex = 0;
+  this.maxElemIndex = this.elems.length - 1;
 
-  this.linkOffsetCache = {};
-  for (var i = 0; i < this.links.length; i++) {
-    this.linkOffsetCache[i] = this.links.eq(i).offset();
+  this.elemOffsetCache = {};
+  for (var i = 0; i < this.elems.length; i++) {
+    this.elemOffsetCache[i] = this.elems.eq(i).offset();
   }
 
   this.focus(this.findActivatedLinkIndex());
 };
 
+page.initLinks = function(){
+  $('a').click(function(e){
+    var href = $(this).attr('href');
+    if (href) {
+      history.replaceState({ activatedHref: href });
+      location.href = href;
+    }
+    e.preventDefault();
+  });
+};
+
 page.initKeyboard = function(){
   var self = this;
-
   keys.addHandler(function(key){
-    switch (key) {
-      case 'esc':
-        self.back();
-        break;
-
-      case 'home':
-        self.focusFirst();
-        break;
-
-      case 'end':
-        self.focusLast();
-        break;
-
-      case 'shift-tab':
-      case 'left':
-      case 'h':
-        self.prevHorizontal();
-        break;
-      case 'up':
-      case 'k':
-        self.prevVertical();
-        break;
-
-      case 'tab':
-      case 'right':
-      case 'l':
-        self.nextHorizontal();
-        break;
-      case 'down':
-      case 'j':
-        self.nextVertical();
-        break;
-
-      case 'space':
-      case 'enter':
-        self.activate();
-        break;
-
-      case 'w':
-        self.toggleWatched();
-        break;
-
-      default:
-        return false;
-        break;
-    }
-
-    return true;
+    if (self.keyHandlerGeneral(key)) return true;
+    if (self.keyHandlerNonText(key)) return true;
+    return false;
   });
+};
+
+page.keyHandlerGeneral = function(key){
+  switch (key) {
+    case 'esc':
+      this.back();
+      break;
+
+    case 'home':
+      this.focusFirst();
+      break;
+
+    case 'end':
+      this.focusLast();
+      break;
+
+    case 'shift-tab':
+      this.prev();
+      break;
+    case 'tab':
+      this.next();
+      break;
+
+    default:
+      return false;
+      break;
+  }
+
+  return true;
+};
+
+page.keyHandlerNonText = function(key){
+  if (this.elem().is('input[type="text"], textarea')) return false;
+
+  switch (key) {
+    case 'left':
+    case 'h':
+      this.prevHorizontal();
+      break;
+    case 'up':
+    case 'k':
+      this.prevVertical();
+      break;
+
+    case 'right':
+    case 'l':
+      this.nextHorizontal();
+      break;
+    case 'down':
+    case 'j':
+      this.nextVertical();
+      break;
+
+    case 'w':
+      this.toggleWatched();
+      break;
+
+    case 'space':
+    case 'enter':
+      this.activate();
+      break;
+
+    default:
+      return false;
+      break;
+  }
+
+  return true;
 };
 
 page.is = function(className) {
@@ -84,38 +118,33 @@ page.back = function(){
   history.back();
 };
 
-page.compassDirection = function(x, y) {
-  var r = Math.abs(x / y);
-  if (x >= 0 && y >= 0) return (r < 1) ? 'S':'E';
-  if (x <= 0 && y >= 0) return (r < 1) ? 'S':'W';
-  if (x >= 0 && y <= 0) return (r < 1) ? 'N':'E';
-  if (x <= 0 && y <= 0) return (r < 1) ? 'N':'W';
-};
-
 page.focusFirst = function(){
-  this.focus(this.minLinkIndex);
+  this.focus(this.minElemIndex);
 };
 
 page.focusLast = function(){
-  this.focus(this.maxLinkIndex);
+  this.focus(this.maxElemIndex);
 };
 
 page.focusNearest = function(direction){
-  var i = this.curLinkIndex;
-  var iOff = this.linkOffsetCache[i];
+  var i = this.curElemIndex;
+  var iOff = this.elemOffsetCache[i];
 
   var nearestDelta = null;
   var nearestIndex = null;
 
-  for (var j = 0; j < this.links.length; j++) {
+  for (var j = 0; j < this.elems.length; j++) {
     if (j == i) continue;
 
-    var jOff = this.linkOffsetCache[j];
+    var jOff = this.elemOffsetCache[j];
 
     var x = jOff.left - iOff.left;
     var y = jOff.top - iOff.top;
 
-    if (page.compassDirection(x, y) != direction) continue;
+    if (direction == 'N' && y >= 0) continue;
+    if (direction == 'E' && x <= 0) continue;
+    if (direction == 'W' && x >= 0) continue;
+    if (direction == 'S' && y <= 0) continue;
 
     var delta = Math.round(Math.sqrt((x * x) + (y * y)));
     if (delta < nearestDelta || nearestDelta == null) {
@@ -135,28 +164,32 @@ page.nextHorizontal = function(){ this.focusNearest('E'); };
 page.nextVertical   = function(){ this.focusNearest('S'); };
 
 page.prev = function(){
-  this.focus(this.curLinkIndex - 1);
+  this.focus(this.curElemIndex - 1);
 };
 
 page.next = function(){
-  this.focus(this.curLinkIndex + 1);
+  this.focus(this.curElemIndex + 1);
 };
 
 page.focus = function(n){
-  if (n < this.minLinkIndex) n = this.minLinkIndex;
-  if (n > this.maxLinkIndex) n = this.maxLinkIndex;
+  if (n < this.minElemIndex) n = this.minElemIndex;
+  if (n > this.maxElemIndex) n = this.maxElemIndex;
 
-  var prev = this.links.eq(this.curLinkIndex);
+  var prev = this.elems.eq(this.curElemIndex);
   if (prev.length) prev.removeClass('active');
 
-  this.curLinkIndex = n;
+  this.curElemIndex = n;
 
-  var link = this.links.eq(n);
-  if (link.length) {
-    link.addClass('active');
+  var elem = this.elems.eq(n);
+  if (elem.length) {
+    elem.focus();
 
-    var y1 = link.offset().top;
-    var h1 = link.height() / 2;
+    if (elem.is('a')) {
+      elem.addClass('active');
+    }
+
+    var y1 = elem.offset().top;
+    var h1 = elem.height() / 2;
     var h2 = $(window).height() / 2;
 
     if (prev.length && prev.offset().top == y1) return;
@@ -171,13 +204,17 @@ page.focus = function(n){
   }
 };
 
+page.elem = function(){
+  return this.elems.eq(this.curElemIndex);
+};
+
 page.findActivatedLinkIndex = function(){
-  var index = this.minLinkIndex;
+  var index = this.minElemIndex;
 
   var pathA = history.state && history.state.activatedHref;
   if (pathA) {
-    for (var i = 0; i < this.links.length; i++) {
-      var pathB = this.links.eq(i).attr('href');
+    for (var i = 0; i < this.elems.length; i++) {
+      var pathB = this.elems.eq(i).attr('href');
       if (pathA == pathB) { index = i; break; }
     }
   }
@@ -186,15 +223,11 @@ page.findActivatedLinkIndex = function(){
 };
 
 page.activate = function(){
-  var href = this.links.eq(this.curLinkIndex).attr('href');
-  if (href) {
-    history.replaceState({ activatedHref: href });
-    location.href = href;
-  }
+  this.elem().click();
 };
 
 page.toggleWatched = function(){
-  var href = this.links.eq(this.curLinkIndex).attr('href');
+  var href = this.elem().attr('href');
   var hrefRE = /^\/(movies|series|files)\/\d+$/;
   if (hrefRE.test(href)) {
     $.ajax({

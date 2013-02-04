@@ -27,6 +27,11 @@
                     <% end %>
                 <% end %>
             </div>
+            <div class="span4">
+                <%= link_to('#', class: 'button') do %>
+                    <i class="icon icon-remove"></i> Wrong series?
+                <% end %>
+            </div>
         </div>
 
         <% @episodes = @series.video_files.order(:season, :episode, :path) %>

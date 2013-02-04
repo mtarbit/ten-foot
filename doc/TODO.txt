@@ -1,5 +1,6 @@
 TODO
 ====
+- Screensaver should work when video is paused.
 x Add watched? method and scope for video files
 x Seek forward when viewing a video with progress if possible
 - Ask for confirmation before resuming a previously watched video.

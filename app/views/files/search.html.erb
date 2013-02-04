@@ -1,0 +1,41 @@
+<div class="row-fluid">
+
+    <div class="span5">
+        <h2>Search</h2>
+
+        <form class="form-horizontal">
+            <input type="hidden" name="ids" value="<%= params[:ids] %>">
+
+            <div class="control-group">
+                <label class="control-label">Title</label>
+                <div class="controls"><input type="text" value="<%= @title %>" class="input-block-level"></div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Year</label>
+                <div class="controls"><input type="text" value="<%= @year %>" class="input-small"></div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Match</label>
+                <div class="controls">
+                    <label class="radio inline"><%= radio_button_tag('media', 'movie', @media == 'movie') %> Movie</label>
+                    <label class="radio inline"><%= radio_button_tag('media', 'series', @media == 'series') %> Series</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <a href="#" class="button">
+                        <i class="icon icon-search"></i>
+                        Search
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="span6 offset1">
+        <h2>Matches</h2>
+    </div>
+</div>

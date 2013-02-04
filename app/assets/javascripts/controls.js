@@ -4,7 +4,7 @@ controls.init = function(player){
   if (!player) return;
   this.player = player;
 
-  this.elem = $('<div class="controls">');
+  this.elem = $('<div class="player-controls">');
 
   this.initStatusElems();
   this.initProgressElems();
@@ -18,21 +18,21 @@ controls.init = function(player){
 
 controls.initStatusElems = function(){
   this.statusIcon = $('<i class="icon icon-play"></i>');
-  this.statusWrap = $('<div class="controls-status">');
+  this.statusWrap = $('<div class="player-controls-status">');
   this.statusWrap.append(this.statusIcon);
 
   this.elem.append(this.statusWrap);
 };
 
 controls.initProgressElems = function(){
-  this.progressBar = $('<div class="controls-progress-bar">');
-  this.progressBarInner = $('<div class="controls-progress-bar-inner">');
+  this.progressBar = $('<div class="player-controls-progress-bar">');
+  this.progressBarInner = $('<div class="player-controls-progress-bar-inner">');
   this.progressBar.append(this.progressBarInner);
 
-  this.progressNum = $('<div class="controls-progress-num">');
-  this.progressTime = $('<span class="controls-progress-time">0:00:00</span>');
-  this.progressDivider = $('<span class="controls-progress-divider">/</span>');
-  this.progressDuration = $('<span class="controls-progress-duration">0:00:00</span>');
+  this.progressNum = $('<div class="player-controls-progress-num">');
+  this.progressTime = $('<span class="player-controls-progress-time">0:00:00</span>');
+  this.progressDivider = $('<span class="player-controls-progress-divider">/</span>');
+  this.progressDuration = $('<span class="player-controls-progress-duration">0:00:00</span>');
   this.progressNum.append(this.progressTime);
   this.progressNum.append(this.progressDivider);
   this.progressNum.append(this.progressDuration);
@@ -43,11 +43,11 @@ controls.initProgressElems = function(){
 
 controls.initVolumeElems = function(){
   this.volumeIcon = $('<i class="icon icon-volume-up"></i>');
-  this.volumeWrap = $('<div class="controls-volume">');
+  this.volumeWrap = $('<div class="player-controls-volume">');
   this.volumeWrap.append(this.volumeIcon);
 
-  this.volumeBar = $('<div class="controls-volume-bar">');
-  this.volumeBarInner = $('<div class="controls-volume-bar-inner">');
+  this.volumeBar = $('<div class="player-controls-volume-bar">');
+  this.volumeBarInner = $('<div class="player-controls-volume-bar-inner">');
   this.volumeBar.append(this.volumeBarInner);
 
   this.elem.append(this.volumeBar);
