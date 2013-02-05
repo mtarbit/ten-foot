@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+host='localhost'
+port='8080'
+
+chrome_tmp_dir='/tmp/ten-foot-chrome'
+chrome_profile="$chrome_tmp_dir/profile"
+chrome_out_log="$chrome_tmp_dir/out.log"
+chrome_err_log="$chrome_tmp_dir/err.log"
+
+if [[ ! -d "$chrome_tmp_dir" ]]; then
+  echo "Creating temporary data dir: $chrome_tmp_dir"
+  mkdir "$chrome_tmp_dir"
+fi
+
+echo "Starting Google Chrome..."
+
+google-chrome "http://$host:$port" \
+  --kiosk \
+  --no-first-run \
+  --user-data-dir="$chrome_profile" \
+  1> "$chrome_out_log" \
+  2> "$chrome_err_log" \
+  &
