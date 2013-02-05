@@ -130,8 +130,7 @@ page.focusNearest = function(direction){
   var i = this.curElemIndex;
   var iOff = this.elemOffsetCache[i];
 
-  var nearestDelta = null;
-  var nearestIndex = null;
+  var candidates = [];
 
   for (var j = 0; j < this.elems.length; j++) {
     if (j == i) continue;
@@ -146,16 +145,34 @@ page.focusNearest = function(direction){
     if (direction == 'W' && x >= 0) continue;
     if (direction == 'S' && y <= 0) continue;
 
-    var delta = Math.round(Math.sqrt((x * x) + (y * y)));
-    if (delta < nearestDelta || nearestDelta == null) {
-      nearestDelta = delta;
-      nearestIndex = j;
-    }
+    candidates.push({ x: Math.abs(x), y: Math.abs(y), index: j });
   }
 
-  if (nearestIndex != null) {
-    this.focus(nearestIndex);
+  if (candidates.length) {
+    candidates.sort(
+      (direction == 'W' || direction == 'E')
+      ? page.sortHorizontal
+      : page.sortVertical
+    );
+
+    this.focus(candidates[0].index);
   }
+};
+
+page.sortHorizontal = function(a, b){
+  if (a.y < b.y) return -1;
+  if (a.y > b.y) return  1;
+  if (a.x < b.x) return -1;
+  if (a.x > b.x) return  1;
+  return 0;
+};
+
+page.sortVertical = function(a, b){
+  if (a.x < b.x) return -1;
+  if (a.x > b.x) return  1;
+  if (a.y < b.y) return -1;
+  if (a.y > b.y) return  1;
+  return 0;
 };
 
 page.prevHorizontal = function(){ this.focusNearest('W'); };
