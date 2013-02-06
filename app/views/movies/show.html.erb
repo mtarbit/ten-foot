@@ -39,7 +39,7 @@
                 <% end %>
             </div>
             <div class="span4">
-                <%= link_to('#', class: 'button') do %>
+                <%= link_to(file_search_path(@movie.video_file_ids.join(',')), class: 'button') do %>
                     <i class="icon icon-remove"></i> Wrong movie?
                 <% end %>
             </div>

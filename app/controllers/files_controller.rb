@@ -50,27 +50,27 @@ class FilesController < ApplicationController
     @year  = params[:year]  || @first.year
     @media = params[:media] || @first.media_type.downcase
 
-    # if params[:imdb_id] || params[:tvdb_id]
-    #   @files.each {|file| file.media = nil; file.save! }
+    if params[:imdb_id] || params[:tvdb_id]
+      record = begin
+        if params[:imdb_id]
+          result = ImdbService.fetch(params[:imdb_id])
+          result && Movie.from_imdb_result(result)
+        end
+        if params[:tvdb_id]
+          result = TvdbService.fetch(params[:tvdb_id])
+          result && Series.from_tvdb_result(result)
+        end
+      end
 
-    #   record = begin
-    #     if params[:imdb_id]
-    #       result = ImdbService.fetch(params[:imdb_id])
-    #       result && Movie.from_imdb_result(result)
-    #     end
-    #     if params[:tvdb_id]
-    #       result = TvdbService.fetch(params[:tvdb_id])
-    #       result && Series.from_tvdb_result(result)
-    #     end
-    #   end
+      @files.each {|file| file.media = record; file.save! }
 
-    #   record.video_files += @files
-    # end
+      redirect_to url_for(controller: @media, action: :show, id: record)
+    end
 
-    # if @media == 'movie'
-    #   @matches = ImdbService.search(@title, @year)
-    # else
-    #   @matches = TvdbService.search(@title, @year)
-    # end
+    if @media == 'movie'
+      @matches = ImdbService.search(@title, @year)
+    else
+      @matches = TvdbService.search(@title, @year)
+    end
   end
 end

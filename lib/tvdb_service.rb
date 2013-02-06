@@ -39,6 +39,6 @@ private
   end
 
   def self.tvdb_year_eq(a, b)
-    a.split('-')[0] == b
+    a && a.split('-')[0] == b
   end
 end

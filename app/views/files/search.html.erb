@@ -37,5 +37,27 @@
 
     <div class="span6 offset1">
         <h2>Matches</h2>
+
+        <ul>
+            <% @matches.each do |match| %>
+                <% if @media == 'series' %>
+                    <li>
+                        <p><%= link_to(match['SeriesName'], file_search_path(params[:ids], tvdb_id: match['id'])) %></p>
+                        <% if match['FirstAired'] %>
+                            <p>First aired: <%= match['FirstAired'].split('-')[0] %></p>
+                        <% end %>
+                        <p><%= match['Overview'] %></p>
+                    </li>
+                <% else %>
+                    <li>
+                        <p>
+                            <%= link_to(match[:title].html_safe, file_search_path(params[:ids], imdb_id: match[:imdb_id])) %>
+                            <% if match[:year] %>(<%= match[:year][1] %>)<% end %>
+                        </p>
+                    </li>
+                <% end %>
+            <% end %>
+        </ul>
+
     </div>
 </div>
