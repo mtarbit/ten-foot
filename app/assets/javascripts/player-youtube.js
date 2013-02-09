@@ -19,7 +19,7 @@ playerYouTube.init = function(){
 
 playerYouTube.initDom = function(){
   this.videoId = this.container.data('video-id');
-  var parameters = { allowScriptAccess: 'always' };
+  var parameters = { allowScriptAccess: 'always', wmode: 'opaque' };
   var attributes = { id: this.domId };
   swfobject.embedSWF(this.CHROMELESS_PLAYER_URL, this.containerId, '100%', '100%', '8', null, null, parameters, attributes);
 };
