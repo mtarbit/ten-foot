@@ -24,11 +24,16 @@ page.initElems = function(){
 
 page.initLinks = function(){
   $('a').click(function(e){
-    var href = $(this).attr('href');
-    if (href) {
+    var link = $(this);
+    var href = link.attr('href');
+
+    if (link.hasClass('submit')) {
+      link.closest('form').submit();
+    } else if (href) {
       history.replaceState({ activatedHref: href });
       location.href = href;
     }
+
     e.preventDefault();
   });
 };

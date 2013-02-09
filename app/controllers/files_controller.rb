@@ -48,23 +48,23 @@ class FilesController < ApplicationController
 
     @title = params[:title] || @first.title
     @year  = params[:year]  || @first.year
-    @media = params[:media] || @first.media_type.downcase
+    @media = params[:media] || @first.media_type.try(:downcase)
 
     if params[:imdb_id] || params[:tvdb_id]
-      record = begin
-        if params[:imdb_id]
-          result = ImdbService.fetch(params[:imdb_id])
-          result && Movie.from_imdb_result(result)
-        end
-        if params[:tvdb_id]
-          result = TvdbService.fetch(params[:tvdb_id])
-          result && Series.from_tvdb_result(result)
-        end
+      if params[:imdb_id]
+        result = ImdbService.fetch(params[:imdb_id])
+        record = Movie.from_imdb_result(result) if result
       end
+      if params[:tvdb_id]
+        result = TvdbService.fetch(params[:tvdb_id])
+        record = Series.from_tvdb_result(result) if result
+      end
+
+      raise "Couldn't fetch match" unless record
 
       @files.each {|file| file.media = record; file.save! }
 
-      redirect_to url_for(controller: @media, action: :show, id: record)
+      redirect_to url_for(controller: record.class.name.underscore.pluralize, action: :show, id: record.id)
     end
 
     if @media == 'movie'
