@@ -170,7 +170,7 @@ input[type="radio"]:focus {
 .poster-image,
 .poster-title {
   width: 100%;
-  height: 11.9em;
+  padding-top: 146%;
 }
 
 .poster-image {
@@ -181,12 +181,18 @@ input[type="radio"]:focus {
 }
 
 .poster-title {
+  position: relative;
   color: #333;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1a1a1a), color-stop(0.7, #0a0a0a));
   box-shadow: inset 0 0 0.5em #0a0a0a;
 }
 
 .poster-title span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   display: block;
   padding: 0.8em;
   font-size: 1.2em;

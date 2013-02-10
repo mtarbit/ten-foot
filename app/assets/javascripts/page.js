@@ -211,7 +211,7 @@ page.focus = function(n){
     }
 
     var y1 = elem.offset().top;
-    var h1 = elem.height() / 2;
+    var h1 = elem.outerHeight() / 2;
     var h2 = $(window).height() / 2;
 
     if (prev.length && prev.offset().top == y1) return;
