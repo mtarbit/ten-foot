@@ -1,9 +1,12 @@
 TODO
 ====
+- Add a way of listing only unmatched files.
+- Add a way of searching for a match for unmatched files.
+- Speed up mark watched and wrong video for large numbers of files.
+- Fix back to work more like a iOS stack than a straight history.back()
 - Screensaver should work when video is paused.
 - See if higher res YouTube thumbs are available.
 - Don't constantly re-check tweets. Store last ID seen.
-- Try to find a way to set a proportional height for images on index pages.
 - Add filters / ordering for index pages
 - Add trailers section.
     - Screen-scrape Apple trailers page.
@@ -21,6 +24,7 @@ TODO
 - When in "play all" mode, pause between videos:
     - Show next video info.
     - Show buttons: "Play", "Skip", "Stop"
+x Try to find a way to set a proportional height for images on index pages.
 x Add watched? method and scope for video files
 x Seek forward when viewing a video with progress if possible
 x Add buttons to movies / series:
