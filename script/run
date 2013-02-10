@@ -15,23 +15,31 @@ chrome_err_log="$chrome_tmp_dir/err.log"
 chrome_pid_file="$chrome_tmp_dir/pid"
 
 function start {
-  window_size="$(xrandr | grep '\*' | awk '{ print $1 }' | tr 'x' ',')"
-
   if [[ ! -d "$chrome_tmp_dir" ]]; then
     echo "Creating temporary data dir: $chrome_tmp_dir"
     mkdir "$chrome_tmp_dir"
   fi
 
-  nohup google-chrome \
-    --app="http://$host:$port" \
-    --app-window-size="$window_size" \
-    --force-app-mode \
-    --enable-crxless-web-apps \
-    --no-first-run \
-    --user-data-dir="$chrome_profile" \
+  nohup google-chrome "http://$host:$port" \
+    --kiosk \
+    --incognito \
     1> "$chrome_out_log" \
     2> "$chrome_err_log" \
     &
+
+  # window_size="$(xrandr | grep '\*' | awk '{ print $1 }' | tr 'x' ',')"
+
+  # nohup google-chrome 
+  #   --app="http://$host:$port" \
+  #   --app-window-size="$window_size" \
+  #   --force-app-mode \
+  #   --enable-crxless-web-apps \
+  #   --no-first-run \
+  #   --user-data-dir="$chrome_profile" \
+  #   --start-maximized \
+  #   1> "$chrome_out_log" \
+  #   2> "$chrome_err_log" \
+  #   &
 
   chrome_pid=$!
 
