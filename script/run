@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+app_name='Ten Foot'
+app_script="$(basename "${BASH_SOURCE[0]}")"
+
+args=("$@")
+
 host='localhost'
 port='8080'
 
@@ -7,19 +12,73 @@ chrome_tmp_dir='tmp/ten-foot-chrome'
 chrome_profile="$chrome_tmp_dir/profile"
 chrome_out_log="$chrome_tmp_dir/out.log"
 chrome_err_log="$chrome_tmp_dir/err.log"
+chrome_pid_file="$chrome_tmp_dir/pid"
 
-if [[ ! -d "$chrome_tmp_dir" ]]; then
-  echo "Creating temporary data dir: $chrome_tmp_dir"
-  mkdir "$chrome_tmp_dir"
+function start {
+  window_size="$(xrandr | grep '\*' | awk '{ print $1 }' | tr 'x' ',')"
+
+  if [[ ! -d "$chrome_tmp_dir" ]]; then
+    echo "Creating temporary data dir: $chrome_tmp_dir"
+    mkdir "$chrome_tmp_dir"
+  fi
+
+  nohup google-chrome \
+    --app="http://$host:$port" \
+    --app-window-size="$window_size" \
+    --force-app-mode \
+    --enable-crxless-web-apps \
+    --no-first-run \
+    --user-data-dir="$chrome_profile" \
+    1> "$chrome_out_log" \
+    2> "$chrome_err_log" \
+    &
+
+  chrome_pid=$!
+
+  echo "$app_name has been started."
+  echo "$chrome_pid" > "$chrome_pid_file"
+}
+
+function stop {
+  if [[ -s "$chrome_pid_file" ]]; then
+    kill $(cat "$chrome_pid_file")
+    rm "$chrome_pid_file"
+    echo "$app_name has been stopped."
+  else
+    echo "$app_name is not currently running."
+  fi
+}
+
+function restart {
+  stop; start
+}
+
+function usage {
+  echo "Usage: $app_script [<command>]"
+  echo "Where <command> is 'start', 'stop' or 'restart'."
+  exit 0
+}
+
+for (( i = ${#args[@]} -1; i >= 0; i-- )); do
+  case ${args[i]} in
+    -h | --help)
+      usage
+      unset args[i];;
+    -*)
+      echo "Unrecognised option: ${args[i]}"
+      usage
+      unset args[i];;
+  esac
+done
+
+if [ ${#args[@]} -gt 1 ]; then
+  usage
 fi
 
-echo "Starting Google Chrome..."
-
-nohup google-chrome "http://$host:$port" \
-  --kiosk \
-  --incognito \
-  1> "$chrome_out_log" \
-  2> "$chrome_err_log" \
-  &
-  # --user-data-dir="$chrome_profile" \
-  # --no-first-run \
+case ${args[0]} in
+  ''        ) start;;
+  'start'   ) start;;
+  'stop'    ) stop;;
+  'restart' ) restart;;
+  *         ) usage;;
+esac
