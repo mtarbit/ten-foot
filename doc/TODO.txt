@@ -1,30 +1,38 @@
 TODO
 ====
 - Screensaver should work when video is paused.
-x Add watched? method and scope for video files
-x Seek forward when viewing a video with progress if possible
-- Ask for confirmation before resuming a previously watched video.
-x Add buttons to movies / series:
-    x "Play all" (or "all unwatched")
-    x "Mark all watched / unwatched"
-    - "Wrong movie / series?"
+- See if higher res YouTube thumbs are available.
+- Don't constantly re-check tweets. Store last ID seen.
+- Try to find a way to set a proportional height for images on index pages.
 - Add filters / ordering for index pages
-- Add ability to correct details by searching and selecting from results.
-- Add ability to correct details by manually entering information.
-- Add controls for HTML5 video
-- Add controls for YouTube player
-- Add controls for VLC plugin:
-    - http://www.videolan.org/doc/play-howto/en/ch04.html
-    - http://wiki.videolan.org/Documentation:WebPlugin
 - Add trailers section.
     - Screen-scrape Apple trailers page.
     - Fetch large poster version.
     - Fetch title (and description?).
     - Fetch video URL.
+- Boot script should perhaps:
+    - Enable / disable apache virtual host.
+    - Enable / disable whenever cron configuration.
+    - Install apache virtual host?
+- Infinite scroll
+- Add ability to correct details by manually entering information.
+- Ask for confirmation before resuming a previously watched video.
 - Add "play all" mode to feeds, trailers.
 - When in "play all" mode, pause between videos:
     - Show next video info.
     - Show buttons: "Play", "Skip", "Stop"
+x Add watched? method and scope for video files
+x Seek forward when viewing a video with progress if possible
+x Add buttons to movies / series:
+    x "Play all" (or "all unwatched")
+    x "Mark all watched / unwatched"
+    x "Wrong movie / series?"
+x Add ability to correct details by searching and selecting from results.
+x Add controls for HTML5 video
+x Add controls for YouTube player
+x Add controls for VLC plugin:
+    x http://www.videolan.org/doc/play-howto/en/ch04.html
+    x http://wiki.videolan.org/Documentation:WebPlugin
 x Look into VLC stalling with traffic cone when video ends.
 x Add duration, progress and calculate progress ratio for video files
 x Scroll focused link to vertical center of page unless index == 0.
@@ -37,9 +45,7 @@ x Directional focus (not just next / prev link)
 x Back to previous page should re-select previously selected link (based on referer + href, needs revisiting)
 x Add a simple screensaver for all non video player pages
     x Fade in / out
-    - Canvas with grid of squares fading in and out
     x Mouse or keyboard activity should reset timer
-- Infinite scroll
 x Hide cursor in feed show mode
 x Use config or settings gem (so private details don't need to be in source)
 x Add keyboard bindings for controls
@@ -55,6 +61,7 @@ Retired
 -------
 - Add ability to convert a single file to viewable format
 - Queue conversion of all remaining files to a viewable format
+- Screensaver canvas with grid of squares fading in and out
 
 Bonus points
 ------------
@@ -88,6 +95,7 @@ Feature creep
 - Second screen support
     - Phone as remote
     - Keep phone from sleeping / locking?
+- "Keep organised" feature to re-arrange video files into directories named by title, season, etc.
 
 
 
