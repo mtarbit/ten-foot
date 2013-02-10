@@ -27,13 +27,29 @@ playerYouTube.initDom = function(){
 playerYouTube.initCallbacks = function(){
   var self = this;
 
-  window.onYouTubePlayerReady = function() {
+  window.onYouTubePlayerReady = function(){
     self.getDom();
   };
 
-  window.onYouTubePlayerStateChange = function(state) {
+  window.onYouTubePlayerStateChange = function(state){
     if (state == self.STATES.ended) self.stop();
   };
+};
+
+playerYouTube.initCursorNoneOverlay = function(){
+  // A fugly hack to prevent the cursor from appearing over
+  // the full-screen SWF. Just applying cursor: none to the
+  // <object> element itself doesn't seem to work in chrome.
+
+  var overlay = $('<div>').css({
+    position: 'absolute',
+    left: 0, top: 0,
+    height: '100%',
+    width: '100%',
+    cursor: 'none'
+  });
+
+  $('body').append(overlay);
 };
 
 playerYouTube.getDom = function(){
@@ -43,6 +59,8 @@ playerYouTube.getDom = function(){
 
   this.dom.addEventListener('onStateChange', 'onYouTubePlayerStateChange');
   this.dom.loadVideoById(this.videoId);
+
+  this.initCursorNoneOverlay();
 };
 
 playerYouTube.STATES = {
