@@ -1,6 +1,6 @@
 class FeedsController < ApplicationController
   def index
-    @videos = YouTubeVideo.includes(:tweets).order('tweets.date DESC')
+    @videos = YouTubeVideo.joins(:tweets).order('tweets.date DESC').limit(30)
   end
 
   def show

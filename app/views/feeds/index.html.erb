@@ -5,7 +5,7 @@
 <% columns = 3 %>
 
 <% @videos.each_with_index do |video, i| %>
-    <% tweet = video.tweets.first %>
+    <% tweet = video.tweets.order('date DESC').limit(1).first %>
 
     <% if i == min_idx || i % columns == 0 %>
         <div class="row-fluid">
