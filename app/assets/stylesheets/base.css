@@ -224,6 +224,7 @@ input[type="radio"]:focus {
   background-size: 100%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
+  background-color: #000;
   margin-bottom: 0.8em;
 }
 
