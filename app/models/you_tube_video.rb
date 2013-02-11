@@ -28,9 +28,10 @@ class YouTubeVideo < ActiveRecord::Base
 
       data = JSON.parse(api_res)
       data_group = data['entry']['media$group']
+      data_thumb = data_group['media$thumbnail'].select {|t| t['time'].nil? }
 
       record.youtube_id = data_group['yt$videoid']['$t']
-      record.image = data_group['media$thumbnail'][1]['url']
+      record.image = data_thumb.last['url']
       record.title = data_group['media$title']['$t']
       record.description = data_group['media$description']['$t']
       record.save!
