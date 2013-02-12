@@ -23,17 +23,9 @@ page.initElems = function(){
 };
 
 page.initLinks = function(){
+  var self = this;
   $('a').click(function(e){
-    var link = $(this);
-    var href = link.attr('href');
-
-    if (link.hasClass('submit')) {
-      link.closest('form').submit();
-    } else if (href) {
-      history.replaceState({ activatedHref: href });
-      location.href = href;
-    }
-
+    self.clickHandler($(this));
     e.preventDefault();
   });
 };
@@ -45,6 +37,24 @@ page.initKeyboard = function(){
     if (self.keyHandlerNonText(key)) return true;
     return false;
   });
+};
+
+page.clickHandler = function(link){
+  var href = link.attr('href');
+
+  if (link.hasClass('submit')) {
+
+    link.closest('form').submit();
+
+  } else if (href) {
+
+    if (!link.hasClass('untracked')) {
+      this.history.push(location.href, href);
+    }
+
+    location.href = href;
+
+  }
 };
 
 page.keyHandlerGeneral = function(key){
@@ -120,7 +130,21 @@ page.is = function(className) {
 };
 
 page.back = function(){
-  history.back();
+  // After a server-side redirect we might end up
+  // with the current page as the last visited href.
+  // So keep popping off hrefs until we have one we
+  // can use (or stop if we're already at top-level).
+
+  while (true) {
+    var href = this.history.pop().url;
+    if (href != location.href) {
+      break;
+    } else if (href == '/') {
+      return;
+    }
+  }
+
+  location.href = href;
 };
 
 page.focusFirst = function(){
@@ -233,7 +257,7 @@ page.elem = function(){
 page.findActivatedLinkIndex = function(){
   var index = this.minElemIndex;
 
-  var pathA = history.state && history.state.activatedHref;
+  var pathA = this.history.getState().activatedUrl;
   if (pathA) {
     for (var i = 0; i < this.elems.length; i++) {
       var pathB = this.elems.eq(i).attr('href');
@@ -258,4 +282,59 @@ page.toggleWatched = function(){
       data: { _method: 'PUT' }
     });
   }
+};
+
+// Page Storage - serializing into and out of local storage
+
+page.storage = {};
+
+page.storage.get = function(key){
+  var key = 'ten-foot:' + key;
+  var str = localStorage[key];
+  if (typeof str !== 'undefined') {
+    return JSON.parse(str);
+  }
+};
+
+page.storage.set = function(key, val){
+  var key = 'ten-foot:' + key;
+  var str = JSON.stringify(val);
+  if (typeof str === 'undefined') {
+    localStorage.removeItem(key);
+  } else {
+    localStorage[key] = str;
+  }
+};
+
+// Page History - curated tracking of visited and activated URLs
+
+page.history = {};
+
+page.history.get = function(){
+  return page.storage.get('history') || [];
+};
+
+page.history.set = function(arr){
+  page.storage.set('history', arr);
+};
+
+page.history.getState = function(){
+  return page.storage.get('history:state') || {};
+};
+
+page.history.setState = function(obj){
+  page.storage.set('history:state', obj);
+};
+
+page.history.push = function(url, activatedUrl){
+  var arr = this.get();
+  arr.push({ url: url, activatedUrl: activatedUrl });
+  this.set(arr); this.setState();
+};
+
+page.history.pop = function(){
+  var arr = this.get();
+  var obj = arr.pop() || { url: '/' };
+  this.set(arr); this.setState(obj);
+  return obj;
 };

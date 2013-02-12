@@ -42,7 +42,7 @@
             <% @matches.each do |match| %>
                 <% if @media == 'series' %>
                     <li>
-                        <p><%= link_to(match['SeriesName'], file_search_path(params[:ids], tvdb_id: match['id'])) %></p>
+                        <p><%= link_to(match['SeriesName'], file_search_path(params[:ids], tvdb_id: match['id']), class: 'untracked') %></p>
                         <% if match['FirstAired'] %>
                             <p>First aired: <%= match['FirstAired'].split('-')[0] %></p>
                         <% end %>
@@ -51,7 +51,7 @@
                 <% else %>
                     <li>
                         <p>
-                            <%= link_to(match[:title].html_safe, file_search_path(params[:ids], imdb_id: match[:imdb_id])) %>
+                            <%= link_to(match[:title].html_safe, file_search_path(params[:ids], imdb_id: match[:imdb_id]), class: 'untracked') %>
                             <% if match[:year] %>(<%= match[:year][1] %>)<% end %>
                         </p>
                     </li>
