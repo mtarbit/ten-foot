@@ -57,7 +57,7 @@ saver.clear = function(){
 
 saver.resize = function(){
   this.w = this.canvas.width();
-  this.h = this.canvas.width();
+  this.h = this.canvas.height();
   this.canvas.attr({ width: this.w, height: this.h });
 };
 
