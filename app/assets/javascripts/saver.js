@@ -10,7 +10,7 @@ saver.init = function(){
   var self = this;
 
   this.canvas = $('<canvas>');
-  this.canvas.css({ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, display: 'none' });
+  this.canvas.css({ width: '100%', height: '100%', position: 'fixed', top: 0, left: 0, display: 'none' });
 
   $('body').append(this.canvas);
 
