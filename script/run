@@ -8,28 +8,49 @@ args=("$@")
 host='localhost'
 port='8080'
 
-chrome_tmp_dir='tmp/ten-foot-chrome'
-chrome_profile="$chrome_tmp_dir/profile"
-chrome_out_log="$chrome_tmp_dir/out.log"
-chrome_err_log="$chrome_tmp_dir/err.log"
-chrome_pid_file="$chrome_tmp_dir/pid"
+client_tmp_dir='tmp/ten-foot-client'
+client_profile="$client_tmp_dir/profile"
+client_out_log="$client_tmp_dir/out.log"
+client_err_log="$client_tmp_dir/err.log"
+client_pid_file="$client_tmp_dir/pid"
 
-function start {
-  if [[ ! -d "$chrome_tmp_dir" ]]; then
-    echo "Creating temporary data dir: $chrome_tmp_dir"
-    mkdir "$chrome_tmp_dir"
+server_tmp_dir='tmp/ten-foot-server'
+server_out_log="$server_tmp_dir/out.log"
+server_err_log="$server_tmp_dir/err.log"
+server_pid_file="$server_tmp_dir/pid"
+
+function create_tmp_dir {
+  local tmp_dir=$1
+  if [[ ! -d "$tmp_dir" ]]; then
+    echo "Creating temporary data dir: $tmp_dir"
+    mkdir "$tmp_dir"
   fi
+}
+
+function server_start {
+  create_tmp_dir "$server_tmp_dir"
+
+  nohup puma \
+    -p "$port" \
+    --pidfile "$server_pid_file" \
+    1> "$server_out_log" \
+    2> "$server_err_log" \
+    &
+}
+
+function client_start {
+  create_tmp_dir "$client_tmp_dir"
 
   nohup google-chrome "http://$host:$port" \
     --kiosk \
     --incognito \
-    1> "$chrome_out_log" \
-    2> "$chrome_err_log" \
+    1> "$client_out_log" \
+    2> "$client_err_log" \
     &
 
   # window_size="$(xrandr | grep '\*' | awk '{ print $1 }' | tr 'x' ',')"
 
-  # nohup google-chrome 
+  # nohup google-chrome
   #   --app="http://$host:$port" \
   #   --app-window-size="$window_size" \
   #   --force-app-mode \
@@ -41,20 +62,31 @@ function start {
   #   2> "$chrome_err_log" \
   #   &
 
-  chrome_pid=$!
+  echo "$!" > "$client_pid_file"
+}
 
+function process_stop {
+  local process_name=$1
+  local process_pid_file=$2
+  if [[ -s "$process_pid_file" ]]; then
+    kill $(cat "$process_pid_file")
+    rm "$process_pid_file"
+    echo "$process_name has been stopped."
+  else
+    echo "$process_name is not currently running."
+  fi
+}
+
+function start {
+  server_start
+  client_start
   echo "$app_name has been started."
-  echo "$chrome_pid" > "$chrome_pid_file"
 }
 
 function stop {
-  if [[ -s "$chrome_pid_file" ]]; then
-    kill $(cat "$chrome_pid_file")
-    rm "$chrome_pid_file"
-    echo "$app_name has been stopped."
-  else
-    echo "$app_name is not currently running."
-  fi
+  process_stop "Server" "$server_pid_file"
+  process_stop "Client" "$client_pid_file"
+  echo "$app_name has been stopped."
 }
 
 function restart {

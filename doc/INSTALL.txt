@@ -47,12 +47,6 @@ Install the Ruby gems themselves:
     $ bundle install
     $ rbenv rehash
 
-Install the Phusion Passenger Apache module to serve Ruby on Rails:
-
-    $ sudo $(which passenger-install-apache2-module)
-
-Follow any aptitude installation instructions in the output from the Passenger installer.
-
 
 Installing the application
 ==========================
@@ -66,6 +60,10 @@ Configure the application:
 
     $ cp config/settings.yml.example config/settings.yml
 
+Create a symlink to your media:
+
+    $ ln -s /path/to/my/videos public/videos
+
 Sign up for a TVDB API key here:
     http://thetvdb.com/?tab=apiregister
 
@@ -73,12 +71,6 @@ Sign up for Twitter API details here:
     https://dev.twitter.com/apps
 
 Edit config/settings.yml and add your settings.
-
-Configure apache:
-
-    $ sudo rake tenfoot:apacheconf > /etc/apache2/sites-available/ten-foot
-    $ sudo a2ensite ten-foot
-    $ sudo apache2ctl graceful
 
 Populate the database:
 
@@ -89,7 +81,9 @@ Add a scheduled job to check for new data once an hour:
 
     $ whenever --update-crontab
 
-Go to http://localhost:8080 in your browser.
+Start the app:
+
+    $ ./script/run
 
 Enjoy!?
 
