@@ -31,7 +31,7 @@ class FilesController < ApplicationController
 
   def progress
     @file = VideoFile.find(params[:id])
-    @file.time = params[:time]
+    @file.progress = params[:progress]
     @file.save!
     render nothing: true
   end

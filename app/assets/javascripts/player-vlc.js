@@ -4,7 +4,7 @@ var playerVlc = {};
 
 playerVlc.type = 'vlc';
 playerVlc.lastTimeChange = 0;
-playerVlc.seekTime;
+playerVlc.seekProgress;
 
 playerVlc.init = function(){
   this.elem = $('object[type="application/x-vlc-plugin"]');
@@ -22,7 +22,9 @@ playerVlc.initEvents = function(){
 
   this.dom.addEventListener('MediaPlayerOpening', function(){
     self.dom.audio.volume = 50;
-    if (self.seekTime) self.setTime(self.seekTime);
+    if (self.seekProgress) {
+      self.setProgress(self.seekProgress);
+    }
   }, false);
 
   this.dom.addEventListener('MediaPlayerTimeChanged', function(){
@@ -50,18 +52,15 @@ playerVlc.updateProgress = function(){
   $.ajax({
     url: location.pathname + '/progress',
     type: 'POST',
-    data: { time: this.getTime(), _method: 'PUT' }
+    data: { progress: this.getProgress(), _method: 'PUT' }
   });
 };
 
 playerVlc.resume = function(){
   var src = this.elem.data('src');
 
-  var time = this.elem.data('time');
-  if (time) {
-    this.lastTimeChange = time;
-    this.seekTime = time;
-  }
+  var progress = this.elem.data('progress');
+  if (progress) this.seekProgress = progress;
 
   // The VLC plugin doesn't seem to be able to parse metadata (e.g. duration)
   // for an http:// URL, but will for file://. However, Chrome wont let us use
@@ -103,6 +102,7 @@ playerVlc.quieter = function(){
 
 playerVlc.setTime = function(time){
   this.dom.input.time = time;
+  this.lastTimeChange = time;
 };
 
 playerVlc.getTime = function(){
@@ -110,7 +110,15 @@ playerVlc.getTime = function(){
 };
 
 playerVlc.getDuration = function(){
-  return this.elem.data('duration');
+  return this.dom.input.length;
+};
+
+playerHtml5.setProgress = function(progress){
+  this.setTime(this.getDuration() * progress);
+};
+
+playerVlc.getProgress = function(){
+  return this.getTime() / this.getDuration();
 };
 
 playerVlc.getVolume = function(){

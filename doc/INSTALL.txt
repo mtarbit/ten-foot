@@ -3,7 +3,7 @@ Using an external HDD
 
 If you're using an external hard drive and it's auto-mounted, you may need
 to explicitly create a custom mount point for it instead to allow you to set
-the necessary permissions so that media can be served from it by Apache.
+the necessary permissions so that your media can be served to the client.
 
     $ sudo vim /etc/fstab
 
@@ -25,7 +25,7 @@ Some initial dependencies for the software that follows:
     sudo aptitude install libreadline-dev
     sudo aptitude install zlib
     sudo aptitude install imagemagick libmagickwand-dev
-    sudo aptitude install browser-plugin-vlc libvlc-dev
+    sudo aptitude install browser-plugin-vlc
 
 Install rbenv to manage Ruby versions as described here:
     https://github.com/sstephenson/rbenv

@@ -13,7 +13,6 @@ gem 'tvdb_party'
 gem 'twitter'
 gem 'whenever', require: false
 gem 'rmagick', require: 'RMagick'
-gem 'vlcrb', git: 'git://github.com/nashby/vlcrb.git'
 gem 'font-awesome-rails'
 gem 'puma'
 

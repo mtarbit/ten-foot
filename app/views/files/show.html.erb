@@ -1,13 +1,13 @@
 <% if @file.use_vlc? %>
 
-    <object type="application/x-vlc-plugin" data-time="<%= @file.time %>" data-duration="<%= @file.duration %>" data-src="file://<%= @file.full_path %>">
+    <object type="application/x-vlc-plugin" data-progress="<%= @file.progress %>" data-src="file://<%= @file.full_path %>">
         <param name="autoplay" value="false" />
         <param name="toolbar" value="false" />
     </object>
 
 <% else %>
 
-    <video data-time="<%= @file.time %>">
+    <video data-progress="<%= @file.progress %>">
         <source src="<%= @file.url %>"></source>
     </video>
 

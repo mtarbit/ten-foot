@@ -4,6 +4,7 @@ class VideoFile < ActiveRecord::Base
   attr_accessible :path
 
   before_validation :attributes_from_path
+  before_save :update_watched
 
   validates_presence_of :path
   validates_presence_of :extension
@@ -16,8 +17,6 @@ class VideoFile < ActiveRecord::Base
   EXTENSIONS_RE = Regexp.new(EXTENSIONS_RE_STR, Regexp::IGNORECASE)
 
   WATCHED_PROGRESS_RATIO = 0.95
-
-  @@vlc_instance = VLC::LibVLC.libvlc_new(0, nil)
 
   scope :watched, where(watched: true)
   scope :unwatched, where(watched: false)
@@ -50,23 +49,6 @@ class VideoFile < ActiveRecord::Base
 
   def full_path
     File.join($settings.video_files_path, path)
-  end
-
-  def time
-    progress && (progress * duration).round
-  end
-
-  def time=(time)
-    self.progress = time.to_f / duration
-    if self.progress > WATCHED_PROGRESS_RATIO
-      self.watched = true
-    end
-  end
-
-  def duration
-    media = VLC::Media.libvlc_media_new_path(@@vlc_instance, full_path)
-    VLC::Media.libvlc_media_parse(media)
-    VLC::Media.libvlc_media_get_duration(media)
   end
 
   def attributes_from_path
@@ -212,6 +194,14 @@ class VideoFile < ActiveRecord::Base
       record.save!
 
       puts "Found new video: #{path}"
+    end
+  end
+
+protected
+
+  def update_watched
+    if self.progress > WATCHED_PROGRESS_RATIO
+      self.watched = true
     end
   end
 end

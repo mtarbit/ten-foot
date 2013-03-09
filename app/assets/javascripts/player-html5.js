@@ -4,7 +4,7 @@ var playerHtml5 = {};
 
 playerHtml5.type = 'html5';
 playerHtml5.lastTimeChange = 0;
-playerHtml5.seekTime;
+playerHtml5.seekProgress;
 
 playerHtml5.init = function(){
   this.elem = $('video');
@@ -21,7 +21,9 @@ playerHtml5.initEvents = function(){
   var self = this;
 
   this.elem.on('loadedmetadata', function(){
-    if (self.seekTime) self.setTime(self.seekTime);
+    if (self.seekProgress) {
+      self.setProgress(self.seekProgress);
+    }
   });
 
   this.elem.on('timeupdate', function(){
@@ -49,16 +51,13 @@ playerHtml5.updateProgress = function(){
   $.ajax({
     url: location.pathname + '/progress',
     type: 'POST',
-    data: { time: this.getTime(), _method: 'PUT' }
+    data: { progress: this.getProgress(), _method: 'PUT' }
   });
 };
 
 playerHtml5.resume = function(){
-  var time = this.elem.data('time');
-  if (time) {
-    this.lastTimeChange = time;
-    this.seekTime = time;
-  }
+  var progress = parseFloat(this.elem.data('progress'), 10);
+  if (progress) this.seekProgress = progress;
 
   this.dom.play();
 };
@@ -93,6 +92,7 @@ playerHtml5.quieter = function(){
 
 playerHtml5.setTime = function(time){
   this.dom.currentTime = time / 1000;
+  this.lastTimeChange = time;
 };
 
 playerHtml5.getTime = function(){
@@ -101,6 +101,14 @@ playerHtml5.getTime = function(){
 
 playerHtml5.getDuration = function(){
   return Math.round(this.dom.duration * 1000);
+};
+
+playerHtml5.setProgress = function(progress){
+  this.setTime(this.getDuration() * progress);
+};
+
+playerHtml5.getProgress = function(){
+  return this.getTime() / this.getDuration();
 };
 
 playerHtml5.getVolume = function(){
