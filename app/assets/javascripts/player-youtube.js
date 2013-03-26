@@ -11,6 +11,7 @@ playerYouTube.init = function(){
   this.container = $('#' + this.containerId);
 
   if (this.container.length) {
+    this.initCursorNoneOverlay();
     this.initCallbacks();
     this.initDom();
     return this;
@@ -59,8 +60,6 @@ playerYouTube.getDom = function(){
 
   this.dom.addEventListener('onStateChange', 'onYouTubePlayerStateChange');
   this.dom.loadVideoById(this.videoId);
-
-  this.initCursorNoneOverlay();
 };
 
 playerYouTube.STATES = {
