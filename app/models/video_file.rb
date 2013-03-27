@@ -16,7 +16,7 @@ class VideoFile < ActiveRecord::Base
   EXTENSIONS_RE_STR = '\.(' + EXTENSIONS.join('|') + ')$'
   EXTENSIONS_RE = Regexp.new(EXTENSIONS_RE_STR, Regexp::IGNORECASE)
 
-  WATCHED_PROGRESS_RATIO = 0.95
+  WATCHED_PROGRESS_RATIO = 0.90
 
   scope :watched, where(watched: true)
   scope :unwatched, where(watched: false)

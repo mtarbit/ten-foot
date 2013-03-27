@@ -22,9 +22,10 @@ playerVlc.initEvents = function(){
 
   this.dom.addEventListener('MediaPlayerOpening', function(){
     self.dom.audio.volume = 50;
-    if (self.seekProgress) {
-      self.setProgress(self.seekProgress);
-    }
+    self.seekOrPoll();
+  }, false);
+
+  this.dom.addEventListener('MediaPlayerPausableChanged', function(){
   }, false);
 
   this.dom.addEventListener('MediaPlayerTimeChanged', function(){
@@ -38,6 +39,24 @@ playerVlc.initEvents = function(){
   $(window).unload(function(){
     self.updateProgress();
   });
+};
+
+playerVlc.seekOrPoll = function(){
+  if (this.seekProgress) {
+    if (this.getDuration()) {
+
+      this.setProgress(this.seekProgress);
+      this.seekProgress = null;
+
+    } else {
+
+      var self = this;
+      setTimeout(function(){
+        self.seekOrPoll();
+      }, 100);
+
+    }
+  }
 };
 
 playerVlc.checkProgress = function(){
@@ -113,7 +132,7 @@ playerVlc.getDuration = function(){
   return this.dom.input.length;
 };
 
-playerHtml5.setProgress = function(progress){
+playerVlc.setProgress = function(progress){
   this.setTime(this.getDuration() * progress);
 };
 
