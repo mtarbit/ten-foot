@@ -200,7 +200,7 @@ class VideoFile < ActiveRecord::Base
 protected
 
   def update_watched
-    if self.progress > WATCHED_PROGRESS_RATIO
+    if self.progress && self.progress > WATCHED_PROGRESS_RATIO
       self.watched = true
     end
   end
