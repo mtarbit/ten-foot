@@ -27,7 +27,7 @@ class Tweet < ActiveRecord::Base
         sleep RATE_RESET
       end
 
-      puts "Making request using options: #{options.inspect}"
+      puts "Making request at #{DateTime.now} using options: #{options.inspect}"
 
       begin
         results = Twitter.home_timeline(options)
