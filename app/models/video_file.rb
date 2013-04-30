@@ -80,7 +80,7 @@ class VideoFile < ActiveRecord::Base
     unless h[:season] && h[:episode]
       patterns = [
         /\b(?:s|sn|sea|season) ?(\d+) ?(?:e|ep|episode) ?(\d+)\b/i,
-        /\b(\d{,2}) ?x ?(\d{,2})\b/i,
+        /\b(\d{1,2}) ?x ?(\d{1,2})\b/i,
         /\b([1-9])0([1-9])\b/i
       ]
 
