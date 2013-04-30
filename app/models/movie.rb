@@ -6,7 +6,16 @@ class Movie < Media
     release_date && release_date.split('-').first
   end
 
-  def self.from_imdb_result(result)
+  def self.search(title, year = nil)
+    self.where('title LIKE ?', title).first
+  end
+
+  def self.search_imdb(title, year = nil)
+    result = ImdbService.search(title, year).first
+    result && ImdbService.fetch(result[:imdb_id])
+  end
+
+  def self.create_from_imdb(result)
     record = self.where(imdb_id: result.imdb_id).first_or_initialize
 
     if record.new_record?
@@ -22,17 +31,24 @@ class Movie < Media
     record
   end
 
+  def self.create_from_video_file(vf)
+    record = self.search(vf.title, vf.year)
+
+    unless record
+      result = self.search_imdb(vf.title, vf.year)
+      record = result && self.create_from_imdb(result)
+    end
+
+    if record
+      record.video_files << vf
+    end
+
+    record
+  end
+
   def self.populate
     VideoFile.unmatched.matchable_as_movies.each do |vf|
-      record = self.where('title LIKE ?', vf.title).first
-
-      record ||= begin
-        result = ImdbService.search(vf.title, vf.year).first
-        result && self.from_imdb_result(ImdbService.fetch(result[:imdb_id]))
-      end
-
-      if record
-        record.video_files << vf
+      if self.create_from_video_file(vf)
         puts "Matched: #{vf}"
       else
         puts "No match for: #{vf}"
