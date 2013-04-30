@@ -47,7 +47,7 @@ class Movie < Media
   end
 
   def self.populate
-    VideoFile.unmatched.matchable_as_movies.each do |vf|
+    VideoFile.unmatched.matchable.movies.each do |vf|
       if self.create_from_video_file(vf)
         puts "Matched: #{vf}"
       else

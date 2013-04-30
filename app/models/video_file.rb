@@ -20,9 +20,15 @@ class VideoFile < ActiveRecord::Base
 
   scope :watched, where(watched: true)
   scope :unwatched, where(watched: false)
+
+  scope :matched, where('media_id IS NOT NULL')
   scope :unmatched, where(media_id: nil)
-  scope :matchable_as_movies, where(unmatchable: false).where(season: nil, episode: nil)
-  scope :matchable_as_series, where(unmatchable: false).where('season IS NOT NULL OR episode IS NOT NULL')
+
+  scope :matchable, where(unmatchable: false)
+  scope :unmatchable, where(unmatchable: true)
+
+  scope :movies, where(season: nil, episode: nil)
+  scope :series, where('season IS NOT NULL OR episode IS NOT NULL')
 
   def self.first_watchable
     unwatched.first || first

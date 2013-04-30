@@ -41,7 +41,7 @@ class Series < Media
   end
 
   def self.populate
-    VideoFile.unmatched.matchable_as_series.each do |vf|
+    VideoFile.unmatched.matchable.series.each do |vf|
       if self.create_from_video_file(vf)
         puts "Matched: #{vf}"
       else
