@@ -53,11 +53,11 @@ class FilesController < ApplicationController
     if params[:imdb_id] || params[:tvdb_id]
       if params[:imdb_id]
         result = ImdbService.fetch(params[:imdb_id])
-        record = Movie.from_imdb_result(result) if result
+        record = result && Movie.create_from_imdb(result)
       end
       if params[:tvdb_id]
         result = TvdbService.fetch(params[:tvdb_id])
-        record = Series.from_tvdb_result(result) if result
+        record = result && Series.create_from_tvdb(result)
       end
 
       raise "Couldn't fetch match" unless record
