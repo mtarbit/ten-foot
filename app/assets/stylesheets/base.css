@@ -332,6 +332,7 @@ dl.details dd {
 
 .feeds-show .container-fluid,
 .files-show .container-fluid {
+  height: 100%;
   padding: 0;
 }
 

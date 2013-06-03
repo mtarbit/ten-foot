@@ -101,7 +101,7 @@ controls.toggleVlcFix = function(){
     parentElem.height(playerElem.height() - this.elem.height());
   } else {
     playerElem.height('100%');
-    parentElem.height('auto');
+    parentElem.height('100%');
   }
 };
 
