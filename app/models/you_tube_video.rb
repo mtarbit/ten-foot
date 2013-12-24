@@ -24,7 +24,13 @@ class YouTubeVideo < ActiveRecord::Base
 
     if record.new_record?
       api_url = yid_to_api_url(yid)
-      api_res = open(api_url).read
+      api_res = begin
+        open(api_url).read
+      rescue
+        puts api_url; nil
+      end
+
+      return unless api_res
 
       data = JSON.parse(api_res)
       data_group = data['entry']['media$group']

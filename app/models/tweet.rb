@@ -12,7 +12,7 @@ class Tweet < ActiveRecord::Base
   def self.populate(options = {})
     unless options[:since_id]
       tweet = order('twitter_id DESC').first
-      options[:since_id] = tweet.twitter_id if tweet
+      options[:since_id] = tweet.twitter_id.to_s if tweet
     end
 
     puts "========================================="
@@ -21,10 +21,12 @@ class Tweet < ActiveRecord::Base
 
     loop do
 
-      requests += 1
-      if requests > RATE_LIMIT
-        puts "Made #{requests - 1} requests. Sleeping for #{RATE_RESET / 60} minutes."
+      if requests >= RATE_LIMIT
+        puts "Made #{requests} requests. Sleeping for #{RATE_RESET / 60} minutes."
         sleep RATE_RESET
+        requests = 0
+      else
+        requests += 1
       end
 
       puts "Making request at #{DateTime.now} using options: #{options.inspect}"
@@ -51,7 +53,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def self.from_twitter_data(data)
-    record = where(twitter_id: data.id).first_or_initialize
+    record = where(twitter_id: data.id.to_s).first_or_initialize
     return record unless record.new_record?
 
     videos = data.urls.map {|data| YouTubeVideo.for_url(data.expanded_url) }.compact
