@@ -1,11 +1,11 @@
 <h1>Feeds</h1>
 
-<% min_idx = 0 %>
-<% max_idx = @videos.count - 1 %>
 <% columns = 4 %>
+<% min_idx = 0 %>
+<% max_idx = @tweets.count - 1 %>
 
-<% @videos.each_with_index do |video, i| %>
-    <% tweet = video.tweets.order('date DESC').limit(1).first %>
+<% @tweets.each_with_index do |tweet, i| %>
+    <% video = tweet.you_tube_videos.find(tweet.you_tube_video_id) %>
 
     <% if i == min_idx || i % columns == 0 %>
         <div class="row-fluid">

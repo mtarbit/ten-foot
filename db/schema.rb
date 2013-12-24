@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130203094226) do
+ActiveRecord::Schema.define(:version => 20131208164813) do
 
   create_table "movies", :force => true do |t|
     t.string   "imdb_id"
     t.string   "title"
     t.string   "image"
     t.float    "rating"
-    t.string   "description"
+    t.text     "description"
     t.string   "runtime"
     t.string   "release_date"
     t.datetime "created_at",   :null => false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20130203094226) do
     t.string   "title"
     t.string   "image"
     t.float    "rating"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20130203094226) do
     t.string   "youtube_id"
     t.string   "image"
     t.string   "title"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

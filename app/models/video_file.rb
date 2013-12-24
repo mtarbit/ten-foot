@@ -11,7 +11,7 @@ class VideoFile < ActiveRecord::Base
   validates_uniqueness_of :path
 
   EXTENSIONS     = %w[avi wmv mpg mp4 m4v mkv ogv]
-  EXTENSIONS_VLC = %w[avi wmv]
+  EXTENSIONS_VLC = %w[avi wmv mp4 mkv]
 
   EXTENSIONS_RE_STR = '\.(' + EXTENSIONS.join('|') + ')$'
   EXTENSIONS_RE = Regexp.new(EXTENSIONS_RE_STR, Regexp::IGNORECASE)

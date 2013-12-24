@@ -7,6 +7,7 @@ gem 'rails', '3.2.11'
 
 gem 'passenger'
 gem 'sqlite3'
+gem 'pg'
 gem 'app_conf'
 gem 'imdb_party'
 gem 'tvdb_party'

@@ -10,7 +10,7 @@ class Media < ActiveRecord::Base
   DEFAULT_IMAGE_SIZE = [275, nil]
 
   def self.recent
-    joins(:video_files).order('video_files.created_at DESC').group(self.arel_table[:id])
+    joins(:video_files).select("#{self.arel_table.name}.*, MAX(video_files.created_at) AS max_created_at").order('max_created_at DESC').group(self.arel_table[:id])
   end
 
   def self.watched(flag = true)

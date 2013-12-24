@@ -74,6 +74,7 @@ GEM
       fastthread (>= 1.0.1)
       rack
       rake (>= 0.8.1)
+    pg (0.17.0)
     polyglot (0.3.3)
     puma (1.6.3)
       rack (~> 1.2)
@@ -148,6 +149,7 @@ DEPENDENCIES
   imdb_party
   jquery-rails
   passenger
+  pg
   puma
   rails (= 3.2.11)
   rmagick

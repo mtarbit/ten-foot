@@ -26,6 +26,7 @@ Some initial dependencies for the software that follows:
     sudo aptitude install zlib
     sudo aptitude install imagemagick libmagickwand-dev
     sudo aptitude install browser-plugin-vlc
+    sudo aptitude install postgresql
 
 Install rbenv to manage Ruby versions as described here:
     https://github.com/sstephenson/rbenv
@@ -46,6 +47,15 @@ Install the Ruby gems themselves:
 
     $ bundle install
     $ rbenv rehash
+
+Create and configure the postgres database:
+
+    $ sudo -u postgres createuser -PSRd tenfoot
+    # Enter the password 'tenfoot' when prompted
+    $ sudo -u postgres createdb tenfoot --owner=tenfoot
+    $ sudo vim /etc/postgresql/9.1/main/pg_hba.conf
+    # Edit line 90-ish from 'local all all peer' to 'local all all md5'
+    $ sudo /etc/init.d/postgresql restart
 
 
 Installing the application
