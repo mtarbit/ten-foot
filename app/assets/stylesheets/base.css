@@ -308,16 +308,10 @@ dl.details dd {
   right: 0;
   height: 100%;
   box-shadow: 0 0 1em rgba(0,0,0, 1);
-}
-
-.movies-show .poster img,
-.series-show .poster img {
-  /* If I use height: 100% instead of this ridiculous hack then the
-   * image's height is scaled correctly. But if it was scaled up,
-   * rather than down, then its width stays as that of the original
-   * image and the aspect ratio is distorted. */
-  min-height: 100%;
-  max-height: 100%;
+  background-color: #000;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 .feeds-show,
