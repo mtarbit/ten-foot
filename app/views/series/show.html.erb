@@ -14,7 +14,7 @@
 
         <div class="row-fluid">
             <div class="span4">
-                <%= link_to(file_path(@series.video_files.first_watchable), class: 'button') do %>
+                <%= link_to(file_path(@video_files.first_watchable), class: 'button') do %>
                     <i class="icon icon-play"></i> Play next
                 <% end %>
             </div>
@@ -28,18 +28,17 @@
                 <% end %>
             </div>
             <div class="span4">
-                <%= link_to(file_search_path(@series.video_file_ids.join(',')), class: 'button') do %>
+                <%= link_to(file_search_path(@video_files.map(&:id).join(',')), class: 'button') do %>
                     <i class="icon icon-remove"></i> Wrong series?
                 <% end %>
             </div>
         </div>
 
-        <% @episodes = @series.video_files.order(:season, :episode, :path) %>
         <% min_idx = 0 %>
-        <% max_idx = @episodes.count - 1 %>
-        <% @episodes.each_with_index do |vf, i| %>
-            <% prev_season = @episodes[i-1].try(:season) if i > min_idx %>
-            <% next_season = @episodes[i+1].try(:season) if i < max_idx %>
+        <% max_idx = @video_files.count - 1 %>
+        <% @video_files.each_with_index do |vf, i| %>
+            <% prev_season = @video_files[i-1].try(:season) if i > min_idx %>
+            <% next_season = @video_files[i+1].try(:season) if i < max_idx %>
 
             <% if vf.season.nil? && i == 0 %>
                 <h2>Files</h2>

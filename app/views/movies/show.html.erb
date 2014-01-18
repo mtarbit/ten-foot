@@ -25,7 +25,7 @@
 
         <div class="row-fluid">
             <div class="span4">
-                <%= link_to(file_path(@movie.video_files.first_watchable), class: 'button') do %>
+                <%= link_to(file_path(@video_files.first_watchable), class: 'button') do %>
                     <i class="icon icon-play"></i> Play next
                 <% end %>
             </div>
@@ -39,7 +39,7 @@
                 <% end %>
             </div>
             <div class="span4">
-                <%= link_to(file_search_path(@movie.video_file_ids.join(',')), class: 'button') do %>
+                <%= link_to(file_search_path(@video_files.map(&:id).join(',')), class: 'button') do %>
                     <i class="icon icon-remove"></i> Wrong movie?
                 <% end %>
             </div>
@@ -47,7 +47,7 @@
 
         <h2>Files</h2>
         <ul>
-            <% @movie.video_files.order(:path).each do |vf| %>
+            <% @video_files.each do |vf| %>
                 <li<%= ' class="watched"'.html_safe if vf.watched? %>><%= link_to(vf.path.split('/').last, file_path(vf)) %></li>
             <% end %>
         </ul>

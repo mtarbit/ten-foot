@@ -5,6 +5,7 @@ class SeriesController < ApplicationController
 
   def show
     @series = Series.find(params[:id])
+    @video_files = @series.video_files.order(:season, :episode, :path)
   end
 
   def watched

@@ -5,6 +5,7 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
+    @video_files = @movie.video_files.order(:path)
   end
 
   def watched
