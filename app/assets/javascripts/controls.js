@@ -108,6 +108,13 @@ controls.toggleVlcFix = function(){
 controls.update = function(){
   var timeSeconds = this.player.getTime() / 1000;
   var durationSeconds = this.player.getDuration() / 1000;
+
+  // Correct for invalid time reported by VLC when
+  // reversing too far off the start of the video.
+  if (timeSeconds < 0 || timeSeconds > durationSeconds) {
+    timeSeconds = 0;
+  }
+
   var progressPercent = Math.round(timeSeconds / durationSeconds * 100);
   var volumePercent = Math.round(this.player.getVolume() * 100);
 

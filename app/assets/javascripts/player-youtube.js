@@ -60,6 +60,7 @@ playerYouTube.getDom = function(){
 
   this.dom.addEventListener('onStateChange', 'onYouTubePlayerStateChange');
   this.dom.loadVideoById(this.videoId);
+  this.dom.setVolume(50);
 };
 
 playerYouTube.STATES = {
