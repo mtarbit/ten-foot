@@ -1,4 +1,11 @@
-<h1>Files <small><%= @path %></small></h1>
+<div class="row-fluid">
+    <div class="span2"><h1>Files <small><%= @path %></small></h1></div>
+    <div class="span3 pull-right">
+        <%= link_to(refresh_files_path, class: 'button', style: 'margin-top: 1.6em;') do %>
+            <i class="icon icon-refresh"></i> Find new media
+        <% end %>
+    </div>
+</div>
 
 <ul class="unstyled">
     <% @filenames.each do |filename| %>

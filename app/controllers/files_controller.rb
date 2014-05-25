@@ -73,4 +73,9 @@ class FilesController < ApplicationController
       @matches = TvdbService.search(@title, @year)
     end
   end
+
+  def refresh
+    Media.populate
+    redirect_to :back
+  end
 end

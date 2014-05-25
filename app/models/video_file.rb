@@ -189,18 +189,25 @@ class VideoFile < ActiveRecord::Base
 
   def self.populate
     Dir.chdir($settings.video_files_path)
-    Dir.glob('**/*.{' + EXTENSIONS.join(',') + '}').each do |path|
+
+    source_paths = Dir.glob('**/*.{' + EXTENSIONS.join(',') + '}')
+    stored_paths = VideoFile.pluck(:path)
+
+    create_paths = source_paths - stored_paths
+    delete_paths = stored_paths - source_paths
+
+    # Create records for any paths we haven't come across before.
+    create_paths.each do |path|
       full_path = File.join($settings.video_files_path, path)
       next if File.directory?(full_path)
 
-      record = self.where(path: path).first_or_initialize
-      next unless record.new_record?
-
-      record.created_at = File.ctime(full_path)
-      record.save!
+      self.create(path: path, created_at: File.ctime(full_path))
 
       puts "Found new video: #{path}"
     end
+
+    # Delete records for any paths that aren't there any more.
+    VideoFile.where(path: delete_paths).destroy_all
   end
 
 protected

@@ -2,10 +2,7 @@ namespace :tenfoot do
 
   desc "Populate database with data from videos, APIs and feeds."
   task :populate => :environment do
-    VideoFile.populate
-    Movie.populate
-    Series.populate
-    VideoFile.unmatched.update_all(unmatchable: true)
+    Media.populate
     Tweet.populate
   end
 

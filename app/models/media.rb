@@ -37,4 +37,11 @@ class Media < ActiveRecord::Base
     video_files.unwatched.exists?
   end
 
+  def self.populate
+    VideoFile.populate
+    Movie.populate
+    Series.populate
+    VideoFile.unmatched.update_all(unmatchable: true)
+  end
+
 end
