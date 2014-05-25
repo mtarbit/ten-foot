@@ -1,4 +1,11 @@
-<h1>Series</h1>
+<div class="row-fluid">
+    <div class="span2"><h1>Series</h1></div>
+    <div class="span2 pull-right">
+        <%= link_to(file_path(@series.sample.video_files.first_watchable), class: 'button', style: 'margin-top: 1.6em;') do %>
+            <i class="icon icon-play"></i> Play random
+        <% end %>
+    </div>
+</div>
 
 <% min_idx = 0 %>
 <% max_idx = @series.to_a.count - 1 %>
