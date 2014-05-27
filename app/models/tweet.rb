@@ -6,8 +6,9 @@ class Tweet < ActiveRecord::Base
   validates_presence_of :twitter_id
   validates_uniqueness_of :twitter_id
 
-  RATE_LIMIT = 15
-  RATE_RESET = 15 * 60
+  RATE_REQUESTS_CHUNK = 15
+  RATE_REQUESTS_LIMIT = RATE_REQUESTS_CHUNK * 10
+  RATE_SLEEP = 15 * 60
 
   def self.populate(options = {})
     unless options[:since_id]
@@ -21,23 +22,31 @@ class Tweet < ActiveRecord::Base
 
     loop do
 
-      if requests >= RATE_LIMIT
-        puts "Made #{requests} requests. Sleeping for #{RATE_RESET / 60} minutes."
-        sleep RATE_RESET
-        requests = 0
-      else
-        requests += 1
-      end
-
-      puts "Making request at #{DateTime.now} using options: #{options.inspect}"
-
       begin
+
+        if requests >= RATE_REQUESTS_LIMIT
+          puts "Made the maximum number of requests. Stopping."
+          return
+        elsif requests >= RATE_REQUESTS_CHUNK
+          puts "Made #{requests} requests. Sleeping for #{RATE_SLEEP / 60} minutes."
+          sleep RATE_SLEEP
+          requests = 0
+        else
+          requests += 1
+        end
+
+        puts "Making request at #{DateTime.now} using options: #{options.inspect}"
         results = Twitter.home_timeline(options)
-        puts "Received #{results.count} results"
+
       rescue Twitter::Error::TooManyRequests => error
         puts "Too many requests: #{error.rate_limit.attrs.inspect}"
         return
+      rescue Timeout::Error => error
+        puts "Request timed out. Retrying."
+        retry
       end
+
+      puts "Received #{results.count} results"
 
       return if results.empty?
 
