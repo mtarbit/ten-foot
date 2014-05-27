@@ -2,6 +2,7 @@ class VideoFile < ActiveRecord::Base
   belongs_to :media, polymorphic: true
 
   attr_accessible :path
+  attr_accessible :created_at
 
   before_validation :attributes_from_path
   before_save :update_watched
