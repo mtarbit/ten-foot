@@ -37,22 +37,21 @@
         <% min_idx = 0 %>
         <% max_idx = @video_files.count - 1 %>
         <% @video_files.each_with_index do |vf, i| %>
-            <% prev_season = @video_files[i-1].try(:season) if i > min_idx %>
-            <% next_season = @video_files[i+1].try(:season) if i < max_idx %>
+            <% prev_season = (@video_files[i-1].season || 1) if i > min_idx %>
+            <% this_season = (vf.season || 1) %>
+            <% next_season = (@video_files[i+1].season || 1) if i < max_idx %>
 
-            <% if vf.season.nil? && i == 0 %>
-                <h2>Files</h2>
-            <% elsif vf.season != prev_season %>
-                <h2>Season <%= vf.season %></h2>
+            <% if this_season != prev_season %>
+                <h2>Season <%= this_season %></h2>
             <% end %>
 
-            <% if vf.season != prev_season || i == min_idx %>
+            <% if this_season != prev_season || i == min_idx %>
                 <ul>
             <% end %>
 
             <li<%= ' class="watched"'.html_safe if vf.watched? %>><%= link_to(truncate("Episode #{vf.episode || '?'} - #{vf.path.split('/').last}", length: 65), file_path(vf)) %></li>
 
-            <% if vf.season != next_season || i == max_idx %>
+            <% if this_season != next_season || i == max_idx %>
                 </ul>
             <% end %>
 
