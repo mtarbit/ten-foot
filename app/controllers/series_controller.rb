@@ -9,12 +9,17 @@ class SeriesController < ApplicationController
   end
 
   def watched
-    @movie = Series.find(params[:id])
-    @movie.toggle_watched(params[:watched])
+    @series = Series.find(params[:id])
+    @series.toggle_watched(params[:watched])
 
     respond_to do |format|
       format.html { redirect_to :back }
       format.js   { render nothing: true }
     end
+  end
+
+  def refresh
+    Media.populate
+    redirect_to :back
   end
 end

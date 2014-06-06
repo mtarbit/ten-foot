@@ -17,4 +17,9 @@ class MoviesController < ApplicationController
       format.js   { render nothing: true }
     end
   end
+
+  def refresh
+    Media.populate
+    redirect_to :back
+  end
 end

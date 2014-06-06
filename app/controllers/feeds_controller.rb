@@ -18,4 +18,9 @@ class FeedsController < ApplicationController
   def show
     @video = YouTubeVideo.find(params[:id])
   end
+
+  def refresh
+    Tweet.populate
+    redirect_to :back
+  end
 end
