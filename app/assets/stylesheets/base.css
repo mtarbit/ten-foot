@@ -89,6 +89,10 @@ a.button.active {
   text-shadow: none;
 }
 
+a.button-update.clicked i.icon {
+    -webkit-animation: spin 1s infinite linear;
+}
+
 label, input, button, select, textarea {
   font-size: inherit;
   line-height: 1em;
@@ -419,3 +423,7 @@ dl.details dd {
   }
 }
 
+@-webkit-keyframes spin {
+    0%   { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}

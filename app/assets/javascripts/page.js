@@ -50,6 +50,7 @@ page.clickHandler = function(link){
 
     if (!link.hasClass('untracked')) {
       this.history.push(location.href, href);
+      link.addClass('clicked');
     }
 
     location.href = href;
