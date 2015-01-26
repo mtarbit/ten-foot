@@ -16,6 +16,7 @@ gem 'whenever', require: false
 gem 'rmagick', require: 'RMagick'
 gem 'font-awesome-rails'
 gem 'puma'
+gem 'google-api-client', '>= 0.7', require: 'google/api_client'
 
 # Gems used only for assets and not required
 # in production environments by default.

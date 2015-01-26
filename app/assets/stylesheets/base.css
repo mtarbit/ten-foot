@@ -2,12 +2,11 @@
   cursor: none;
 }
 
-html {
-  min-height: 100%;
+html, body {
+  height: 100%;
 }
 
 body {
-  min-height: 100%;
   font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 200%;
   line-height: 1.4em;
@@ -277,10 +276,24 @@ input[type="radio"]:focus {
   font-size: 0.8em;
 }
 
+.feed-item .video-title {
+  font-family: 'Economica', sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 1.1em;
+  margin-right: 0.2em;
+  color: #fff;
+}
+
 .feed-item .video-desc {
-  font-size: 0.8em;
-  line-height: 1.4em;
+  font-size: 0.9em;
   margin-top: 0.5em;
+  color: #666;
+}
+
+.feed-item .video-desc em {
+  font-style: normal;
+  color: #999;
 }
 
 dl.details dt {
@@ -322,6 +335,7 @@ dl.details dd {
   background-position: 50% 50%;
 }
 
+.search-show,
 .feeds-show,
 .files-show {
   height: 100%;
@@ -332,12 +346,15 @@ dl.details dd {
   padding: 0;
 }
 
+.search-show .container-fluid,
 .feeds-show .container-fluid,
 .files-show .container-fluid {
   height: 100%;
   padding: 0;
 }
 
+.search-show object,
+.search-show video,
 .files-show object,
 .files-show video {
   cursor: none;

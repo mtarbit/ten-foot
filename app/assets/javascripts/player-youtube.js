@@ -6,7 +6,7 @@ playerYouTube.type = 'youtube';
 playerYouTube.CHROMELESS_PLAYER_URL = "http://www.youtube.com/apiplayer?enablejsapi=1&version=3";
 
 playerYouTube.init = function(){
-  this.domId = 'feed-player';
+  this.domId = 'youtube-player';
   this.containerId = this.domId + '-container';
   this.container = $('#' + this.containerId);
 

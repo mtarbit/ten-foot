@@ -1,6 +1,15 @@
 <div class="row-fluid" style="margin-top:17%;">
 
-    <div class="span3 ac">
+    <div class="span2 ac offset1">
+        <h2>
+            <%= link_to(search_index_path) do %>
+                <i class="icon icon-large icon-search"></i><br>
+                Search
+            <% end %>
+        </h2>
+    </div>
+
+    <div class="span2 ac">
         <h2>
             <%= link_to(feeds_path) do %>
                 <i class="icon icon-large icon-rss"></i><br>
@@ -9,7 +18,7 @@
         </h2>
     </div>
 
-    <div class="span3 ac">
+    <div class="span2 ac">
         <h2>
             <%= link_to(movies_path) do %>
                 <i class="icon icon-large icon-film"></i><br>
@@ -18,7 +27,7 @@
         </h2>
     </div>
 
-    <div class="span3 ac">
+    <div class="span2 ac">
         <h2>
             <%= link_to(series_index_path) do %>
                 <i class="icon icon-large icon-play-circle"></i><br>
@@ -27,7 +36,7 @@
         </h2>
     </div>
 
-    <div class="span3 ac">
+    <div class="span2 ac">
         <h2>
             <%= link_to(files_path) do %>
                 <i class="icon icon-large icon-folder-open"></i><br>

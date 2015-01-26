@@ -1,0 +1,46 @@
+<form class="form-inline">
+    <div class="row-fluid">
+        <div class="span3"><h1>Search</h1></div>
+
+        <div class="span6">
+            <%= text_field_tag :terms, @terms, class: 'input-block-level', style: 'margin-top: 1.7em;' %>
+        </div>
+
+        <div class="span3">
+            <a href="#" class="button submit" style="margin-top: 1.6em;">
+                <i class="icon icon-search"></i> Search
+            </a>
+        </div>
+    </div>
+</form>
+
+<% if @matches.present? %>
+    <% columns = 4 %>
+    <% min_idx = 0 %>
+    <% max_idx = @matches.count - 1 %>
+
+    <% @matches.each_with_index do |match, i| %>
+
+        <% if i == min_idx || i % columns == 0 %>
+            <div class="row-fluid">
+        <% end %>
+
+        <div class="span3">
+            <div class="feed-item">
+                <%= link_to(search_path(match.id.videoId)) do %>
+                    <span class="video-img img" style="background-image: url(<%= match.snippet.thumbnails.high.url %>)"></span>
+                    <span class="video-txt">
+                        <span class="video-title"><%= match.snippet.title %></span>
+                        <span class="video-desc"><%= minimal_video_text(match.snippet.description) %></span>
+                    </span>
+                <% end %>
+            </div>
+        </div>
+
+        <% if i == max_idx || i % columns == columns - 1 %>
+            </div>
+        <% end %>
+
+    <% end %>
+<% end %>
+

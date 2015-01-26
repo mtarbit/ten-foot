@@ -14,4 +14,10 @@ module ApplicationHelper
     t.gsub!(%r{https?://(\S+)}, '<em>http&hellip;</em>')
     t.html_safe
   end
+
+  def minimal_video_text(text)
+    t = text.dup
+    t.gsub!(%r{https?://(\S+)}, '<em>http&hellip;</em>')
+    t.html_safe
+  end
 end

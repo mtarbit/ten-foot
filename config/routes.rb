@@ -4,6 +4,8 @@ TenFoot::Application.routes.draw do
   match 'files/path(/:path)', to: 'files#path', as: :file_path, constraints: {path: /.+/}
   match 'files/search/:ids', to: 'files#search', as: :file_search
 
+  resources :search, only: [:index, :show]
+
   resources :feeds, only: [:index, :show] do
     match :refresh, on: :collection
   end

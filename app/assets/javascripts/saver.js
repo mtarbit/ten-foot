@@ -5,7 +5,7 @@ var saver = {};
 saver.TIMER_DELAY = 2 * 60 * 1000;
 
 saver.init = function(){
-  if (page.is('feeds-show') || page.is('files-show')) return;
+  if (page.is('feeds-show') || page.is('files-show') || page.is('search-show')) return;
 
   var self = this;
 
