@@ -86,7 +86,7 @@ class VideoFile < ActiveRecord::Base
     # Extract any season or episode info
     unless h[:season] && h[:episode]
       patterns = [
-        /\b(?:s|sn|sea|season) ?(\d+) ?(?:e|ep|episode) ?(\d+)\b/i,
+        /\b(?:s|sn|sea|season) ?(\d+) ?(?:e|ep|episode|part) ?(\d+)\b/i,
         /\b(\d{1,2}) ?x ?(\d{1,2})\b/i,
         /\b([1-9])0([1-9])\b/i
       ]
@@ -106,7 +106,7 @@ class VideoFile < ActiveRecord::Base
       end
 
       unless h[:episode]
-        match = s.match(/\b(?:e|ep|episode) ?(\d+)\b/i)
+        match = s.match(/\b(?:e|ep|episode|part) ?(\d+)\b/i)
         h[:episode] = match[1].to_i if match
       end
       unless h[:episode]
