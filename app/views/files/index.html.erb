@@ -1,6 +1,18 @@
-<div class="row-fluid">
-    <div class="span2"><h1>Files <small><%= @path %></small></h1></div>
-</div>
+<form class="form-inline">
+    <div class="row-fluid">
+        <div class="span3"><h1>Files</h1></div>
+
+        <div class="span6">
+            <%= text_field_tag :terms, @terms, class: 'input-block-level', style: 'margin-top: 1.7em;' %>
+        </div>
+
+        <div class="span3">
+            <a href="#" class="button submit" style="margin-top: 1.6em;">
+                <i class="icon icon-search"></i> Search
+            </a>
+        </div>
+    </div>
+</form>
 
 <ul class="unstyled">
     <% @filenames.each do |filename| %>

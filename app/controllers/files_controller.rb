@@ -5,10 +5,20 @@ class FilesController < ApplicationController
   end
 
   def path
+    @terms = params[:terms]
+
     @relpath = params[:path] || ''
     @abspath = File.join($settings.video_files_path, @relpath)
 
-    if File.directory?(@abspath)
+    if @terms
+
+      files = VideoFile.scoped
+      @terms.split.each {|term| files = files.where('path ILIKE ?', "%#{term}%") }
+      files = files.order('season NULLS FIRST, episode NULLS FIRST, path')
+      @filenames = files.pluck(:path).map {|p| File.basename(p) }
+      render :index
+
+    elsif File.directory?(@abspath)
 
       @filenames = []
       Dir.foreach(@abspath) do |filename|
