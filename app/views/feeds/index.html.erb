@@ -20,7 +20,7 @@
 
     <div class="span3">
         <div class="feed-item">
-            <%= link_to(feed_path(video)) do %>
+            <%= link_to(feed_path(video), data: { 'youtube-url' => video.url }) do %>
                 <span class="tweet-icon"><%= image_tag(tweet.image_cached, alt: tweet.user, size: '48x48') %></span>
                 <span class="video-img img" style="background-image: url(<%= video.image_cached %>)"></span>
                 <span class="video-txt">

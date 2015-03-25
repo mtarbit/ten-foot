@@ -113,6 +113,10 @@ page.keyHandlerNonText = function(key){
       this.toggleWatched();
       break;
 
+    case 'y':
+      this.openYouTubeUrl();
+      break;
+
     case 'space':
     case 'enter':
       this.activate();
@@ -283,6 +287,11 @@ page.toggleWatched = function(){
       data: { _method: 'PUT' }
     });
   }
+};
+
+page.openYouTubeUrl = function(){
+    var url = this.elem().data('youtube-url');
+    if (url) window.open(url);
 };
 
 // Page Storage - serializing into and out of local storage

@@ -27,7 +27,7 @@
 
         <div class="span3">
             <div class="feed-item">
-                <%= link_to(search_path(match.id.videoId)) do %>
+                <%= link_to(search_path(match.id.videoId), data: { 'youtube-url' => 'http://www.youtube.com/watch?v=' + match.id.videoId }) do %>
                     <span class="video-img img" style="background-image: url(<%= match.snippet.thumbnails.high.url %>)"></span>
                     <span class="video-txt">
                         <span class="video-title"><%= match.snippet.title %></span>

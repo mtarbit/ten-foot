@@ -12,7 +12,7 @@ class FeedsController < ApplicationController
                         AS tytv
                         ON tytv.min_tweet_id = tweets.id')
                 .order('tweets.date DESC')
-                .limit(150)
+                .limit(450)
   end
 
   def show
