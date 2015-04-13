@@ -1,15 +1,21 @@
 <form class="form-inline">
     <div class="row-fluid">
-        <div class="span3"><h1>Files</h1></div>
+        <div class="span2"><h1>Files</h1></div>
 
         <div class="span6">
             <%= text_field_tag :terms, @terms, class: 'input-block-level', style: 'margin-top: 1.7em;' %>
         </div>
 
-        <div class="span3">
+        <div class="span2">
             <a href="#" class="button submit" style="margin-top: 1.6em;">
                 <i class="icon icon-search"></i> Search
             </a>
+        </div>
+
+        <div class="span2">
+            <%= link_to(refresh_files_path, class: 'button button-update', style: 'margin-top: 1.6em;') do %>
+                <i class="icon icon-refresh"></i> Update
+            <% end %>
         </div>
     </div>
 </form>

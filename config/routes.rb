@@ -23,5 +23,6 @@ TenFoot::Application.routes.draw do
   resources :files, only: [:index, :show] do
     match :progress, on: :member
     match :watched, on: :member
+    match :refresh, on: :collection
   end
 end

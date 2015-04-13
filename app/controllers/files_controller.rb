@@ -10,7 +10,7 @@ class FilesController < ApplicationController
     @relpath = params[:path] || ''
     @abspath = File.join($settings.video_files_path, @relpath)
 
-    if @terms
+    if @terms.present?
 
       files = VideoFile.scoped
       @terms.split.each {|term| files = files.where('path ILIKE ?', "%#{term}%") }
@@ -82,5 +82,10 @@ class FilesController < ApplicationController
     else
       @matches = TvdbService.search(@title, @year)
     end
+  end
+
+  def refresh
+    VideoFile.populate
+    redirect_to :back
   end
 end
