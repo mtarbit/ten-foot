@@ -11,13 +11,17 @@ class TvdbService
       b_score = 0
 
       a_score += 1 if self.tvdb_title_eq(a['SeriesName'], title)
+      a_score += 1 if self.tvdb_title_in(a['SeriesName'], title)
       a_score += 1 if self.tvdb_year_eq(a['FirstAired'], year)
+      a_score += 1 if self.tvdb_year_gt(a['FirstAired'], b['FirstAired'])
 
       b_score += 1 if self.tvdb_title_eq(b['SeriesName'], title)
+      b_score += 1 if self.tvdb_title_in(b['SeriesName'], title)
       b_score += 1 if self.tvdb_year_eq(b['FirstAired'], year)
+      b_score += 1 if self.tvdb_year_gt(b['FirstAired'], a['FirstAired'])
 
       b_score <=> a_score
-    end if year
+    end
 
     results
   end
@@ -28,17 +32,35 @@ class TvdbService
 
 private
 
-  def self.normalized_title(title)
-    title.downcase.gsub(/[^\w\s]+/, '')
+  def self.normalized_title(s)
+    s && s.downcase.gsub(/[^\w\s]+/, '')
+  end
+
+  def self.normalized_year(s)
+    s && s.split('-').first
   end
 
   def self.tvdb_title_eq(a, b)
     a = self.normalized_title(a)
     b = self.normalized_title(b)
-    a.include?(b)
+    a && b && (a == b || a.index(b) == 0)
+  end
+
+  def self.tvdb_title_in(a, b)
+    a = self.normalized_title(a)
+    b = self.normalized_title(b)
+    a && b && a.include?(b)
   end
 
   def self.tvdb_year_eq(a, b)
-    a && a.split('-')[0] == b
+    a = self.normalized_year(a)
+    b = self.normalized_year(b)
+    a && b && a == b
+  end
+
+  def self.tvdb_year_gt(a, b)
+    a = self.normalized_year(a)
+    b = self.normalized_year(b)
+    (a && b && a > b) || (a && b.nil?)
   end
 end
