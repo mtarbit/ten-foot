@@ -32,12 +32,16 @@ class TvdbService
 
 private
 
-  def self.normalized_title(s)
-    s && s.downcase.gsub(/[^\w\s]+/, '')
+  def self.normalized_title(val)
+    val && val.downcase.gsub(/[^\w\s]+/, '')
   end
 
-  def self.normalized_year(s)
-    s && s.split('-').first
+  def self.normalized_year(val)
+    if val.is_a?(Fixnum)
+      val
+    else
+      val && val.split('-').first
+    end
   end
 
   def self.tvdb_title_eq(a, b)

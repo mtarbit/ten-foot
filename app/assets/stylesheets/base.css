@@ -157,6 +157,7 @@ input[type="radio"]:focus {
 
 .poster {
   margin-bottom: 1.2em;
+  border-radius: 0.6em;
 }
 
 .poster a, a.img, a .img {
@@ -172,6 +173,22 @@ input[type="radio"]:focus {
 .poster a.active, a.img.active, a.active .img {
   border-color: #fff;
   box-shadow: 0 -0.3em 1.8em #af4, 0 0 0.5em #fff;
+}
+
+.poster.watched .poster-image {
+  position: relative;
+}
+
+.poster.watched .poster-image:before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.8;
+  background-color: black;
+  border-radius: 15px;
 }
 
 .poster-image,

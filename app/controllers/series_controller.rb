@@ -1,6 +1,6 @@
 class SeriesController < MediaController
   def index
-    @series = Series.recent.unwatched
+    @series = Series.recent
   end
 
   def show

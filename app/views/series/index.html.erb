@@ -21,7 +21,7 @@
         <div class="row-fluid">
     <% end %>
 
-    <div class="poster span2">
+    <div class="poster span2 <% if series.watched? %>watched<% end %>">
         <% if series.image_cached %>
             <%= link_to('', series_path(series), class: 'poster-image', style: "background-image: url(#{series.image_scaled(*Series::DEFAULT_IMAGE_SIZE)});") %>
         <% else %>
