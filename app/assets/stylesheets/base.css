@@ -157,7 +157,6 @@ input[type="radio"]:focus {
 
 .poster {
   margin-bottom: 1.2em;
-  border-radius: 0.6em;
 }
 
 .poster a, a.img, a .img {
@@ -186,7 +185,7 @@ input[type="radio"]:focus {
   left: 0;
   bottom: 0;
   right: 0;
-  opacity: 0.8;
+  opacity: 0.75;
   background-color: black;
   border-radius: 15px;
 }

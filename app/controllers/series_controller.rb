@@ -1,6 +1,6 @@
 class SeriesController < MediaController
   def index
-    @series = Series.recent
+    @series = Series.recently_updated
   end
 
   def show
