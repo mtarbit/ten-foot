@@ -23,23 +23,13 @@ class YouTubeVideo < ActiveRecord::Base
     record = where(youtube_id: yid).first_or_initialize
 
     if record.new_record?
-      api_url = yid_to_api_url(yid)
-      api_res = begin
-        open(api_url).read
-      rescue
-        puts api_url; nil
-      end
+      api_res = YouTubeService.video(record.youtube_id)
 
       return unless api_res
 
-      data = JSON.parse(api_res)
-      data_group = data['entry']['media$group']
-      data_thumb = data_group['media$thumbnail'].select {|t| t['time'].nil? }
-
-      record.youtube_id = data_group['yt$videoid']['$t']
-      record.image = data_thumb.last['url']
-      record.title = data_group['media$title']['$t']
-      record.description = data_group['media$description']['$t']
+      record.image = api_res.snippet.thumbnails.high.url
+      record.title = api_res.snippet.title
+      record.description = api_res.snippet.description
       record.save!
     end
 
@@ -49,9 +39,5 @@ class YouTubeVideo < ActiveRecord::Base
   def self.url_to_yid(url)
     m = url.match(URL_RE) || url.match(SHORT_URL_RE)
     m && m[1]
-  end
-
-  def self.yid_to_api_url(yid)
-    'http://gdata.youtube.com/feeds/api/videos/' + yid + '?v=2&alt=json'
   end
 end

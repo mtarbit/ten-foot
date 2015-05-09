@@ -27,4 +27,16 @@ class YouTubeService
 
     res.data.items
   end
+
+  def self.video(id)
+    res = self.client.execute!(
+      api_method: self.api.videos.list,
+      parameters: {
+        id: id,
+        part: 'snippet'
+      }
+    )
+
+    res.data.items.first
+  end
 end
