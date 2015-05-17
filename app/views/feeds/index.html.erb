@@ -9,10 +9,10 @@
 
 <% columns = 4 %>
 <% min_idx = 0 %>
-<% max_idx = @tweets.count - 1 %>
+<% max_idx = @videos.count - 1 %>
 
-<% @tweets.each_with_index do |tweet, i| %>
-    <% video = tweet.you_tube_videos.find(tweet.you_tube_video_id) %>
+<% @videos.each_with_index do |video, i| %>
+    <% tweet = video.tweets.first %>
 
     <% if i == min_idx || i % columns == 0 %>
         <div class="row-fluid">
