@@ -28,7 +28,7 @@
                 <% end %>
             </div>
             <div class="span4">
-                <%= link_to(file_search_path(@video_files.map(&:id).join(',')), class: 'button') do %>
+                <%= link_to(file_search_path(@video_files.map(&:id).join(',')), class: 'button untracked') do %>
                     <i class="icon icon-remove"></i> Wrong series?
                 <% end %>
             </div>
