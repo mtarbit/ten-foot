@@ -65,7 +65,7 @@ class Tweet < ActiveRecord::Base
     record = where(twitter_id: data.id.to_s).first_or_initialize
     return record unless record.new_record?
 
-    videos = data.urls.map {|data| YouTubeVideo.for_url(data.expanded_url) }.compact
+    videos = data.urls.map {|data| YouTubeVideo.from_url(data.expanded_url) }.compact
     return record unless videos.present?
 
     record.user = data.user.screen_name

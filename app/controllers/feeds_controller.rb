@@ -1,6 +1,6 @@
 class FeedsController < ApplicationController
   def index
-    @videos = YouTubeVideo.includes(:tweets).order('tweets.date DESC').limit(120)
+    @videos = YouTubeVideo.eager_load(:tweets).order('COALESCE(tweets.date, published_at) DESC').limit(120)
   end
 
   def show
@@ -8,6 +8,7 @@ class FeedsController < ApplicationController
   end
 
   def refresh
+    YouTubeVideo.populate
     Tweet.populate
     redirect_to :back
   end

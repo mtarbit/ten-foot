@@ -6,3 +6,7 @@ twitter:
   consumer_secret: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcde
   oauth_token: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
   oauth_token_secret: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
+google:
+  developer_key: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
+youtube:
+  username: my_user_123

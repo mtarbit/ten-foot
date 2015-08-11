@@ -30,8 +30,9 @@
                 <%= link_to(search_path(match.id.videoId), data: { 'youtube-url' => 'http://www.youtube.com/watch?v=' + match.id.videoId }) do %>
                     <span class="video-img img" style="background-image: url(<%= match.snippet.thumbnails.high.url %>)"></span>
                     <span class="video-txt">
-                        <span class="video-title"><%= match.snippet.title %></span>
-                        <span class="video-desc"><%= minimal_video_text(match.snippet.description) %></span>
+                        <span class="tweet-user"><%= match.snippet.channelTitle %></span>
+                        <span class="tweet-date"><%= time_ago_in_words(match.snippet.publishedAt) %></span>
+                        <span class="tweet-text"><%= match.snippet.title %></span>
                     </span>
                 <% end %>
             </div>

@@ -3,6 +3,7 @@ namespace :tenfoot do
   desc "Populate database with data from videos, APIs and feeds."
   task :populate => :environment do
     Media.populate
+    YouTubeVideo.populate
     Tweet.populate
   end
 

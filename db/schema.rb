@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131208164813) do
+ActiveRecord::Schema.define(:version => 20150811081541) do
 
   create_table "movies", :force => true do |t|
     t.string   "imdb_id"
@@ -84,8 +84,10 @@ ActiveRecord::Schema.define(:version => 20131208164813) do
     t.string   "image"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "channel_title"
+    t.datetime "published_at"
   end
 
   add_index "you_tube_videos", ["youtube_id"], :name => "index_you_tube_videos_on_youtube_id"

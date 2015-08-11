@@ -21,12 +21,20 @@
     <div class="span3">
         <div class="feed-item">
             <%= link_to(feed_path(video), data: { 'youtube-url' => video.url }) do %>
-                <span class="tweet-icon"><%= image_tag(tweet.image_cached, alt: tweet.user, size: '48x48') %></span>
+                <% if tweet %>
+                    <span class="tweet-icon"><%= image_tag(tweet.image_cached, alt: tweet.user, size: '48x48') %></span>
+                <% end %>
                 <span class="video-img img" style="background-image: url(<%= video.image_cached %>)"></span>
                 <span class="video-txt">
-                    <span class="tweet-user"><%= tweet.user %></span>
-                    <span class="tweet-date"><%= time_ago_in_words(tweet.date) %> ago</span>
-                    <span class="tweet-text"><%= minimal_tweet_text(tweet.text) %></span>
+                    <% if tweet %>
+                        <span class="tweet-user"><%= tweet.user %></span>
+                        <span class="tweet-date"><%= time_ago_in_words(tweet.date) %> ago</span>
+                        <span class="tweet-text"><%= minimal_tweet_text(tweet.text) %></span>
+                    <% else %>
+                        <span class="tweet-user"><%= video.channel_title %></span>
+                        <span class="tweet-date"><%= time_ago_in_words(video.published_at) %> ago</span>
+                        <span class="tweet-text"><%= minimal_video_text(video.title) %></span>
+                    <% end %>
                 </span>
             <% end %>
         </div>
