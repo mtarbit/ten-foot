@@ -5,6 +5,7 @@ var playerVlc = {};
 playerVlc.type = 'vlc';
 playerVlc.lastTimeChange = 0;
 playerVlc.seekProgress;
+playerVlc.originalSubtitleTrack;
 
 playerVlc.init = function(){
   this.elem = $('object[type="application/x-vlc-plugin"]');
@@ -143,3 +144,12 @@ playerVlc.getProgress = function(){
 playerVlc.getVolume = function(){
   return this.dom.audio.volume / 200;
 };
+
+playerVlc.subtitle = function(){
+  if (this.dom.subtitle.track) {
+    this.originalSubtitleTrack = this.dom.subtitle.track;
+    this.dom.subtitle.track = 0;
+  } else {
+    this.dom.subtitle.track = this.originalSubtitleTrack;
+  }
+}

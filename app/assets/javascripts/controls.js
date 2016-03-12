@@ -64,6 +64,7 @@ controls.initKeyboard = function(){
       case 'left':  self.reverse(); break;
       case 'up':    self.louder();  break;
       case 'down':  self.quieter(); break;
+      case 's':     self.subtitle(); break;
       default:      return false;   break;
     }
 
@@ -160,4 +161,10 @@ controls.louder = function(){
 controls.quieter = function(){
   this.player.quieter();
   this.update();
+};
+
+controls.subtitle = function(){
+  if (this.player.subtitle) {
+    this.player.subtitle();
+  }
 };
