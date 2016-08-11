@@ -1,66 +1,60 @@
-// Player YouTube - YouTube chromeless player SWF
+// Player YouTube - YouTube iframe player API
 
 var playerYouTube = {};
 
 playerYouTube.type = 'youtube';
-playerYouTube.CHROMELESS_PLAYER_URL = "http://www.youtube.com/apiplayer?enablejsapi=1&version=3";
+playerYouTube.IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
 
 playerYouTube.init = function(){
-  this.domId = 'youtube-player';
-  this.containerId = this.domId + '-container';
+  this.containerId = 'youtube-player-container';
   this.container = $('#' + this.containerId);
 
   if (this.container.length) {
-    this.initCursorNoneOverlay();
-    this.initCallbacks();
-    this.initDom();
+    this.loadApi();
     return this;
   }
 };
 
-playerYouTube.initDom = function(){
-  this.videoId = this.container.data('video-id');
-  var parameters = { allowScriptAccess: 'always', wmode: 'opaque' };
-  var attributes = { id: this.domId };
-  swfobject.embedSWF(this.CHROMELESS_PLAYER_URL, this.containerId, '100%', '100%', '8', null, null, parameters, attributes);
+playerYouTube.loadApi = function(){
+  var self = this;
+  var script = $('<script>').attr('src', this.IFRAME_API_URL);
+
+  $('head').append(script);
+
+  window.onYouTubeIframeAPIReady = function(){
+    self.initApi();
+  };
 };
 
-playerYouTube.initCallbacks = function(){
+playerYouTube.initApi = function(){
   var self = this;
 
-  window.onYouTubePlayerReady = function(){
-    self.getDom();
-  };
-
-  window.onYouTubePlayerStateChange = function(state){
-    if (state == self.STATES.ended) self.stop();
-  };
-};
-
-playerYouTube.initCursorNoneOverlay = function(){
-  // A fugly hack to prevent the cursor from appearing over
-  // the full-screen SWF. Just applying cursor: none to the
-  // <object> element itself doesn't seem to work in chrome.
-
-  var overlay = $('<div>').css({
-    position: 'absolute',
-    left: 0, top: 0,
-    height: '100%',
-    width: '100%',
-    cursor: 'none'
+  this.api = new YT.Player(this.containerId, {
+    'height': '100%',
+    'width': '100%',
+    'playerVars': {
+      'autoplay': 1,
+      'controls': 0
+    },
+    'events': {
+      'onReady': function(){
+        self.onPlayerReady();
+      },
+      'onStateChange': function(){
+        self.onPlayerStateChange();
+      },
+    }
   });
-
-  $('body').append(overlay);
 };
 
-playerYouTube.getDom = function(){
-  this.elem = $('#' + this.domId);
+playerYouTube.onPlayerReady = function(event){
+  var videoId = this.container.data('video-id');
+  this.api.loadVideoById(videoId);
+  this.api.setVolume(50);
+};
 
-  this.dom = this.elem.get(0);
-
-  this.dom.addEventListener('onStateChange', 'onYouTubePlayerStateChange');
-  this.dom.loadVideoById(this.videoId);
-  this.dom.setVolume(50);
+playerYouTube.onPlayerStateChange = function(event){
+  if (event.data == this.STATES.ended) self.stop();
 };
 
 playerYouTube.STATES = {
@@ -69,10 +63,11 @@ playerYouTube.STATES = {
   , 'playing':    1
   , 'paused':     2
   , 'buffering':  3
+  , 'cued':       5
 };
 
 playerYouTube.is = function(state){
-  return this.dom.getPlayerState() == this.STATES[state];
+  return this.api.getPlayerState() == this.STATES[state];
 };
 
 playerYouTube.stop = function(){
@@ -81,37 +76,36 @@ playerYouTube.stop = function(){
 
 playerYouTube.pause = function(){
   if (this.is('paused')) {
-    this.dom.playVideo();
+    this.api.playVideo();
   } else {
-    this.dom.pauseVideo();
+    this.api.pauseVideo();
   }
 };
 
 playerYouTube.advance = function(){
-  this.dom.seekTo(this.dom.getCurrentTime() + 10);
+  this.api.seekTo(this.api.getCurrentTime() + 10, true);
 };
 
 playerYouTube.reverse = function(){
-  this.dom.seekTo(this.dom.getCurrentTime() - 10);
+  this.api.seekTo(this.api.getCurrentTime() - 10, true);
 };
 
 playerYouTube.louder = function(){
-  this.dom.setVolume(Math.min(this.dom.getVolume() + 10, 100));
+  this.api.setVolume(Math.min(this.api.getVolume() + 10, 100));
 };
 
 playerYouTube.quieter = function(){
-  this.dom.setVolume(Math.max(this.dom.getVolume() - 10, 0));
+  this.api.setVolume(Math.max(this.api.getVolume() - 10, 0));
 };
 
 playerYouTube.getTime = function(){
-  return this.dom.getCurrentTime() * 1000;
+  return this.api.getCurrentTime() * 1000;
 };
 
 playerYouTube.getDuration = function(){
-  return this.dom.getDuration() * 1000;
+  return this.api.getDuration() * 1000;
 };
 
 playerYouTube.getVolume = function(){
-  return this.dom.getVolume() / 100;
+  return this.api.getVolume() / 100;
 };
-
