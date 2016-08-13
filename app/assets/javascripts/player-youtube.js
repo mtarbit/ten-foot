@@ -37,11 +37,11 @@ playerYouTube.initApi = function(){
       'controls': 0
     },
     'events': {
-      'onReady': function(){
-        self.onPlayerReady();
+      'onReady': function(event){
+        self.onPlayerReady(event);
       },
-      'onStateChange': function(){
-        self.onPlayerStateChange();
+      'onStateChange': function(event){
+        self.onPlayerStateChange(event);
       },
     }
   });
@@ -54,7 +54,7 @@ playerYouTube.onPlayerReady = function(event){
 };
 
 playerYouTube.onPlayerStateChange = function(event){
-  if (event.data == this.STATES.ended) self.stop();
+  if (event.data == this.STATES.ended) this.stop();
 };
 
 playerYouTube.STATES = {
