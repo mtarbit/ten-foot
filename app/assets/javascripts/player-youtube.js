@@ -28,13 +28,19 @@ playerYouTube.loadApi = function(){
 
 playerYouTube.initApi = function(){
   var self = this;
+  var videoId = this.container.data('video-id');
 
   this.api = new YT.Player(this.containerId, {
     'height': '100%',
     'width': '100%',
+    'videoId': videoId,
     'playerVars': {
+      'nohtml5': 1,
       'autoplay': 1,
-      'controls': 0
+      'controls': 0,
+      'origin': 'localhost',
+      'rel': 0,
+      'showinfo': 0
     },
     'events': {
       'onReady': function(event){
@@ -48,8 +54,6 @@ playerYouTube.initApi = function(){
 };
 
 playerYouTube.onPlayerReady = function(event){
-  var videoId = this.container.data('video-id');
-  this.api.loadVideoById(videoId);
   this.api.setVolume(50);
 };
 
